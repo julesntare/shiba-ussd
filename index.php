@@ -7,7 +7,7 @@
 header('Content-type: text/plain');
 
 /* local db configuration */
-$dsn = 'bnw530k7urgmxgzkeziw;host=bnw530k7urgmxgzkeziw-mysql.services.clever-cloud.com;'; //database name
+$dsn = 'bnw530k7urgmxgzkeziw;host=bnw530k7urgmxgzkeziw-mysql.services.clever-cloud.com'; //database name
 $user = 'uuvo090e1awwwfz0'; // your mysql user 
 $password = 'WknalOFgRERGk4rldEsr'; // your mysql password
 
