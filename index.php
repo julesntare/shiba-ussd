@@ -9,12 +9,12 @@ header('Content-type: text/plain');
 /* local db configuration */
 $host = 'bnw530k7urgmxgzkeziw-mysql.services.clever-cloud.com'; //database name
 $user = 'uuvo090e1awwwfz0'; // your mysql user 
-$dbname='bnw530k7urgmxgzkeziw';
+$db='bnw530k7urgmxgzkeziw';
 $password = 'WknalOFgRERGk4rldEsr'; // your mysql password
 
 //  Create a PDO instance that will allow you to access your database
 try {
-    $dbh = new PDO($dsn, $user, $password);
+    $dbh = new PDO($host, $user, $password,$db,);
 }
 catch(PDOException $e) {
     //var_dump($e);
