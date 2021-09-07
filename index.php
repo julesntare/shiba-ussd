@@ -7,13 +7,15 @@
 header('Content-type: text/plain');
 
 /* local db configuration */
-$dsn = 'bnw530k7urgmxgzkeziw;host=bnw530k7urgmxgzkeziw-mysql.services.clever-cloud.com'; //database name
-$user = 'uuvo090e1awwwfz0'; // your mysql user 
-$password = 'WknalOFgRERGk4rldEsr'; // your mysql password
+// $dsn = 'bnw530k7urgmxgzkeziw;host=bnw530k7urgmxgzkeziw-mysql.services.clever-cloud.com'; //database name
+// $user = 'uuvo090e1awwwfz0'; // your mysql user 
+// $password = 'WknalOFgRERGk4rldEsr'; // your mysql password
+
+$uri='mysql://uuvo090e1awwwfz0:WknalOFgRERGk4rldEsr@bnw530k7urgmxgzkeziw-mysql.services.clever-cloud.com:3306/bnw530k7urgmxgzkeziw';
 
 //  Create a PDO instance that will allow you to access your database
 try {
-    $dbh = new PDO($dsn, $user, $password);
+    $dbh = new PDO($uri);
 }
 catch(PDOException $e) {
     //var_dump($e);
