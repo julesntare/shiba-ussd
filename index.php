@@ -118,7 +118,7 @@ function register($details,$phone, $dbh){
         $phone_number =$phone;//store phone number 
 
         // build sql statement
-        $sth = $dbh->prepare("INSERT INTO customer (full_name, email, phone) VALUES('$full_name','$email','$phone_number')");
+        $sth = $dbh->prepare("INSERT INTO customer1 (full_name, email, phone) VALUES('$full_name','$email','$phone_number')");
         //execute insert query   
         $sth->execute();
         if($sth->errorCode() == 0) {
