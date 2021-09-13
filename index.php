@@ -96,7 +96,7 @@ function about($ussd_text)
 function register($details,$phone, $dbh){
     if($details == "1")
     {
-        
+
         $ussd_text = "Please enter your Full Name and Email, each seperated by commas:";
         ussd_proceed($ussd_text); // ask user to enter registration details
     }
@@ -107,7 +107,7 @@ function register($details,$phone, $dbh){
                 $ussd_text = "Sorry we do not accept blank values";
                 ussd_proceed($ussd_text);
         } else {
-        $input = explode(",",$details[1]);//store input values in an array
+        $input = explode(",",$details);//store input values in an array
         $full_name = $input[0];//store full name
         $email = $input[1];//store email
         $phone_number =$phone;//store phone number 
