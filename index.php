@@ -104,7 +104,7 @@ function register($details,$phone, $dbh){
     else
     {
         ussd_proceed($details);
-        if (empty($details)){
+        if ($details == "1*"){
                 $ussd_text = "Sorry we do not accept blank values";
                 ussd_proceed($ussd_text);
         } else {
