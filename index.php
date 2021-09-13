@@ -55,7 +55,7 @@ if ($level > 0) {
         //If user selected 2, send them to the about menu
         about($ussd_string_exploded);
     } else {
-        ussd_stop("Invalid selection!!!");
+        ussd_stop("Invalid selection!!!" . $level);
     }
 }
 
