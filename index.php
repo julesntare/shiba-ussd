@@ -13,6 +13,7 @@ $dbUser = "uuvo090e1awwwfz0";      //by default root is user name.
 $dbPassword = "WknalOFgRERGk4rldEsr";     //password is blank by default
 try {
     $dbConn = new PDO("mysql:host=$dbHost;dbname=$dbName", $dbUser, $dbPassword);
+    $dbConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (Exception $e) {
     echo "Connection failed" . $e->getMessage();
 }
@@ -107,11 +108,11 @@ function register($details, $phone, $dbConn)
 
             // build sql statement
             try {
-                $sth = $dbConn->prepare("INSERT INTO customer1 (full_name, email, phone) VALUES('$full_name','$email','$phone_number')");
+                $dbConn->exec("INSERT INTO customer1 (full_name, email, phone) VALUES('$full_name','$email','$phone_number')");
                 //execute insert query
-                $sth->execute();
+                // $sth->execute();
                 $ussd_text = $full_name . " your registration was successful. Your email is " . $email . " and phone number is " . $phone_number;
-                ussd_proceed($ussd_text);
+                ussd_stop($ussd_text);
             } catch (PDOException $e) {
                 // $errors = $sth->errorInfo();
                 ussd_stop("Error:" . $e->getMessage());
