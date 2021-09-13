@@ -58,7 +58,7 @@ if($level == ""){
         //If user selected 2, send them to the about menu
         about($ussd_string_exploded);
     }
-    else if($level == "1*ee") {
+    else if($level == "1*") {
         register($level,$phone, $dbh);
     }
 
