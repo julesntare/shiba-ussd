@@ -41,12 +41,12 @@ $ussd_string_exploded = explode("*", $ussd_string);
 // Get menu level from ussd_string reply
 $level = count($ussd_string_exploded);
 
-if ($level == 0) {
+if ($level == 1) {
 
     display_menu(); // show the home/first menu
 }
 
-if ($level > 0) {
+if ($level > 1) {
 
     if ($ussd_string_exploded[0] == "1") {
         // If user selected 1 send them to the registration menu
