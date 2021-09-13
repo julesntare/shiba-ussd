@@ -13,7 +13,6 @@ $dbUser = "uuvo090e1awwwfz0";      //by default root is user name.
 $dbPassword = "WknalOFgRERGk4rldEsr";     //password is blank by default
 try {
     $dbConn = new PDO("mysql:host=$dbHost;dbname=$dbName", $dbUser, $dbPassword);
-    echo "Successfully connected with myDB database";
 } catch (Exception $e) {
     echo "Connection failed" . $e->getMessage();
 }
