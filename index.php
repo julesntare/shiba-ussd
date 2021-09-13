@@ -94,7 +94,7 @@ function about($ussd_text)
 
 // Function that handles Registration menu
 function register($details,$phone, $dbh){
-    if($details == "1*1")
+    if($details == "1")
     {
         
         $ussd_text = "Please enter your Full Name and Email, each seperated by commas:";
@@ -103,8 +103,8 @@ function register($details,$phone, $dbh){
     // if($details== "1*2")
     else
     {
-        if (empty($details[1])){
-                $ussd_text = "Sorry we do not accept blank values".$details;
+        if (empty($details)){
+                $ussd_text = "Sorry we do not accept blank values";
                 ussd_proceed($ussd_text);
         } else {
         $input = explode(",",$details[1]);//store input values in an array
