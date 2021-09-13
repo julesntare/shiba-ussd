@@ -101,27 +101,26 @@ function register($details, $phone, $dbh)
         ussd_proceed($ussd_text); // ask user to enter registration details
     }
     if (count($details) == 3) {
-        if (empty($details[1])) {
+        if (empty($details[2])) {
             $ussd_text = "Sorry we do not accept blank values";
             ussd_proceed($ussd_text);
         } else {
-            ussd_stop("ok here");
-            // $input = explode(",", $details[1]); //store input values in an array
-            // $full_name = $input[0]; //store full name
-            // $email = $input[1]; //store email
-            // $phone_number = $phone; //store phone number 
+            $input = explode(",", $details[2]); //store input values in an array
+            $full_name = $input[0]; //store full name
+            $email = $input[1]; //store email
+            $phone_number = $phone; //store phone number
 
-            // // build sql statement
-            // $sth = $dbh->prepare("INSERT INTO customer1 (full_name, email, phone) VALUES('$full_name','$email','$phone_number')");
-            // //execute insert query   
-            // $sth->execute();
-            // if ($sth->errorCode() == 0) {
-            //     $ussd_text = $full_name . " your registration was successful. Your email is " . $email . " and phone number is " . $phone_number;
-            //     ussd_proceed($ussd_text);
-            // } else {
-            //     // $errors = $sth->errorInfo();
-            //     ussd_stop("hi");
-            // }
+            // build sql statement
+            $sth = $dbh->prepare("INSERT INTO customer1 (full_name, email, phone) VALUES('$full_name','$email','$phone_number')");
+            //execute insert query
+            $sth->execute();
+            if ($sth->errorCode() == 0) {
+                $ussd_text = $full_name . " your registration was successful. Your email is " . $email . " and phone number is " . $phone_number;
+                ussd_proceed($ussd_text);
+            } else {
+                // $errors = $sth->errorInfo();
+                ussd_stop("hi");
+            }
         }
     }
 }
