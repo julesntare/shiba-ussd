@@ -11,7 +11,7 @@ header('Content-type: text/plain');
 // $user = 'uuvo090e1awwwfz0'; // your mysql user 
 // $password = 'WknalOFgRERGk4rldEsr'; // your mysql password
 
-$uri='mysql://uuvo090e1awwwfz0:WknalOFgRERGk4rldEsr@bnw530k7urgmxgzkeziw-mysql.services.clever-cloud.com:3306/bnw530k7urgmxgzkeziw';
+// $uri='mysql://uuvo090e1awwwfz0:WknalOFgRERGk4rldEsr@bnw530k7urgmxgzkeziw-mysql.services.clever-cloud.com:3306/bnw530k7urgmxgzkeziw';
 
 //  Create a PDO instance that will allow you to access your database
 try {
@@ -19,7 +19,7 @@ try {
 }
 catch(PDOException $e) {
     //var_dump($e);
-    echo("PDO error occurred");
+    echo($e." PDO error occurred");
 }
 catch(Exception $e) {
     //var_dump($e);
