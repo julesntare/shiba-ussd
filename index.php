@@ -106,7 +106,7 @@ function register($details,$phone, $dbh){
         ussd_proceed($details);
         if ($details == "1*"){
                 $ussd_text = "Sorry we do not accept blank values";
-                ussd_proceed($ussd_text);
+                ussd_stop($ussd_text);
         } else {
         $input = explode(",",$details);//store input values in an array
         $full_name = $input[0];//store full name
@@ -121,7 +121,7 @@ function register($details,$phone, $dbh){
             $ussd_text = $full_name." your registration was successful. Your email is ".$email." and phone number is ".$phone_number;
             ussd_proceed($ussd_text);
         } else {
-            $errors = $sth->errorInfo();
+            ussd_stop($sth->errorInfo());
         }
     }
 }
