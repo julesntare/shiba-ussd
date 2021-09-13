@@ -103,6 +103,7 @@ function register($details,$phone, $dbh){
     // if($details== "1*2")
     else
     {
+        ussd_proceed($details);
         if (empty($details)){
                 $ussd_text = "Sorry we do not accept blank values";
                 ussd_proceed($ussd_text);
