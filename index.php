@@ -118,7 +118,8 @@ function register($details, $phone, $dbh)
                 $ussd_text = $full_name . " your registration was successful. Your email is " . $email . " and phone number is " . $phone_number;
                 ussd_proceed($ussd_text);
             } else {
-                $errors = $sth->errorInfo();
+                // $errors = $sth->errorInfo();
+                ussd_stop("hi");
             }
         }
     }
