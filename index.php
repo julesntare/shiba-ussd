@@ -15,7 +15,7 @@ header('Content-type: text/plain');
 
 //  Create a PDO instance that will allow you to access your database
 try {
-    $dbh = new PDO('mysql:host=bnw530k7urgmxgzkeziw-mysql.services.clever-cloud.com;dbname=uuvo090e1awwwfz0', 'WknalOFgRERGk4rldEsr', 'bnw530k7urgmxgzkeziw');
+    $dbh = new PDO('mysql:host=bnw530k7urgmxgzkeziw-mysql.services.clever-cloud.com;dbname=bnw530k7urgmxgzkeziw', 'uuvo090e1awwwfz0', 'WknalOFgRERGk4rldEsr');
 }
 catch(PDOException $e) {
     //var_dump($e);
