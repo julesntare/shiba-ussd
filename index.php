@@ -51,7 +51,7 @@ if($level == ""){
     else if ($level == "1")
     {
         // If user selected 1 send them to the registration menu
-        register($ussd_string_exploded,$phone, $dbh);
+        register($level,$phone, $dbh);
     }
 
   else if ($level == "2"){
@@ -94,13 +94,14 @@ function about($ussd_text)
 
 // Function that handles Registration menu
 function register($details,$phone, $dbh){
-    if(count($details) == 2)
+    if($details == "1*1")
     {
         
         $ussd_text = "Please enter your Full Name and Email, each seperated by commas:";
         ussd_proceed($ussd_text); // ask user to enter registration details
     }
-    if(count($details)== 3)
+    // if($details== "1*2")
+    else
     {
         if (empty($details[1])){
                 $ussd_text = "Sorry we do not accept blank values";
