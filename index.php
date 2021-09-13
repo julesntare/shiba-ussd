@@ -41,12 +41,10 @@ $ussd_string_exploded = explode("*", $ussd_string);
 // Get menu level from ussd_string reply
 $level = count($ussd_string_exploded);
 
-if ($level == 0) {
+if ($level == 1) {
 
     display_menu(); // show the home/first menu
-}
-
-if ($level > 0) {
+} else {
 
     if ($ussd_string_exploded[0] == "1") {
         // If user selected 1 send them to the registration menu
@@ -55,7 +53,7 @@ if ($level > 0) {
         //If user selected 2, send them to the about menu
         about($ussd_string_exploded);
     } else {
-        ussd_stop("Invalid selection!!!" . $level);
+        ussd_stop("Invalid selection!!!");
     }
 }
 
