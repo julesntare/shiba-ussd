@@ -95,6 +95,8 @@ function register($details, $phone, $dbConn)
 
         $ussd_text = "Please enter your Full Name and Email, each seperated by commas:";
         ussd_proceed($ussd_text); // ask user to enter registration details
+        $ussd_text = "Please enter your Full Name and Email, each seperated by commas:";
+        ussd_proceed($ussd_text); // ask user to enter registration details
     }
     if (count($details) == 3) {
         if (empty($details[2])) {
@@ -107,6 +109,9 @@ function register($details, $phone, $dbConn)
             $phone_number = $phone; //store phone number
 
             // build sql statement
+
+
+
             try {
                 $dbConn->exec("INSERT INTO customer1 (full_name, email, phone) VALUES('$full_name','$email','$phone_number')");
                 //execute insert query
