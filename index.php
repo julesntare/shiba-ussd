@@ -36,7 +36,6 @@ $ussd_string_exploded = explode("*", $ussd_string);
 
 // Get menu level from ussd_string reply
 $level = count($ussd_string_exploded);
-echo $level;
 
 if ($level == 1) {
     display_menu(); // show the home/first menu
@@ -75,7 +74,8 @@ function ussd_stop($ussd_text)
 //This is the home menu function
 function display_menu()
 {
-    $ussd_text = "1. Register \n 2. About \n"; // add \n so that the menu has new lines
+    global $level;
+    $ussd_text = "1. Register \n 2. About \n 3. $level"; // add \n so that the menu has new lines
     ussd_proceed($ussd_text);
 }
 
