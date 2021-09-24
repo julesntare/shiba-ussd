@@ -91,41 +91,46 @@ function about($ussd_text)
 // Function that handles Registration menu
 function register($details, $phone, $dbConn)
 {
-    if (count($details) == 2) {
-        $ussd_text = "Please enter your Full Name:";
-        ussd_proceed($ussd_text); // ask user to enter registration details
-    }
-    if (count($details) == 3) {
-        $name = $details[2];
-        if (empty($details[2])) {
-            $ussd_text = "Sorry we do not accept blank values, fill valid data";
-            ussd_proceed($ussd_text);
-        } else {
-            $ussd_text = "Please enter your Email:";
+    switch (count($details)) {
+        case 2:
+            $ussd_text = "Please enter your Full Name:";
             ussd_proceed($ussd_text); // ask user to enter registration details
-        }
-    }
-    if (count($details) == 4) {
-        if (empty($details[3])) {
-            $ussd_text = "Sorry we do not accept blank values, fill valid data";
-            ussd_proceed($ussd_text);
-        } else {
-            $full_name = $details[2]; //store full name
-            $email = $details[3]; //store email
-            $phone_number = $phone; //store phone number
-
-            // build sql statement
-            try {
-                $dbConn->exec("INSERT INTO customer1 (full_name, email, phone) VALUES('$full_name','$email','$phone_number')");
-                //execute insert query
-                // $sth->execute();
-                $ussd_text = $full_name . " your registration was successful. Your email is " . $email . " and phone number is " . $phone_number;
-                ussd_stop($ussd_text);
-            } catch (PDOException $e) {
-                // $errors = $sth->errorInfo();
-                ussd_stop("Error:" . $e->getMessage());
+            break;
+        case 3:
+            $name = $details[2];
+            if (empty($details[2])) {
+                $ussd_text = "Sorry we do not accept blank values, fill valid data";
+                ussd_proceed($ussd_text);
+            } else {
+                $ussd_text = "Please enter your Email:";
+                ussd_proceed($ussd_text); // ask user to enter registration details
             }
-        }
+            break;
+        case 4:
+            if (empty($details[3])) {
+                $ussd_text = "Sorry we do not accept blank values, fill valid data";
+                ussd_proceed($ussd_text);
+            } else {
+                $full_name = $details[2]; //store full name
+                $email = $details[3]; //store email
+                $phone_number = $phone; //store phone number
+
+                // build sql statement
+                try {
+                    $dbConn->exec("INSERT INTO customer1 (full_name, email, phone) VALUES('$full_name','$email','$phone_number')");
+                    //execute insert query
+                    // $sth->execute();
+                    $ussd_text = $full_name . " your registration was successful. Your email is " . $email . " and phone number is " . $phone_number;
+                    ussd_stop($ussd_text);
+                } catch (PDOException $e) {
+                    // $errors = $sth->errorInfo();
+                    ussd_stop("Error:" . $e->getMessage());
+                }
+            }
+            break;
+        default:
+            ussd_stop("Something went wrong");
+            break;
     }
 }
 # close the pdo connection
