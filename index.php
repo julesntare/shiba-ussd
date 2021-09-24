@@ -92,18 +92,26 @@ function about($ussd_text)
 function register($details, $phone, $dbConn)
 {
     if (count($details) == 2) {
-
-        $ussd_text = "Please enter your Full Name and Email, each seperated by commas:";
+        $ussd_text = "Please enter your Full Name:";
         ussd_proceed($ussd_text); // ask user to enter registration details
     }
     if (count($details) == 3) {
+        $name = $details[2];
         if (empty($details[2])) {
             $ussd_text = "Sorry we do not accept blank values, fill valid data";
             ussd_proceed($ussd_text);
         } else {
-            $input = explode(",", $details[2]); //store input values in an array
-            $full_name = $input[0]; //store full name
-            $email = $input[1]; //store email
+            $ussd_text = "Please enter your Email:";
+            ussd_proceed($ussd_text); // ask user to enter registration details
+        }
+    }
+    if (count($details) == 4) {
+        if (empty($details[3])) {
+            $ussd_text = "Sorry we do not accept blank values, fill valid data";
+            ussd_proceed($ussd_text);
+        } else {
+            $full_name = $name; //store full name
+            $email = $details[3]; //store email
             $phone_number = $phone; //store phone number
 
             // build sql statement
