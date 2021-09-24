@@ -90,13 +90,13 @@ function about($ussd_text)
 function register($details, $phone, $dbConn)
 {
     switch (count($details)) {
-        case 2:
+        case 1:
             $ussd_text = "Please enter your Full Name:";
             ussd_proceed($ussd_text); // ask user to enter registration details
             break;
-        case 3:
-            $name = $details[2];
-            if (empty($details[2])) {
+        case 2:
+            $name = $details[1];
+            if (empty($details[1])) {
                 $ussd_text = "Sorry we do not accept blank values, fill valid data";
                 ussd_proceed($ussd_text);
             } else {
@@ -104,8 +104,8 @@ function register($details, $phone, $dbConn)
                 ussd_proceed($ussd_text); // ask user to enter registration details
             }
             break;
-        case 4:
-            if (empty($details[3])) {
+        case 3:
+            if (empty($details[2])) {
                 $ussd_text = "Sorry we do not accept blank values, fill valid data";
                 ussd_proceed($ussd_text);
             } else {
