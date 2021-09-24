@@ -91,7 +91,6 @@ function about($ussd_text)
 // Function that handles Registration menu
 function register($details, $phone, $dbConn)
 {
-    $name = '';
     if (count($details) == 2) {
         $ussd_text = "Please enter your Full Name:";
         ussd_proceed($ussd_text); // ask user to enter registration details
@@ -111,7 +110,7 @@ function register($details, $phone, $dbConn)
             $ussd_text = "Sorry we do not accept blank values, fill valid data";
             ussd_proceed($ussd_text);
         } else {
-            $full_name = $name; //store full name
+            $full_name = $details[2]; //store full name
             $email = $details[3]; //store email
             $phone_number = $phone; //store phone number
 
