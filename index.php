@@ -37,6 +37,7 @@ $ussd_string_exploded = explode("*", $ussd_string);
 
 // Get menu level from ussd_string reply
 $level = count($ussd_string_exploded);
+$level += 1;
 
 if ($level == 1) {
     display_menu(); // show the home/first menu
