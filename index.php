@@ -23,7 +23,6 @@ $phone = $_POST['phoneNumber'];
 $session_id = $_POST['sessionId'];
 $service_code = $_POST['serviceCode'];
 $ussd_string = $_POST['text'];
-$request_type = $_POST['requestType'];
 
 //set default level to zero
 $level = 0;
@@ -37,7 +36,6 @@ $ussd_string_exploded = explode("*", $ussd_string);
 
 // Get menu level from ussd_string reply
 $level = count($ussd_string_exploded);
-$level += 1;
 
 if ($level == 1) {
     display_menu(); // show the home/first menu
@@ -70,8 +68,8 @@ function ussd_proceed($ussd_text)
 */
 function ussd_stop($ussd_text)
 {
-    global $request_type;
-    echo "END $ussd_text $request_type";
+    global $level;
+    echo "END $ussd_text $level";
 }
 
 //This is the home menu function
