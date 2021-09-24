@@ -23,6 +23,7 @@ $phone = $_POST['phoneNumber'];
 $session_id = $_POST['sessionId'];
 $service_code = $_POST['serviceCode'];
 $ussd_string = $_POST['text'];
+$request_type = $_POST['requestType'];
 
 //set default level to zero
 $level = 0;
@@ -38,10 +39,8 @@ $ussd_string_exploded = explode("*", $ussd_string);
 $level = count($ussd_string_exploded);
 
 if ($level == 1) {
-
     display_menu(); // show the home/first menu
 } else {
-
     if ($ussd_string_exploded[0] == "1") {
         // If user selected 1 send them to the registration menu
         register($ussd_string_exploded, $phone, $dbConn);
@@ -70,13 +69,14 @@ function ussd_proceed($ussd_text)
 */
 function ussd_stop($ussd_text)
 {
-    echo "END $ussd_text";
+    global $request_type;
+    echo "END $ussd_text $request_type";
 }
 
 //This is the home menu function
 function display_menu()
 {
-    $ussd_text =    "1. Register \n 2. About \n"; // add \n so that the menu has new lines
+    $ussd_text = "1. Register \n 2. About \n"; // add \n so that the menu has new lines
     ussd_proceed($ussd_text);
 }
 
@@ -84,7 +84,7 @@ function display_menu()
 // Function that hanldles About menu
 function about($ussd_text)
 {
-    $ussd_text =    "This is a sample registration application";
+    $ussd_text = "This is a sample registration application";
     ussd_stop($ussd_text);
 }
 
