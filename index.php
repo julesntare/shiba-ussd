@@ -74,8 +74,8 @@ function ussd_stop($ussd_text)
 //This is the home menu function
 function display_menu()
 {
-    global $level;
-    $ussd_text = "1. Register \n 2. About \n 3. $level"; // add \n so that the menu has new lines
+    global $ussd_string_exploded;
+    $ussd_text = "1. Register \n 2. About \n 3. $ussd_string_exploded"; // add \n so that the menu has new lines
     ussd_proceed($ussd_text);
 }
 
