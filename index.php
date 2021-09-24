@@ -109,8 +109,8 @@ function register($details, $phone, $dbConn)
                 $ussd_text = "Sorry we do not accept blank values, fill valid data";
                 ussd_proceed($ussd_text);
             } else {
-                $full_name = $details[2]; //store full name
-                $email = $details[3]; //store email
+                $full_name = $details[1]; //store full name
+                $email = $details[2]; //store email
                 $phone_number = $phone; //store phone number
 
                 // build sql statement
