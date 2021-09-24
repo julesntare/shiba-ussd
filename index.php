@@ -7,19 +7,15 @@
 header('Content-type: text/plain');
 
 /* local db configuration */
-$dsn = 'mysql:dbname=bnw530k7urgmxgzkeziw;host=bnw530k7urgmxgzkeziw-mysql.services.clever-cloud.com;'; //database name
-$user = 'uuvo090e1awwwfz0'; // your mysql user 
-$password = 'WknalOFgRERGk4rldEsr'; // your mysql password
-
-//  Create a PDO instance that will allow you to access your database
+$dbHost = "bnw530k7urgmxgzkeziw-mysql.services.clever-cloud.com";
+$dbName = "bnw530k7urgmxgzkeziw";
+$dbUser = "uuvo090e1awwwfz0";      //by default root is user name.
+$dbPassword = "WknalOFgRERGk4rldEsr";     //password is blank by default
 try {
-    $dbh = new PDO($dsn, $user, $password);
-} catch (PDOException $e) {
-    //var_dump($e);
-    echo ("PDO error occurred");
+    $dbConn = new PDO("mysql:host=$dbHost;dbname=$dbName", $dbUser, $dbPassword);
+    $dbConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (Exception $e) {
-    //var_dump($e);
-    echo ("Error occurred");
+    echo "Connection failed" . $e->getMessage();
 }
 
 // Get the parameters provided by Africa's Talking USSD gateway
@@ -44,13 +40,11 @@ $level = count($ussd_string_exploded);
 if ($level == 1) {
 
     display_menu(); // show the home/first menu
-}
-
-if ($level > 1) {
+} else {
 
     if ($ussd_string_exploded[0] == "1") {
         // If user selected 1 send them to the registration menu
-        register($ussd_string_exploded, $phone, $dbh);
+        register($ussd_string_exploded, $phone, $dbConn);
     } else if ($ussd_string_exploded[0] == "2") {
         //If user selected 2, send them to the about menu
         about($ussd_string_exploded);
@@ -95,36 +89,45 @@ function about($ussd_text)
 }
 
 // Function that handles Registration menu
-function register($details, $phone, $dbh)
+function register($details, $phone, $dbConn)
 {
+    $name = '';
     if (count($details) == 2) {
-
-        $ussd_text = "Please enter your Full Name and Email, each seperated by commas:";
+        $ussd_text = "Please enter your Full Name:";
         ussd_proceed($ussd_text); // ask user to enter registration details
     }
     if (count($details) == 3) {
-        if (empty($details[1])) {
-            $ussd_text = "Sorry we do not accept blank values";
+        $name = $details[2];
+        if (empty($details[2])) {
+            $ussd_text = "Sorry we do not accept blank values, fill valid data";
             ussd_proceed($ussd_text);
         } else {
-            $input = explode(",", $details[1]); //store input values in an array
-            $full_name = $input[0]; //store full name
-            $email = $input[1]; //store email
-            $phone_number = $phone; //store phone number 
+            $ussd_text = "Please enter your Email:";
+            ussd_proceed($ussd_text); // ask user to enter registration details
+        }
+    }
+    if (count($details) == 4) {
+        if (empty($details[3])) {
+            $ussd_text = "Sorry we do not accept blank values, fill valid data";
+            ussd_proceed($ussd_text);
+        } else {
+            $full_name = $name; //store full name
+            $email = $details[3]; //store email
+            $phone_number = $phone; //store phone number
 
             // build sql statement
-            $sth = $dbh->prepare("INSERT INTO customer1 (full_name, email, phone) VALUES('$full_name','$email','$phone_number')");
-            //execute insert query   
-            $sth->execute();
-            if ($sth->errorCode() == 0) {
+            try {
+                $dbConn->exec("INSERT INTO customer1 (full_name, email, phone) VALUES('$full_name','$email','$phone_number')");
+                //execute insert query
+                // $sth->execute();
                 $ussd_text = $full_name . " your registration was successful. Your email is " . $email . " and phone number is " . $phone_number;
-                ussd_proceed($ussd_text);
-            } else {
+                ussd_stop($ussd_text);
+            } catch (PDOException $e) {
                 // $errors = $sth->errorInfo();
-                ussd_stop("hi");
+                ussd_stop("Error:" . $e->getMessage());
             }
         }
     }
 }
-# close the pdo connection  
-$dbh = null;
+# close the pdo connection
+$dbConn = null;
