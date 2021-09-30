@@ -74,7 +74,7 @@ function ussd_stop($ussd_text)
 //This is the home menu function
 function display_menu()
 {
-    $ussd_text = "1. Register \n 2. About system \n"; // add \n so that the menu has new lines
+    $ussd_text = "1. Register \n 2. About system \n login \n"; // add \n so that the menu has new lines
     ussd_proceed($ussd_text);
 }
 
@@ -91,27 +91,27 @@ function register($details, $phone, $dbConn)
 {
     switch (count($details)) {
         case 1:
-            $ussd_text = "Please enter your Full Name:";
+            $ussd_text = "injiza amazina yose yumwana:";
             ussd_proceed($ussd_text); // ask user to enter registration details
             break;
         case 2:
             $name = $details[1];
             if (empty($details[1])) {
-                $ussd_text = "Sorry we do not accept blank values, fill valid data";
+                $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
                 ussd_proceed($ussd_text);
             } else {
-                $ussd_text = "Please enter your Email:";
+                $ussd_text = "injiza amazina ya se:";
                 ussd_proceed($ussd_text); // ask user to enter registration details
             }
             break;      
         case 3:
             if (empty($details[2])) {
-                $ussd_text = "Sorry we do not accept blank values, fill valid data";
+                $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
                 ussd_proceed($ussd_text);
             }
 
             else{
-                $ussd_text = "Please enter your home :";
+                $ussd_text = "inziza amazina ya nyina :";
                 ussd_proceed($ussd_text); // ask user to enter home location
 
             }
@@ -119,23 +119,35 @@ function register($details, $phone, $dbConn)
             case 4:
                 if(empty($details[3])){
 
-                    $ussd_text="Sorry we do not accept blank values, fill valid data";
+                    $ussd_text="ntakintu mwinjijemo ntabwo byemewe";
+                    ussd_proceed($ussd_text);
+                }
+
+                else{
+
+                    $ussd_text = "inziza nimero yirangamuntu ya nyina :";
+                    ussd_proceed($ussd_text); // ask user to enter home location
+                }
+                if(empty($ussd_text)){
+
+                    $ussd_text="ntakintu mwinjijemo ntabwo byemewe";
                     ussd_proceed($ussd_text);
                 }
             
             else {
                 
-                $full_name = $details[1]; //store full name
-                $email = $details[2]; //store email
-                $home = $details[3]; //home location
+                $full_name = $details[1]; //store full name of the baby
+                $father = $details[2]; //father name
+                $mother = $details[3]; //mother name
+                $mid = $details[3]; //mother id
                 $phone_number = $phone; //store phone number
 
                 // build sql statement
                 try {
-                    $dbConn->exec("INSERT INTO customer1 (full_name, email, home, phone) VALUES('$full_name','$email','$home','$phone_number')");
+                    $dbConn->exec("INSERT INTO customer2 (full_name, father, mother,mid, phone) VALUES('$full_name','$father','$mother','$mid','$phone_number')");
                     //execute insert query
                     // $sth->execute();
-                    $ussd_text = $full_name . " your registration was successful. Your email is " . $email . " and phone number is " . $phone_number;
+                    $ussd_text = $full_name . " your registration was successful. Your email is " . $full_name . " and phone number is " . $phone_number;
                     ussd_stop($ussd_text);
                 } catch (PDOException $e) {
                     // $errors = $sth->errorInfo();
