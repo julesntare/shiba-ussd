@@ -144,7 +144,7 @@ function register($details, $phone, $dbConn)
 
                 // build sql statement
                 try {
-                    $dbConn->exec("INSERT INTO customer2 (full_name, father, mother,mid, phone) VALUES('$full_name','$father','$mother','$mid','$phone_number')");
+                    $dbConn->exec("INSERT INTO customer3 (full_name, father, mother,mid, phone) VALUES('$full_name','$father','$mother','$mid','$phone_number')");
                     //execute insert query
                     // $sth->execute();
                     $ussd_text = $full_name . " your registration was successful. Your email is " . $full_name . " and phone number is " . $phone_number;
