@@ -128,7 +128,7 @@ function register($details, $phone, $dbConn)
                     $ussd_text = "inziza nimero yirangamuntu ya nyina :";
                     ussd_proceed($ussd_text); // ask user to enter home location
                 }
-                if(empty($ussd_text)){
+                if(empty($ussd_text[4])){
 
                     $ussd_text="ntakintu mwinjijemo ntabwo byemewe";
                     ussd_proceed($ussd_text);
@@ -139,7 +139,7 @@ function register($details, $phone, $dbConn)
                 $full_name = $details[1]; //store full name of the baby
                 $father = $details[2]; //father name
                 $mother = $details[3]; //mother name
-                $mid = $details[3]; //mother id
+                $mid = $details[4]; //mother id
                 $phone_number = $phone; //store phone number
 
                 // build sql statement
