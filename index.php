@@ -147,7 +147,7 @@ function register($details, $phone, $dbConn)
                     $dbConn->exec("INSERT INTO customer3 (full_name, father, mother,mid, phone) VALUES('$full_name','$father','$mother','$mid','$phone_number')");
                     //execute insert query
                     // $sth->execute();
-                    $ussd_text = $full_name . " your registration was successful. Your email is " . $full_name . " and phone number is " . $phone_number;
+                    $ussd_text = $full_name . " kwiyandikishabyagenze neza murakoze!";
                     ussd_stop($ussd_text);
                 } catch (PDOException $e) {
                     // $errors = $sth->errorInfo();
