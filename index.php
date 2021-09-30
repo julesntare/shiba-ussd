@@ -103,19 +103,36 @@ function register($details, $phone, $dbConn)
                 $ussd_text = "Please enter your Email:";
                 ussd_proceed($ussd_text); // ask user to enter registration details
             }
-            break;
+            break;      
         case 3:
             if (empty($details[2])) {
                 $ussd_text = "Sorry we do not accept blank values, fill valid data";
                 ussd_proceed($ussd_text);
-            } else {
+            }
+
+            else{
+                $ussd_text = "Please enter your home :";
+                ussd_proceed($ussd_text); // ask user to enter home location
+
+            }
+            break;
+            case 4:
+                if(empty($details[3])){
+
+                    $ussd_text="Sorry we do not accept blank values, fill valid data";
+                    ussd_proceed($ussd_text);
+                }
+            
+            else {
+                
                 $full_name = $details[1]; //store full name
                 $email = $details[2]; //store email
+                $home = $details[3]; //home location
                 $phone_number = $phone; //store phone number
 
                 // build sql statement
                 try {
-                    $dbConn->exec("INSERT INTO customer1 (full_name, email, phone) VALUES('$full_name','$email','$phone_number')");
+                    $dbConn->exec("INSERT INTO customer1 (full_name, email, home, phone) VALUES('$full_name','$email','$home','$phone_number')");
                     //execute insert query
                     // $sth->execute();
                     $ussd_text = $full_name . " your registration was successful. Your email is " . $email . " and phone number is " . $phone_number;
