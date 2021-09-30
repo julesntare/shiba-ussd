@@ -123,28 +123,18 @@ function register($details, $phone, $dbConn)
                     ussd_proceed($ussd_text);
                 }
 
-                else{
-
-                    $ussd_text = "inziza nimero yirangamuntu ya nyina :";
-                    ussd_proceed($ussd_text); // ask user to enter mothers id
-                }
-                if(empty($ussd_text[4])){
-
-                    $ussd_text="ntakintu mwinjijemo ntabwo byemewe";
-                    ussd_proceed($ussd_text);
-                }
-            
+                
             else {
                 
                 $full_name = $details[1]; //store full name of the baby
                 $father = $details[2]; //father name
                 $mother = $details[3]; //mother name
-                $mid = $details[4]; //mother id
+                //$mid = $details[4]; //mother id
                 $phone_number = $phone; //store phone number
 
                 // build sql statement
                 try {
-                    $dbConn->exec("INSERT INTO customer3 (full_name, father, mother,mid, phone) VALUES('$full_name','$father','$mother','$mid','$phone_number')");
+                    $dbConn->exec("INSERT INTO customer3 (full_name, father, mother, phone) VALUES('$full_name','$father','$mother','$phone_number')");
                     //execute insert query
                     // $sth->execute();
                     $ussd_text = $full_name . " kwiyandikisha byagenze neza murakoze!";
