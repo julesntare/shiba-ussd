@@ -111,8 +111,8 @@ function register($details, $phone, $dbConn)
             }
 
             else{
-                $ussd_text = "inziza amazina ya nyina :";
-                ussd_proceed($ussd_text); // ask user to enter home location
+                $ussd_text = "inziza amazina ya nyina :";  // ask user to enter home location
+                ussd_proceed($ussd_text);
 
             }
             break;
@@ -126,7 +126,7 @@ function register($details, $phone, $dbConn)
                 else{
 
                     $ussd_text = "inziza nimero yirangamuntu ya nyina :";
-                    ussd_proceed($ussd_text); // ask user to enter home location
+                    ussd_proceed($ussd_text); // ask user to enter mothers id
                 }
                 if(empty($ussd_text[4])){
 
@@ -147,7 +147,7 @@ function register($details, $phone, $dbConn)
                     $dbConn->exec("INSERT INTO customer3 (full_name, father, mother,mid, phone) VALUES('$full_name','$father','$mother','$mid','$phone_number')");
                     //execute insert query
                     // $sth->execute();
-                    $ussd_text = $full_name . " kwiyandikishabyagenze neza murakoze!";
+                    $ussd_text = $full_name . " kwiyandikisha byagenze neza murakoze!";
                     ussd_stop($ussd_text);
                 } catch (PDOException $e) {
                     // $errors = $sth->errorInfo();
