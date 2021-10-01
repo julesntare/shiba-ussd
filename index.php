@@ -46,7 +46,15 @@ if ($ussd_string_exploded[0] == '') {
     } else if ($ussd_string_exploded[0] == "2") {
         //If user selected 2, send them to the about menu
         about($ussd_string_exploded);
-    } else {
+    
+    }
+    
+    elseif($ussd_string_exploded[0] == "3"){
+
+        test($ussd_string_exploded);
+    }
+
+    else {
         ussd_stop("Invalid selection!!!");
     }
 }
@@ -74,7 +82,7 @@ function ussd_stop($ussd_text)
 //This is the home menu function
 function display_menu()
 {
-    $ussd_text = "1. Register \n 2. About system \n 3.login \n"; // add \n so that the menu has new lines
+    $ussd_text = "1. Register \n 2. About system \n 3.function test \n"; // add \n so that the menu has new lines
     ussd_proceed($ussd_text);
 }
 
@@ -84,6 +92,11 @@ function about($ussd_text)
 {
     $ussd_text = "This is a sample registration application";
     ussd_stop($ussd_text);
+}
+
+function test($ussd_text){
+
+    $ussd_text="This is for testing the function";
 }
 
 // Function that handles Registration menu
@@ -149,6 +162,10 @@ function register($details, $phone, $dbConn)
             ussd_stop("Something went wrong");
             break;
     }
+}
+
+function login(){
+    
 }
 # close the pdo connection
 $dbConn = null;
