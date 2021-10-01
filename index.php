@@ -97,6 +97,7 @@ function about($ussd_text)
 function test($ussd_text){
 
     $ussd_text="This is for testing the function";
+    ussd_stop($ussd_text);
 }
 
 // Function that handles Registration menu
