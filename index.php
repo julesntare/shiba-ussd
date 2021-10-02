@@ -99,7 +99,7 @@ function login( $phone, $dbConn){
     $dbConn->exec("SELECT FROM customer3 where phone='$phone'");
 
     while ($row=mysqli_fetch_array($dbConn)): 
-      echo $row['lname'];
+      echo $row['full_name'];
       endwhile;
     
 }
