@@ -51,7 +51,7 @@ if ($ussd_string_exploded[0] == '') {
     
     elseif($ussd_string_exploded[0] == "3"){
 
-        test($ussd_string_exploded);
+        test($ussd_string_exploded,$dbConn);
     }
 
     else {
@@ -94,11 +94,29 @@ function about($ussd_text)
     ussd_stop($ussd_text);
 }
 
-function test($ussd_text){
+function test($dbConn,$details){
 
-    $ussd_text="This is for testing the function";
+   function login($details,$dbConn){
+
+ switch (count($details)) {
+        case 1:
+            $ussd_text = "injiza umubare wibanga:";
+            ussd_proceed($ussd_text); // ask user to enter registration details
+            break;
+        case 2:
+            $name = $details[1];
+            if (empty($details[1])) {
+                $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
+                ussd_proceed($ussd_text);
+            }
+            break;
+            default:
+           ussd_stop("test failed");
+           break;
+
+   }
     ussd_stop($ussd_text);
-}
+}}
 
 // Function that handles Registration menu
 function register($details, $phone, $dbConn)
