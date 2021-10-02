@@ -51,7 +51,7 @@ if ($ussd_string_exploded[0] == '') {
     
     elseif($ussd_string_exploded[0] == "3"){
 
-        test($ussd_string_exploded,$dbConn);
+        test($ussd_string_exploded,$dbConn,$details);
     }
 
     else {
@@ -94,9 +94,9 @@ function about($ussd_text)
     ussd_stop($ussd_text);
 }
 
-function test($dbConn,$details){
+function test($dbConn,$details,$phone){
 
-   function login($details,$dbConn){
+   function login($details,$dbConn,$phone){
 
  switch (count($details)) {
         case 1:
@@ -104,10 +104,36 @@ function test($dbConn,$details){
             ussd_proceed($ussd_text); // ask user to enter registration details
             break;
         case 2:
-            $name = $details[1];
+            
             if (empty($details[1])) {
                 $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
                 ussd_proceed($ussd_text);
+
+            }
+            else {
+
+
+
+                try {
+                    $dbConn->exec("SELECT FROM customer3 WHERE phone='$phone'");
+                    //execute select query
+                    
+                   
+                    $search_result=filterTable($dbConn);
+                    while ($row=mysqli_fetch_array($search_result)):
+                        
+                      echo $row['full_name'];
+                     
+                      endwhile;
+                    
+                    
+                } catch (PDOException $e) {
+                    // $errors = $sth->errorInfo();
+                    ussd_stop("Error:" . $e->getMessage());
+                }
+
+
+
             }
             break;
             default:
