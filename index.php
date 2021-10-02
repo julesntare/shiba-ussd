@@ -51,7 +51,7 @@ if ($ussd_string_exploded[0] == '') {
     
     elseif($ussd_string_exploded[0] == "3"){
 
-        test($ussd_string_exploded);
+        login($dbConn,$phone);
     }
 
     else {
@@ -94,10 +94,14 @@ function about($ussd_text)
     ussd_stop($ussd_text);
 }
 
-function test($ussd_text){
+function login( $phone, $dbConn){
+    $phone;
+    $dbConn->exec("SELECT FROM customer3 where phone='$phone'");
 
-    $ussd_text="This is for testing the function";
-    ussd_stop($ussd_text);
+    while ($row=mysqli_fetch_array($dbConn)): 
+      echo $row['lname'];
+      endwhile;
+    
 }
 
 // Function that handles Registration menu
@@ -165,8 +169,5 @@ function register($details, $phone, $dbConn)
     }
 }
 
-function login(){
-    
-}
 # close the pdo connection
 $dbConn = null;
