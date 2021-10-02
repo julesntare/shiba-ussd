@@ -51,7 +51,7 @@ if ($ussd_string_exploded[0] == '') {
     
     elseif($ussd_string_exploded[0] == "3"){
 
-        login($dbConn,$phone);
+        test($ussd_string_exploded);
     }
 
     else {
@@ -94,14 +94,10 @@ function about($ussd_text)
     ussd_stop($ussd_text);
 }
 
-function login( $phone, $dbConn){
-    $phone;
-    $dbConn->exec("SELECT FROM customer3 where phone='$phone'");
+function test($ussd_text){
 
-    while ($row=mysqli_fetch_array($dbConn)): 
-      echo $row['full_name'];
-      endwhile;
-    
+    $ussd_text="This is for testing the function";
+    ussd_stop($ussd_text);
 }
 
 // Function that handles Registration menu
