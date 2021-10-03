@@ -156,7 +156,25 @@ function register($details, $phone, $dbConn)
 
                 $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
                 ussd_proceed($ussd_text);
-            } else {
+            
+            }
+
+            else{
+
+                $ussd_text = "hitamo umubare wibanga :";  // ask user to enter home location
+                ussd_proceed($ussd_text);  
+            }
+            break;
+            case 5:
+                if(empty($details[4])){
+
+                    $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
+                    ussd_proceed($ussd_text);  
+                }
+            
+            
+            
+            else {
 
                 $full_name = $details[1]; //store full name of the baby
                 $father = $details[2]; //father name
