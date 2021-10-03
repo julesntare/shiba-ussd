@@ -179,12 +179,13 @@ function register($details, $phone, $dbConn)
                 $full_name = $details[1]; //store full name of the baby
                 $father = $details[2]; //father name
                 $mother = $details[3]; //mother name
+                $pin = $details[4]; //mother name
                 //$mid = $details[4]; //mother id
                 $phone_number = $phone; //store phone number
 
                 // build sql statement
                 try {
-                    $dbConn->exec("INSERT INTO customer3 (full_name, father, mother, phone) VALUES('$full_name','$father','$mother','$phone_number')");
+                    $dbConn->exec("INSERT INTO customer3 (full_name, father, mother, phone,pin) VALUES('$full_name','$father','$mother','$phone_number','$pin')");
                     //execute insert query
                     // $sth->execute();
                     $ussd_text = $full_name . " kwiyandikisha byagenze neza murakoze!";
