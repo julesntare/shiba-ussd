@@ -48,7 +48,7 @@ if ($ussd_string_exploded[0] == '') {
         about($ussd_string_exploded);
     } elseif ($ussd_string_exploded[0] == "3") {
 
-        test($ussd_string_exploded, $dbConn, $details);
+        test($ussd_string_exploded, $dbConn, $phone);
     } else {
         ussd_stop("Invalid selection!!!");
     }
@@ -88,7 +88,7 @@ function about($ussd_text)
     ussd_stop($ussd_text);
 }
 
-function test($dbConn, $details, $phone)
+function test($details, $dbConn, $phone)
 {
 
     switch (count($details)) {
