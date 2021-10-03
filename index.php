@@ -117,7 +117,7 @@ function login($details, $dbConn, $phone)
                     $names = '';
                     foreach ($search_result as $row) {
 
-                        $names .= $row['full_name'] . "\n";
+                        $names .= $row['pin'] . "\n";
                     }
                     ussd_stop($names);
                 } catch (PDOException $e) {
