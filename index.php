@@ -102,15 +102,17 @@ function login($details, $dbConn, $phone)
             } else {
 
                 try {
-                    $dbConn->exec("SELECT * FROM customer3 WHERE phone='$phone'");
+                    $search_result = $dbConn->exec("SELECT * FROM customer3 WHERE phone='$phone'");
                     //execute select query
 
-                    $search_result = filterTable($dbConn);
+                    // $search_result = filterTable($dbConn);
+                    $names = '';
                     while ($row = mysqli_fetch_array($search_result)) :
 
-                        echo $row['full_name'];
+                        $names .= $row['full_name'];
 
                     endwhile;
+                    ussd_stop($names);
                 } catch (PDOException $e) {
                     // $errors = $sth->errorInfo();
                     ussd_stop("Error:" . $e->getMessage());
