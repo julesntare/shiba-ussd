@@ -114,12 +114,12 @@ function login($details, $dbConn, $phone)
                     //execute select query
 
                     // $search_result = filterTable($dbConn);
-                    $names = '';
+                    $savedpin = '';
                     foreach ($search_result as $row) {
 
-                        $names .= $row['pin'] . "\n";
+                        $savedpin .= $row['pin'] . "\n";
                     }
-                    ussd_stop($names);
+                    ussd_stop($savedpin);
                 } catch (PDOException $e) {
                     // $errors = $sth->errorInfo();
                     ussd_stop("Error:" . $e->getMessage());
