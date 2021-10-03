@@ -156,17 +156,34 @@ function register($details, $phone, $dbConn)
 
                 $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
                 ussd_proceed($ussd_text);
-            } else {
+            }
+            
+            else{
+
+                $ussd_text = "hitamo  umubare wibanga :";  // ask user tocreate pin
+                ussd_proceed($ussd_text); 
+            }
+            case 5:
+                if (empty($details[4])) {
+
+                    $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
+                    ussd_proceed($ussd_text);
+                }
+                
+
+            
+            else {
 
                 $full_name = $details[1]; //store full name of the baby
                 $father = $details[2]; //father name
                 $mother = $details[3]; //mother name
+                $pin = $details[4]; //pin
                 //$mid = $details[4]; //mother id
                 $phone_number = $phone; //store phone number
 
                 // build sql statement
                 try {
-                    $dbConn->exec("INSERT INTO customer3 (full_name, father, mother, phone) VALUES('$full_name','$father','$mother','$phone_number')");
+                    $dbConn->exec("INSERT INTO customer3 (full_name, father, mother, phone,pin) VALUES('$full_name','$father','$mother','$phone_number','$pin')");
                     //execute insert query
                     // $sth->execute();
                     $ussd_text = $full_name . " kwiyandikisha byagenze neza murakoze!";
