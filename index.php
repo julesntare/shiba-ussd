@@ -46,15 +46,10 @@ if ($ussd_string_exploded[0] == '') {
     } else if ($ussd_string_exploded[0] == "2") {
         //If user selected 2, send them to the about menu
         about($ussd_string_exploded);
-    
-    }
-    
-    elseif($ussd_string_exploded[0] == "3"){
+    } elseif ($ussd_string_exploded[0] == "3") {
 
-        test($ussd_string_exploded,$dbConn,$details);
-    }
-
-    else {
+        test($ussd_string_exploded, $dbConn, $details);
+    } else {
         ussd_stop("Invalid selection!!!");
     }
 }
@@ -86,7 +81,6 @@ function display_menu()
     ussd_proceed($ussd_text);
 }
 
-
 // Function that hanldles About menu
 function about($ussd_text)
 {
@@ -94,55 +88,44 @@ function about($ussd_text)
     ussd_stop($ussd_text);
 }
 
-function test($dbConn,$details,$phone){
+function test($dbConn, $details, $phone)
+{
 
-   function login($details,$dbConn,$phone){
-
- switch (count($details)) {
+    switch (count($details)) {
         case 1:
             $ussd_text = "injiza umubare wibanga:";
             ussd_proceed($ussd_text); // ask user to enter registration details
             break;
         case 2:
-            
+
             if (empty($details[1])) {
                 $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
                 ussd_proceed($ussd_text);
-
-            }
-            else {
-
-
+            } else {
 
                 try {
                     $dbConn->exec("SELECT FROM customer3 WHERE phone='$phone'");
                     //execute select query
-                    
-                   
-                    $search_result=filterTable($dbConn);
-                    while ($row=mysqli_fetch_array($search_result)):
-                        
-                      echo $row['full_name'];
-                     
-                      endwhile;
-                    
-                    
+
+
+                    $search_result = filterTable($dbConn);
+                    while ($row = mysqli_fetch_array($search_result)) :
+
+                        echo $row['full_name'];
+
+                    endwhile;
                 } catch (PDOException $e) {
                     // $errors = $sth->errorInfo();
                     ussd_stop("Error:" . $e->getMessage());
                 }
-
-
-
             }
             break;
-            default:
-           ussd_stop("test failed");
-           break;
-
-   }
+        default:
+            ussd_stop("test failed");
+            break;
+    }
     ussd_stop($ussd_text);
-}}
+}
 
 // Function that handles Registration menu
 function register($details, $phone, $dbConn)
@@ -161,29 +144,23 @@ function register($details, $phone, $dbConn)
                 $ussd_text = "injiza amazina ya se:";
                 ussd_proceed($ussd_text); // ask user to enter registration details
             }
-            break;      
+            break;
         case 3:
             if (empty($details[2])) {
                 $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
                 ussd_proceed($ussd_text);
-            }
-
-            else{
+            } else {
                 $ussd_text = "inziza amazina ya nyina :";  // ask user to enter home location
                 ussd_proceed($ussd_text);
-
             }
             break;
-            case 4:
-                if(empty($details[3])){
+        case 4:
+            if (empty($details[3])) {
 
-                    $ussd_text="ntakintu mwinjijemo ntabwo byemewe";
-                    ussd_proceed($ussd_text);
-                }
+                $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
+                ussd_proceed($ussd_text);
+            } else {
 
-                
-            else {
-                
                 $full_name = $details[1]; //store full name of the baby
                 $father = $details[2]; //father name
                 $mother = $details[3]; //mother name
