@@ -118,6 +118,13 @@ function login($details, $dbConn, $phone)
                     foreach ($search_result as $row) {
 
                         $savedpin .= $row['pin'] . "\n";
+                        
+                        if($details[4]!=$savedpin){
+
+                            echo "pin missmatch";
+
+
+                        }
                     }
                     ussd_stop($savedpin);
                 } catch (PDOException $e) {
