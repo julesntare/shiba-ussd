@@ -99,6 +99,14 @@ function login($details, $dbConn, $phone)
             if (empty($details[1])) {
                 $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
                 ussd_proceed($ussd_text);
+                $search_result = $dbConn->query("SELECT * FROM customer3 WHERE phone='$phone'");
+                if(count($search_result)==0)
+                echo"invalid account";
+                else{
+
+                    echo "your phone is".$phone;
+                }
+                
             } else {
 
                 try {
