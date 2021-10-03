@@ -47,8 +47,7 @@ if ($ussd_string_exploded[0] == '') {
         //If user selected 2, send them to the about menu
         about($ussd_string_exploded);
     } elseif ($ussd_string_exploded[0] == "3") {
-
-        test($ussd_string_exploded, $dbConn, $phone);
+        login($ussd_string_exploded, $dbConn, $phone);
     } else {
         ussd_stop("Invalid selection!!!");
     }
@@ -88,7 +87,7 @@ function about($ussd_text)
     ussd_stop($ussd_text);
 }
 
-function test($details, $dbConn, $phone)
+function login($details, $dbConn, $phone)
 {
 
     switch (count($details)) {
@@ -97,16 +96,14 @@ function test($details, $dbConn, $phone)
             ussd_proceed($ussd_text); // ask user to enter registration details
             break;
         case 2:
-
             if (empty($details[1])) {
                 $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
                 ussd_proceed($ussd_text);
             } else {
 
                 try {
-                    $dbConn->exec("SELECT FROM customer3 WHERE phone='$phone'");
+                    $dbConn->exec("SELECT * FROM customer3 WHERE phone='$phone'");
                     //execute select query
-
 
                     $search_result = filterTable($dbConn);
                     while ($row = mysqli_fetch_array($search_result)) :
@@ -124,7 +121,6 @@ function test($details, $dbConn, $phone)
             ussd_stop("test failed");
             break;
     }
-    ussd_stop($ussd_text);
 }
 
 // Function that handles Registration menu
