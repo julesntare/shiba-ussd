@@ -118,6 +118,15 @@ function login($details, $dbConn, $phone)
                     foreach ($search_result as $row) {
 
                         $savedpin .= $row['full_name'] . "\n";
+
+                       
+                        function display_menu(){
+    
+                            $ussd_text = "1. Register \n 2. About system \n 3.function test \n"; // add \n so that the menu has new lines
+    ussd_proceed($ussd_text);
+}
+
+
                         
                        
                     }
