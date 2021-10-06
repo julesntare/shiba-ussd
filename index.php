@@ -119,8 +119,30 @@ function login($details, $dbConn, $phone)
 
                         $savedpin .= $row['full_name'] . "\n";
                         
+                        $ussd_string = $_POST['text'];
+                        $level = 0;
+                        $ussd_string_exploded = explode("*", $ussd_string);
+                       
+                        $level = count($ussd_string_exploded);
+                        if ($ussd_string_exploded[0] == '') {
+                            display_menu(); // show the home/first menu
+                        }
 
-                        
+                        function ussd_proceed($ussd_text)
+{
+    echo "CON $ussd_text";
+}
+function display_menu()
+{
+    $ussd_text = "1. Register \n 2. About system \n 3.function test \n"; // add \n so that the menu has new lines
+    ussd_proceed($ussd_text);
+}
+
+
+
+
+
+
                        
                     }
                     ussd_stop($savedpin);
