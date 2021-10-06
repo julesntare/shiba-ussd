@@ -76,7 +76,7 @@ function ussd_stop($ussd_text)
 //This is the home menu function
 function display_menu()
 {
-    $ussd_text = "1. Register \n 2. About system \n 3.function test \n"; // add \n so that the menu has new lines
+    $ussd_text = "1. Register \n 2. About system \n 3.Login \n"; // add \n so that the menu has new lines
     ussd_proceed($ussd_text);
 }
 
