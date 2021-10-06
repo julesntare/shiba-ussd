@@ -118,14 +118,44 @@ function login($details, $dbConn, $phone)
                     foreach ($search_result as $row) {
 
                         $savedpin .= $row['full_name'] . "\n";
+                        
+                        $ussd_string = $_POST['text'];
 
-                       
-                        function display_menu(){
-    
-                            $ussd_text = "1. Register \n 2. About system \n 3.function test \n"; // add \n so that the menu has new lines
-    ussd_proceed($ussd_text);
+//set default level to zero
+$level = 0;
+
+                        $ussd_string_exploded = explode("*", $ussd_string);
+
+// Get menu level from ussd_string reply
+$level = count($ussd_string_exploded);
+
+if ($ussd_string_exploded[0] == '') {
+    display_menu(); // show the home/first menu
+} else {
+    if ($ussd_string_exploded[0] == "1") {
+        // If user selected 1 send them to the registration menu
+        register($ussd_string_exploded, $phone, $dbConn);
+    } else if ($ussd_string_exploded[0] == "2") {
+        //If user selected 2, send them to the about menu
+        about($ussd_string_exploded);
+    } elseif ($ussd_string_exploded[0] == "3") {
+        login($ussd_string_exploded, $dbConn, $phone);
+    } else {
+        ussd_stop("Invalid selection!!!");
+    }
 }
 
+function ussd_proceed($ussd_text)
+{
+    echo "CON $ussd_text";
+}
+
+
+function display_menu()
+{
+    $ussd_text = "1. new \n 2. new \n 3.function test \n"; // add \n so that the menu has new lines
+    ussd_proceed($ussd_text);
+}
 
                         
                        
