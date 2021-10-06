@@ -117,6 +117,9 @@ function login($details, $dbConn, $phone)
                     $savedpin = '';
                     foreach ($search_result as $row) {
 
+                        
+                        echo"murakaza neza".$$row['full_name']."\n";
+
                         $savedpin .= $row['pin'] . "\n";
                         
                        
