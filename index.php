@@ -88,38 +88,10 @@ function about($ussd_text)
     ussd_stop($ussd_text);
 }
 
-function display_user_menu($details, $phone)
+function display_user_menu()
 {
-    switch (count($details)) {
-        case 1:
-            $ussd_text = "1. raporo \n 2. Siba konti  \n"; // add \n so that the menu has new lines
-            ussd_proceed($ussd_text);
-            break;
-
-        case 2:
-            if (empty($details[1])) {
-                $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
-                ussd_proceed($ussd_text);
-            } else {
-                $ussd_text = "injiza amazina ya se:";
-                ussd_proceed($ussd_text); // ask user to enter registration details
-            }
-            break;
-
-        case 3:
-            if (empty($details[1])) {
-                $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
-                ussd_proceed($ussd_text);
-            } else {
-                $ussd_text = "injiza amazina ya kw:";
-                ussd_proceed($ussd_text); // ask user to enter registration details
-            }
-            break;
-
-        default:
-            ussd_stop("havuze ikibazo, mwongere mukanya");
-            break;
-    }
+    $ussd_text = "1. raporo \n 2. Siba konti  \n"; // add \n so that the menu has new lines
+    ussd_proceed($ussd_text);
 }
 
 function login($details, $dbConn, $phone)
@@ -149,10 +121,22 @@ function login($details, $dbConn, $phone)
                         ussd_stop("Umubare w'ibanga ntabwo ariwo");
                         return;
                     }
-                    display_user_menu($details[1], $phone);
+                    display_user_menu();
                 } catch (PDOException $e) {
                     // $errors = $sth->errorInfo();
                     ussd_stop("Error:" . $e->getMessage());
+                }
+            }
+            break;
+        case 3:
+            if (empty($details[2])) {
+                $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
+                ussd_proceed($ussd_text);
+            } else {
+                if ($details[2] == "1") {
+                    ussd_stop("report");
+                } else if ($details[2] == "2") {
+                    ussd_stop("deleted");
                 }
             }
             break;
