@@ -130,8 +130,9 @@ function login($details, $dbConn, $phone)
                     ussd_stop("report"); // delete this
                 } else if ($details[2] == "2") {
                     // add queries here
-                    //ussd_stop("deleted"); // delete this
+                     // delete this
                     $dbConn->exec("DELETE from customer3 where phone='$phone'");
+                    ussd_stop("deleted");
                 }
             }
             break;
