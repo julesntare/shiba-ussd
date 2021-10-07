@@ -76,7 +76,7 @@ function ussd_stop($ussd_text)
 //This is the home menu function
 function display_menu()
 {
-    $ussd_text = "1. kwiyandikisha \n 2. inyerekeye system \n 3.kwinjira  \n"; // add \n so that the menu has new lines
+    $ussd_text = "1. kwiyandikisha \n 2. ibyerekeye system \n 3.kwinjira  \n"; // add \n so that the menu has new lines
     ussd_proceed($ussd_text);
 }
 
@@ -119,17 +119,9 @@ function login($details, $dbConn, $phone)
                         ussd_stop("Umubare w'ibanga ntabwo ariwo");
                         return;
                     }
-                    foreach ($search_result as $row) {
 
-                        $savedpin .= $row['full_name'] . "\n";
-
-                        // function display_menu()
-                        // {
-                        //     $ussd_text = "1. kwiyandikisha \n 2. inyerekeye system \n 3.kwinjira  \n"; // add \n so that the menu has new lines
-                        //     ussd_proceed($ussd_text);
-                        // }
-                    }
-                    ussd_stop($savedpin);
+                    $ussd_text = "1. option1 \n 2. option2 \n 3.option3  \n"; // add \n so that the menu has new lines
+                    ussd_proceed($ussd_text);
                 } catch (PDOException $e) {
                     // $errors = $sth->errorInfo();
                     ussd_stop("Error:" . $e->getMessage());
@@ -137,7 +129,7 @@ function login($details, $dbConn, $phone)
             }
             break;
         default:
-            ussd_stop("test failed");
+            ussd_stop("havuze ikibazo, mwongere mukanya");
             break;
     }
 }
