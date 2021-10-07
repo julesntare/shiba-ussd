@@ -77,7 +77,7 @@ function ussd_stop($ussd_text)
 //This is the home menu function
 function display_menu()
 {
-    $ussd_text = "1. kwiyandikisha \n 2. ibyerekeye system \n 3.kwinjira  \n"; // add \n so that the menu has new lines
+    $ussd_text = "1. kwiyandikisha \n 2. ibyerekeye system \n 3. kwinjira  \n"; // add \n so that the menu has new lines
     ussd_proceed($ussd_text);
 }
 
@@ -105,13 +105,6 @@ function login($details, $dbConn, $phone)
             if (empty($details[1])) {
                 $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
                 ussd_proceed($ussd_text);
-                // $search_result = $dbConn->query("SELECT * FROM customer3 WHERE phone='$phone'");
-                // if (count($search_result) == 0)
-                //     echo "invalid account";
-                // else {
-
-                //     echo "your phone is" . $phone;
-                // }
             } else {
 
                 try {
@@ -123,7 +116,6 @@ function login($details, $dbConn, $phone)
                     }
                     display_user_menu();
                 } catch (PDOException $e) {
-                    // $errors = $sth->errorInfo();
                     ussd_stop("Error:" . $e->getMessage());
                 }
             }
@@ -134,9 +126,11 @@ function login($details, $dbConn, $phone)
                 ussd_proceed($ussd_text);
             } else {
                 if ($details[2] == "1") {
-                    ussd_stop("report");
+                    // add queries here
+                    ussd_stop("report"); // delete this
                 } else if ($details[2] == "2") {
-                    ussd_stop("deleted");
+                    // add queries here
+                    ussd_stop("deleted"); // delete this
                 }
             }
             break;
