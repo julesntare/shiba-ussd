@@ -80,6 +80,12 @@ function display_menu()
     ussd_proceed($ussd_text);
 }
 
+function display_user_menu()
+{
+    $ussd_text = "1. raporo \n 2. Siba konti  \n"; // add \n so that the menu has new lines
+    ussd_proceed($ussd_text);
+}
+
 // Function that hanldles About menu
 function about($ussd_text)
 {
@@ -110,18 +116,12 @@ function login($details, $dbConn, $phone)
 
                 try {
                     $search_result = $dbConn->query("SELECT * FROM customer3 WHERE phone='$phone' and pin='$details[1]'");
-                    //execute select query
-
-                    // $search_result = filterTable($dbConn);
-                    $savedpin = '';
                     $total_rows = $search_result->rowCount();
                     if ($total_rows == 0) {
                         ussd_stop("Umubare w'ibanga ntabwo ariwo");
                         return;
                     }
-
-                    $ussd_text = "1. option1 \n 2. option2 \n 3.option3  \n"; // add \n so that the menu has new lines
-                    ussd_proceed($ussd_text);
+                    display_user_menu();
                 } catch (PDOException $e) {
                     // $errors = $sth->errorInfo();
                     ussd_stop("Error:" . $e->getMessage());
