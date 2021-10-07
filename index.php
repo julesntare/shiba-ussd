@@ -130,12 +130,13 @@ function login($details, $dbConn, $phone)
                     ussd_stop("report"); // delete this
                 } else if ($details[2] == "2") {
                     // add queries here
-                    ussd_stop("deleted"); // delete this
+                    //ussd_stop("deleted"); // delete this
+                    $dbConn->exec("DELETE from customer3 where phone='$phone'");
                 }
             }
             break;
         default:
-            ussd_stop("havuze ikibazo, mwongere mukanya");
+            ussd_stop("habaye ikibazo, mwongere mukanya");
             break;
     }
 }
@@ -183,7 +184,7 @@ function register($details, $phone, $dbConn)
                 $full_name = $details[1]; //store full name of the baby
                 $father = $details[2]; //father name
                 $mother = $details[3]; //mother name
-                $pin = $details[4]; //mother name
+                $pin = $details[4]; //pin number
                 //$mid = $details[4]; //mother id
                 $phone_number = $phone; //store phone number
 
