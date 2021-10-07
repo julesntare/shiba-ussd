@@ -156,6 +156,18 @@ function login($details, $dbConn, $phone)
                 }
             }
             break;
+        case 3:
+            if (empty($details[2])) {
+                $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
+                ussd_proceed($ussd_text);
+            } else {
+                if ($details[2] == "1") {
+                    ussd_stop("report");
+                } else if ($details[2] == "2") {
+                    ussd_stop("deleted");
+                }
+            }
+            break;
         default:
             ussd_stop("havuze ikibazo, mwongere mukanya");
             break;
