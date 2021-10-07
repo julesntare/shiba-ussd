@@ -99,42 +99,35 @@ function login($details, $dbConn, $phone)
             if (empty($details[1])) {
                 $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
                 ussd_proceed($ussd_text);
-                $search_result = $dbConn->query("SELECT * FROM customer3 WHERE phone='$phone'");
-                if(count($search_result)==0)
-                echo"invalid account";
-                else{
+                // $search_result = $dbConn->query("SELECT * FROM customer3 WHERE phone='$phone'");
+                // if (count($search_result) == 0)
+                //     echo "invalid account";
+                // else {
 
-                    echo "your phone is".$phone;
-                }
-                
+                //     echo "your phone is" . $phone;
+                // }
             } else {
 
                 try {
-                    $search_result = $dbConn->query("SELECT * FROM customer3 WHERE phone='$phone'");
+                    $search_result = $dbConn->query("SELECT * FROM customer3 WHERE phone='$phone' and pin='$details[1]'");
                     //execute select query
 
                     // $search_result = filterTable($dbConn);
                     $savedpin = '';
+                    $total_rows = $search_result->rowCount();
+                    if ($total_rows == 0) {
+                        ussd_stop("Umubare w'ibanga ntabwo ariwo");
+                        return;
+                    }
                     foreach ($search_result as $row) {
 
                         $savedpin .= $row['full_name'] . "\n";
-                        
- 
 
-                        function display_menu()
-                        {
-                            $ussd_text = "1. kwiyandikisha \n 2. inyerekeye system \n 3.kwinjira  \n"; // add \n so that the menu has new lines
-                            ussd_proceed($ussd_text);
-                        }
-
-
-
-
-
-
-
-
-                       
+                        // function display_menu()
+                        // {
+                        //     $ussd_text = "1. kwiyandikisha \n 2. inyerekeye system \n 3.kwinjira  \n"; // add \n so that the menu has new lines
+                        //     ussd_proceed($ussd_text);
+                        // }
                     }
                     ussd_stop($savedpin);
                 } catch (PDOException $e) {
@@ -158,7 +151,6 @@ function register($details, $phone, $dbConn)
             ussd_proceed($ussd_text); // ask user to enter registration details
             break;
         case 2:
-            $name = $details[1];
             if (empty($details[1])) {
                 $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
                 ussd_proceed($ussd_text);
@@ -178,29 +170,18 @@ function register($details, $phone, $dbConn)
             break;
         case 4:
             if (empty($details[3])) {
-
                 $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
                 ussd_proceed($ussd_text);
-            
-            }
-
-            else{
-
+            } else {
                 $ussd_text = "hitamo umubare wibanga :";  // ask user to enter home location
-                ussd_proceed($ussd_text);  
+                ussd_proceed($ussd_text);
             }
             break;
-            case 5:
-                if(empty($details[4])){
-
-                    $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
-                    ussd_proceed($ussd_text);  
-                }
-            
-            
-            
-            else {
-
+        case 5:
+            if (empty($details[4])) {
+                $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
+                ussd_proceed($ussd_text);
+            } else {
                 $full_name = $details[1]; //store full name of the baby
                 $father = $details[2]; //father name
                 $mother = $details[3]; //mother name
