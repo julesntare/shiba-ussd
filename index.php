@@ -53,6 +53,7 @@ if ($ussd_string_exploded[0] == '') {
     }
 }
 
+
 /* The ussd_proceed function appends CON to the USSD response your application gives.
  * This informs Africa's Talking USSD gateway and consecuently Safaricom's
  * USSD gateway that the USSD session is till in session or should still continue
@@ -80,12 +81,6 @@ function display_menu()
     ussd_proceed($ussd_text);
 }
 
-function display_user_menu()
-{
-    $ussd_text = "1. raporo \n 2. Siba konti  \n"; // add \n so that the menu has new lines
-    ussd_proceed($ussd_text);
-}
-
 // Function that hanldles About menu
 function about($ussd_text)
 {
@@ -93,9 +88,42 @@ function about($ussd_text)
     ussd_stop($ussd_text);
 }
 
+function display_user_menu($details, $phone)
+{
+    switch (count($details)) {
+        case 1:
+            $ussd_text = "1. raporo \n 2. Siba konti  \n"; // add \n so that the menu has new lines
+            ussd_proceed($ussd_text);
+            break;
+
+        case 2:
+            if (empty($details[1])) {
+                $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
+                ussd_proceed($ussd_text);
+            } else {
+                $ussd_text = "injiza amazina ya se:";
+                ussd_proceed($ussd_text); // ask user to enter registration details
+            }
+            break;
+
+        case 3:
+            if (empty($details[1])) {
+                $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
+                ussd_proceed($ussd_text);
+            } else {
+                $ussd_text = "injiza amazina ya kw:";
+                ussd_proceed($ussd_text); // ask user to enter registration details
+            }
+            break;
+
+        default:
+            ussd_stop("havuze ikibazo, mwongere mukanya");
+            break;
+    }
+}
+
 function login($details, $dbConn, $phone)
 {
-
     switch (count($details)) {
         case 1:
             $ussd_text = "injiza umubare wibanga:";
@@ -121,7 +149,7 @@ function login($details, $dbConn, $phone)
                         ussd_stop("Umubare w'ibanga ntabwo ariwo");
                         return;
                     }
-                    display_user_menu();
+                    display_user_menu($details[1], $phone);
                 } catch (PDOException $e) {
                     // $errors = $sth->errorInfo();
                     ussd_stop("Error:" . $e->getMessage());
