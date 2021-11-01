@@ -125,13 +125,13 @@ function login($details, $dbConn, $phone)
                 $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
                 ussd_proceed($ussd_text);
             } else {
-                if ($details[2] == "1") {
+                if ($details[2] == "3") {
 
 
                     // add queries here
                     switch (count($details)){
                         case 1:
-                            $ussd_text = "injiza umubare wibanga:";
+                            $ussd_text = "andika igitekerezo:";
                             ussd_proceed($ussd_text); // ask user to enter registration details
                             break;
 
@@ -228,7 +228,7 @@ function register($details, $phone, $dbConn)
                     CURLOPT_FOLLOWLOCATION => true,
                     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                     CURLOPT_CUSTOMREQUEST => 'POST',
-                    CURLOPT_POSTFIELDS => array('to' => $phone_number,'from' => 'SBCA','unicode' => '0','sms' => "Muraho ,  kwandika umwana wanyu witwa ".$full_name." byagenze neza. muzajya mubonera kugihe inama namakuru kumikurire yumwana wanyu Murakoze!",'action' => 'send-sms'),
+                    CURLOPT_POSTFIELDS => array('to' => $phone_number,'from' => 'SBCA','unicode' => '0','sms' => "Muraho ,kwandika umwana wanyu witwa ".$full_name." byagenze neza. muzajya mubonera kugihe inama namakuru kumikurire yumwana wanyu Murakoze!",'action' => 'send-sms'),
                     CURLOPT_HTTPHEADER => array(
                         'x-api-key: 8a8c7724-e3ad-98c7-99da-add728dba94e-c34bb3a2'
                     ),
@@ -241,7 +241,7 @@ function register($details, $phone, $dbConn)
 
                     //execute insert query
                     // $sth->execute();
-                    $ussd_text = $full_name . " kwiyandikisha byagenze neza murakoze!";
+                    $ussd_text = " kwiyandikisha byagenze neza murakira ubutumwa bw'ikaze murakoze!";
                     ussd_stop($ussd_text);
                 } catch (PDOException $e) {
                     // $errors = $sth->errorInfo();
