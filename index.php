@@ -134,6 +134,12 @@ function login($details, $dbConn, $phone)
                             $ussd_text = "andika igitekerezo:";
                             ussd_proceed($ussd_text); // ask user to enter registration details
                             break;
+                            case 2:
+                                if (empty($details[1])) {
+                                    $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
+                                    ussd_proceed($ussd_text);
+                                }
+                                else {}
 
                     }
                     
