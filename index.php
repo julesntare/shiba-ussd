@@ -90,7 +90,7 @@ function about($ussd_text)
 
 function display_user_menu()
 {
-    $ussd_text = "1.ibiherutse gukorwa \n 2. ibyenda gukorwa  \n 3. gusohoka muri system  \n"; // add \n so that the menu has new lines
+    $ussd_text = "1.ibiherutse gukorwa \n 2. ibyenda gukorwa  \n \n 3. tanga igitekerezo  \n 4. gusohoka muri system  \n"; // add \n so that the menu has new lines
     ussd_proceed($ussd_text);
 }
 
@@ -139,7 +139,7 @@ echo $interval->format('%R%a days');
 
 
                     //ussd_stop("report"); // delete this
-                } else if ($details[2] == "2") {
+                } else if ($details[2] == "4") {
                     // add queries here
                     
                     $dbConn->exec("DELETE from customer3 where phone='$phone'");
@@ -217,7 +217,7 @@ function register($details, $phone, $dbConn)
                     CURLOPT_FOLLOWLOCATION => true,
                     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                     CURLOPT_CUSTOMREQUEST => 'POST',
-                    CURLOPT_POSTFIELDS => array('to' => $phone_number,'from' => 'SBCA','unicode' => '0','sms' => "Muraho Bwana. ".$father." na Madamu. ".$mother.", SBCA irabamenyesha ko kwandika umwana wanyu witwa ".$full_name." byagenze neza. Murakoze!",'action' => 'send-sms'),
+                    CURLOPT_POSTFIELDS => array('to' => $phone_number,'from' => 'SBCA','unicode' => '0','sms' => "Muraho ,  kwandika umwana wanyu witwa ".$full_name." byagenze neza. muzajya mubonera kugihe inama namakuru kumikurire yumwana wanyu Murakoze!",'action' => 'send-sms'),
                     CURLOPT_HTTPHEADER => array(
                         'x-api-key: 8a8c7724-e3ad-98c7-99da-add728dba94e-c34bb3a2'
                     ),
