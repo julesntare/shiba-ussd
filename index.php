@@ -150,7 +150,7 @@ function login($details, $dbConn, $phone)
 
 
                     //ussd_stop("report"); // delete this
-                } else if ($details[2] == "4") {
+                } else if ($details[2] == "3") {
                     // add queries here
                     
                     $dbConn->exec("DELETE from customer3 where phone='$phone'");
