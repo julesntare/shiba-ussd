@@ -90,7 +90,7 @@ function about($ussd_text)
 
 function display_user_menu()
 {
-    $ussd_text = "1.ibiherutse gukorwa \n 2. ibyenda gukorwa   \n 3. tanga igitekerezo  \n 4. gusohoka muri system  \n"; // add \n so that the menu has new lines
+    $ussd_text = "1.Ibiherutse gukorwa \n 2. Ibyenda gukorwa   \n 3. Tanga igitekerezo  \n 4. Gusohoka muri system  \n"; // add \n so that the menu has new lines
     ussd_proceed($ussd_text);
 }
 
@@ -126,16 +126,27 @@ function login($details, $dbConn, $phone)
                 ussd_proceed($ussd_text);
             } else {
                 if ($details[2] == "1") {
-                    // add queries here
 
-$datetime1 = date_create('now');
-$datetime2 = date_create('2018-06-28');
+
+                    // add queries here
+                    switch (count($details)){
+                        case 1:
+                            $ussd_text = "injiza umubare wibanga:";
+                            ussd_proceed($ussd_text); // ask user to enter registration details
+                            break;
+
+                    }
+                    
+
+
+// $datetime1 = date_create('now');
+// $datetime2 = date_create('2018-06-28');
   
-// calculates the difference between DateTime objects
-$interval = date_diff($datetime1, $datetime2);
+// // calculates the difference between DateTime objects
+// $interval = date_diff($datetime1, $datetime2);
   
-//  printing result in days format
-echo $interval->format('%R%a days');
+// //  printing result in days format
+// echo $interval->format('%R%a days');
 
 
                     //ussd_stop("report"); // delete this
