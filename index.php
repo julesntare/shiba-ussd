@@ -127,39 +127,22 @@ function login($details, $dbConn, $phone)
             } else {
                 if ($details[2] == "3") {
                     // add queries here
-                    // switch (count($details)) {
                     //     case 1:
-                            $ussd_text = "andika igitekerezo:";
-                            ussd_proceed($ussd_text); // ask user to enter registration details
-                            // break;
-                        // case 2:
-                        //     if (empty($details[1])) {
-                        //         $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
-                        //         ussd_proceed($ussd_text);
-                        //     } else {
-                        //         ussd_stop("nibyo");
-                        //     }
-                    }
+                    $ussd_text = "andika igitekerezo:";
+                    ussd_proceed($ussd_text); // ask user to enter registration details
+                    // break;
+                    // case 2:
 
-                    // $datetime1 = date_create('now');
-                    // $datetime2 = date_create('2018-06-28');
-
-                    // // calculates the difference between DateTime objects
-                    // $interval = date_diff($datetime1, $datetime2);
-
-                    // //  printing result in days format
-                    // echo $interval->format('%R%a days');
-
-
-                    //ussd_stop("report"); // delete this
-                } else if ($details[2] == "3") {
-                    // add queries here
-
-                    $dbConn->exec("DELETE from customer3 where phone='$phone'");
-                    if ($dbConn) {
-                        ussd_stop("mwamaze kuva muri system mwarakoze gukorana natwe");
-                    }
                 }
+                //ussd_stop("report"); // delete this
+                // } else if ($details[2] == "3") {
+                //     // add queries here
+
+                //     $dbConn->exec("DELETE from customer3 where phone='$phone'");
+                //     if ($dbConn) {
+                //         ussd_stop("mwamaze kuva muri system mwarakoze gukorana natwe");
+                //     }
+                // }
             }
             break;
         default:
