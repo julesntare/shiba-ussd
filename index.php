@@ -136,7 +136,8 @@ function login($details, $dbConn, $phone)
                             if ($date > $perDate) {
                                 continue;
                             }
-                            $ussd_text .= "(" . $no . ") " . $perDate . " : " . $row['name'];
+                            $ussd_text .= "(" . $no . ") " . date("d/m/Y", strtotime($perDate)) . " : " . $row['name'] . "\n";
+                            $no += 1;
                         }
                         ussd_stop($ussd_text);
                     case "3":
