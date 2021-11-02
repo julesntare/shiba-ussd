@@ -126,6 +126,19 @@ function login($details, $dbConn, $phone)
                 ussd_proceed($ussd_text);
             } else {
                 switch ($details[2]) {
+                    case "2":
+                        $date = date("Y-m-d H:i:s");
+                        $search_result = $dbConn->query("SELECT * FROM events order by period");
+                        $ussd_text = "";
+                        $no = 1;
+                        while ($row = $search_result->fetch()) {
+                            $perDate = date('Y-m-d H:i:s', strtotime($date . '+' . $row['period'] . 'days'));
+                            if ($date > $perDate) {
+                                continue;
+                            }
+                            $ussd_text .= "(" . $no . ") " . $perDate . " : " . $row['name'];
+                        }
+                        ussd_stop($ussd_text);
                     case "3":
                         // add queries here
                         $ussd_text = "andika igitekerezo:";
