@@ -126,17 +126,18 @@ function login($details, $dbConn, $phone)
                 ussd_proceed($ussd_text);
             } else {
                 $date = date("Y-m-d H:i:s");
+                $search_result = $dbConn->query("SELECT * FROM customer3 WHERE phone='$phone'");
+                $fetched_rows = $search_result->fetch();
+                $bornDate = $fetched_rows['born'];
                 switch ($details[2]) {
                     case "1":
                         $search_result = $dbConn->query("SELECT * FROM events order by period");
                         $ussd_text = "";
                         $no = 1;
                         while ($row = $search_result->fetch()) {
-                            $perDate = date('Y-m-d H:i:s', strtotime($date . '+' . $row['period'] . 'days'));
+                            $perDate = date('Y-m-d H:i:s', strtotime($bornDate . '+' . $row['period'] . 'days'));
                             if ($date > $perDate) {
                                 $ussd_text .= "(" . $no . ") " . date("d/m/Y", strtotime($perDate)) . " : " . $row['name'] . "\n";
-                            } else {
-                                $ussd_text .= "Nta gikorwa kiraba. murakoze!!!";
                             }
                             $no += 1;
                         }
@@ -147,7 +148,7 @@ function login($details, $dbConn, $phone)
                         $ussd_text = "";
                         $no = 1;
                         while ($row = $search_result->fetch()) {
-                            $perDate = date('Y-m-d H:i:s', strtotime($date . '+' . $row['period'] . 'days'));
+                            $perDate = date('Y-m-d H:i:s', strtotime($bornDate . '+' . $row['period'] . 'days'));
                             if ($date > $perDate) {
                                 continue;
                             }
