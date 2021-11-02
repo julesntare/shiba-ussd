@@ -125,24 +125,31 @@ function login($details, $dbConn, $phone)
                 $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
                 ussd_proceed($ussd_text);
             } else {
-                if ($details[2] == "3") {
-                    // add queries here
-                    //     case 1:
-                    $ussd_text = "andika igitekerezo:";
-                    ussd_proceed($ussd_text); // ask user to enter registration details
-                    // break;
-                    // case 2:
-
+                switch ($details[2]) {
+                    case "3":
+                        // add queries here
+                        $ussd_text = "andika igitekerezo:";
+                        ussd_proceed($ussd_text); // ask user to enter registration details
+                        break;
                 }
-                //ussd_stop("report"); // delete this
-                // } else if ($details[2] == "3") {
-                //     // add queries here
-
-                //     $dbConn->exec("DELETE from customer3 where phone='$phone'");
-                //     if ($dbConn) {
-                //         ussd_stop("mwamaze kuva muri system mwarakoze gukorana natwe");
-                //     }
-                // }
+            }
+            break;
+        case 4:
+            if (empty($details[3])) {
+                $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
+                ussd_proceed($ussd_text);
+            } else {
+                switch ($details[2]) {
+                    case "3":
+                        // add queries here
+                        $ussd_text = "andika igitekerezo:";
+                        ussd_proceed($ussd_text); // ask user to enter registration details
+                        break;
+                    case "4":
+                        $dbConn->exec("DELETE FROM customer3 where phone = '$phone'");
+                        ussd_stop("Urakoze gukoresha systeme, dutegereje ko ugaruka!!!");
+                        break;
+                }
             }
             break;
         default:
