@@ -122,23 +122,23 @@ function login($details, $dbConn, $phone)
             break;
         case 3:
             if (empty($details[2])) {
-                $ussd_text = "ntakintu mwinjijemo ntabwo";
+                $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
                 ussd_proceed($ussd_text);
             } else {
                 if ($details[2] == "3") {
                     // add queries here
-                    switch (count($details)) {
-                        case 1:
+                    // switch (count($details)) {
+                    //     case 1:
                             $ussd_text = "andika igitekerezo:";
                             ussd_proceed($ussd_text); // ask user to enter registration details
-                            break;
-                        case 2:
-                            if (empty($details[1])) {
-                                $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
-                                ussd_proceed($ussd_text);
-                            } else {
-                                ussd_stop("nibyo");
-                            }
+                            // break;
+                        // case 2:
+                        //     if (empty($details[1])) {
+                        //         $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
+                        //         ussd_proceed($ussd_text);
+                        //     } else {
+                        //         ussd_stop("nibyo");
+                        //     }
                     }
 
                     // $datetime1 = date_create('now');
