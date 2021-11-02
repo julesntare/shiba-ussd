@@ -131,6 +131,10 @@ function login($details, $dbConn, $phone)
                         $ussd_text = "andika igitekerezo:";
                         ussd_proceed($ussd_text); // ask user to enter registration details
                         break;
+                    case "4":
+                        $ussd_text = "Murakoze gukoresha sisitemu yacu. ibihe byiza!!!";
+                        ussd_stop($ussd_text);
+                        break;
                 }
             }
             break;
