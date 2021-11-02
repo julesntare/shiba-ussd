@@ -139,17 +139,14 @@ function login($details, $dbConn, $phone)
                 $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
                 ussd_proceed($ussd_text);
             } else {
-                switch ($details[3]) {
-                    case "3":
-                        // add queries here
-                        $ussd_text = "andika igitekerezo:";
-                        ussd_proceed($ussd_text); // ask user to enter registration details
-                        break;
-                    case "4":
-                        $dbConn->exec("DELETE FROM customer3 where phone = '$phone'");
-                        ussd_stop("Urakoze gukoresha systeme, dutegereje ko ugaruka!!!");
-                        break;
-                }
+                // add queries here
+                $search_result = $dbConn->query("SELECT * FROM customer3 WHERE phone='$phone'");
+                $fetched_rows = $search_result->fetch();
+                $sender = $fetched_rows['id'];
+
+                $dbConn->exec("INSERT INTO comments (sender, message) VALUES('$sender','$details[3]')");
+                $ussd_text = "Murakoze! igitekerezo cyanyu cyakiriwe";
+                ussd_stop($ussd_text);
             }
             break;
         default:
