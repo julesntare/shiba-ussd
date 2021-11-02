@@ -139,7 +139,7 @@ function login($details, $dbConn, $phone)
                 $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
                 ussd_proceed($ussd_text);
             } else {
-                switch ($details[2]) {
+                switch ($details[3]) {
                     case "3":
                         // add queries here
                         $ussd_text = "andika igitekerezo:";
