@@ -134,9 +134,10 @@ function login($details, $dbConn, $phone)
                             break;
                         case 2:
                             if (empty($details[1])) {
-                                $ussd_text = "ntakintu mwinjijemo ntabwo";
+                                $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
                                 ussd_proceed($ussd_text);
                             } else {
+                                ussd_stop("nibyo");
                             }
                     }
 
