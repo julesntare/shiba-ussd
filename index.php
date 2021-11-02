@@ -126,43 +126,39 @@ function login($details, $dbConn, $phone)
                 ussd_proceed($ussd_text);
             } else {
                 if ($details[2] == "3") {
-
-
                     // add queries here
-                    switch (count($details)){
+                    switch (count($details)) {
                         case 1:
                             $ussd_text = "andika igitekerezo:";
                             ussd_proceed($ussd_text); // ask user to enter registration details
                             break;
-                            case 2:
-                                if (empty($details[1])) {
-                                    $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
-                                    ussd_proceed($ussd_text);
-                                }
-                                else {}
-
+                        case 2:
+                            if (empty($details[1])) {
+                                $ussd_text = "ntakintu mwinjijemo ntabwo";
+                                ussd_proceed($ussd_text);
+                            } else {
+                            }
                     }
-                    
 
+                    // $datetime1 = date_create('now');
+                    // $datetime2 = date_create('2018-06-28');
 
-// $datetime1 = date_create('now');
-// $datetime2 = date_create('2018-06-28');
-  
-// // calculates the difference between DateTime objects
-// $interval = date_diff($datetime1, $datetime2);
-  
-// //  printing result in days format
-// echo $interval->format('%R%a days');
+                    // // calculates the difference between DateTime objects
+                    // $interval = date_diff($datetime1, $datetime2);
+
+                    // //  printing result in days format
+                    // echo $interval->format('%R%a days');
 
 
                     //ussd_stop("report"); // delete this
                 } else if ($details[2] == "3") {
                     // add queries here
-                    
+
                     $dbConn->exec("DELETE from customer3 where phone='$phone'");
-                    if($dbConn){
-                    ussd_stop("mwamaze kuva muri system mwarakoze gukorana natwe");
-                }}
+                    if ($dbConn) {
+                        ussd_stop("mwamaze kuva muri system mwarakoze gukorana natwe");
+                    }
+                }
             }
             break;
         default:
@@ -221,23 +217,22 @@ function register($details, $phone, $dbConn)
                 // build sql statement
                 try {
                     $dbConn->exec("INSERT INTO customer3 (full_name, father, mother, phone,pin) VALUES('$full_name','$father','$mother','$phone_number','$pin')");
-                    
 
                     $curl = curl_init();
 
                     curl_setopt_array($curl, array(
-                    CURLOPT_URL => 'https://api.mista.io/sms',
-                    CURLOPT_RETURNTRANSFER => true,
-                    CURLOPT_ENCODING => '',
-                    CURLOPT_MAXREDIRS => 10,
-                    CURLOPT_TIMEOUT => 0,
-                    CURLOPT_FOLLOWLOCATION => true,
-                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                    CURLOPT_CUSTOMREQUEST => 'POST',
-                    CURLOPT_POSTFIELDS => array('to' => $phone_number,'from' => 'SBCA','unicode' => '0','sms' => "Muraho ,kwandika umwana wanyu witwa ".$full_name." byagenze neza. muzajya mubonera kugihe inama namakuru kumikurire yumwana wanyu Murakoze!",'action' => 'send-sms'),
-                    CURLOPT_HTTPHEADER => array(
-                        'x-api-key: c2c1f86a-b113-97d9-ad16-76b66e1e5e68-8235bffb'
-                    ),
+                        CURLOPT_URL => 'https://api.mista.io/sms',
+                        CURLOPT_RETURNTRANSFER => true,
+                        CURLOPT_ENCODING => '',
+                        CURLOPT_MAXREDIRS => 10,
+                        CURLOPT_TIMEOUT => 0,
+                        CURLOPT_FOLLOWLOCATION => true,
+                        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                        CURLOPT_CUSTOMREQUEST => 'POST',
+                        CURLOPT_POSTFIELDS => array('to' => $phone_number, 'from' => 'SBCA', 'unicode' => '0', 'sms' => "Muraho ,kwandika umwana wanyu witwa " . $full_name . " byagenze neza. muzajya mubonera kugihe inama namakuru kumikurire yumwana wanyu Murakoze!", 'action' => 'send-sms'),
+                        CURLOPT_HTTPHEADER => array(
+                            'x-api-key: c2c1f86a-b113-97d9-ad16-76b66e1e5e68-8235bffb'
+                        ),
                     ));
 
                     $response = curl_exec($curl);
