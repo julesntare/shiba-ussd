@@ -125,9 +125,24 @@ function login($details, $dbConn, $phone)
                 $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
                 ussd_proceed($ussd_text);
             } else {
+                $date = date("Y-m-d H:i:s");
                 switch ($details[2]) {
+                    case "1":
+                        $search_result = $dbConn->query("SELECT * FROM events order by period");
+                        $ussd_text = "";
+                        $no = 1;
+                        while ($row = $search_result->fetch()) {
+                            $perDate = date('Y-m-d H:i:s', strtotime($date . '+' . $row['period'] . 'days'));
+                            if ($date > $perDate) {
+                                $ussd_text .= "(" . $no . ") " . date("d/m/Y", strtotime($perDate)) . " : " . $row['name'] . "\n";
+                            } else {
+                                $ussd_text .= "Nta gikorwa kiraba. murakoze!!!";
+                            }
+                            $no += 1;
+                        }
+                        ussd_stop($ussd_text);
+                        break;
                     case "2":
-                        $date = date("Y-m-d H:i:s");
                         $search_result = $dbConn->query("SELECT * FROM events order by period");
                         $ussd_text = "";
                         $no = 1;
@@ -140,6 +155,7 @@ function login($details, $dbConn, $phone)
                             $no += 1;
                         }
                         ussd_stop($ussd_text);
+                        break;
                     case "3":
                         // add queries here
                         $ussd_text = "andika igitekerezo:";
