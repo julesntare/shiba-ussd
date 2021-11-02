@@ -122,7 +122,7 @@ function login($details, $dbConn, $phone)
             break;
         case 3:
             if (empty($details[2])) {
-                $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
+                $ussd_text = "ntakintu mwinjijemo ntabwo";
                 ussd_proceed($ussd_text);
             } else {
                 if ($details[2] == "3") {
