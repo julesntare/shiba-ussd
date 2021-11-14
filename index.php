@@ -108,7 +108,7 @@ function login($details, $dbConn, $phone)
             } else {
 
                 try {
-                    $search_result = $dbConn->query("SELECT * FROM customer3 WHERE phone='$phone' and pin='$details[1]'");
+                    $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phone' and pin='$details[1]'");
                     $total_rows = $search_result->rowCount();
                     if ($total_rows == 0) {
                         ussd_stop("Umubare w'ibanga ntabwo ariwo");
