@@ -90,7 +90,7 @@ function about($ussd_text)
 
 function display_user_menu()
 {
-    $ussd_text = "1.Ibiherutse gukorwa \n 2. Ibyenda gukorwa   \n 3. Tanga igitekerezo  \n 4. Gusohoka muri system  \n"; // add \n so that the menu has new lines
+    $ussd_text = "1.kwandika umwana mushya \n 1.Ibiherutse gukorwa \n 2. Ibyenda gukorwa   \n 3. Tanga igitekerezo  \n 4. Gusohoka muri system  \n"; // add \n so that the menu has new lines
     ussd_proceed($ussd_text);
 }
 
