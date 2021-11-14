@@ -77,7 +77,7 @@ function ussd_stop($ussd_text)
 //This is the home menu function
 function display_menu()
 {
-    $ussd_text = "1. kwiyandikisha \n 2. ibyerekeye system \n 3. kwinjira  \n"; // add \n so that the menu has new lines
+    $ussd_text = "1. kwiyandikisha(umubyeyi) \n 2. ibyerekeye system \n 3. konti yange  \n"; // add \n so that the menu has new lines
     ussd_proceed($ussd_text);
 }
 
@@ -195,7 +195,7 @@ function register($details, $phone, $dbConn)
 {
     switch (count($details)) {
         case 1:
-            $ussd_text = "injiza amazina yose yumwana:";
+            $ussd_text = "injiza izina ryambere:";
             ussd_proceed($ussd_text); // ask user to enter registration details
             break;
         case 2:
@@ -203,7 +203,7 @@ function register($details, $phone, $dbConn)
                 $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
                 ussd_proceed($ussd_text);
             } else {
-                $ussd_text = "injiza amazina ya se:";
+                $ussd_text = "injiza andi mazina:";
                 ussd_proceed($ussd_text); // ask user to enter registration details
             }
             break;
@@ -212,7 +212,7 @@ function register($details, $phone, $dbConn)
                 $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
                 ussd_proceed($ussd_text);
             } else {
-                $ussd_text = "inziza amazina ya nyina :";  // ask user to enter home location
+                $ussd_text = "injiza numero yirangamuntu:";  // ask user to enter home location
                 ussd_proceed($ussd_text);
             }
             break;
@@ -230,16 +230,16 @@ function register($details, $phone, $dbConn)
                 $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
                 ussd_proceed($ussd_text);
             } else {
-                $full_name = $details[1]; //store full name of the baby
-                $father = $details[2]; //father name
-                $mother = $details[3]; //mother name
-                $pin = $details[4]; //pin number
+                $fname = $details[1]; //store full name of the baby
+                $oname = $details[2]; //father name
+                $idno = $details[3]; //mother name
+                $pin= $details[4]; //pin number
                 //$mid = $details[4]; //mother id
                 $phone_number = $phone; //store phone number
 
                 // build sql statement
                 try {
-                    $dbConn->exec("INSERT INTO customer3 (full_name, father, mother, phone,pin) VALUES('$full_name','$father','$mother','$phone_number','$pin')");
+                    $dbConn->exec("INSERT INTO parents (fname,oname,idno,phone,pin) VALUES('$fname','$oname','$idno','$phone_number','$pin')");
 
                     $curl = curl_init();
 
@@ -252,7 +252,7 @@ function register($details, $phone, $dbConn)
                         CURLOPT_FOLLOWLOCATION => true,
                         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                         CURLOPT_CUSTOMREQUEST => 'POST',
-                        CURLOPT_POSTFIELDS => array('to' => $phone_number, 'from' => 'SBCA', 'unicode' => '0', 'sms' => "Muraho ,kwandika umwana wanyu witwa " . $full_name . " byagenze neza. muzajya mubonera kugihe inama namakuru kumikurire yumwana wanyu Murakoze!", 'action' => 'send-sms'),
+                        CURLOPT_POSTFIELDS => array('to' => $phone_number, 'from' => 'SBCA', 'unicode' => '0', 'sms' => "Muraho  " . $fname. ",kwiyandikisha byagenze neza. mushobora kwandikisha umwana wanyu muri SBCS mukajya mubona inama kumikurire myiza yumwana Murakoze!", 'action' => 'send-sms'),
                         CURLOPT_HTTPHEADER => array(
                             'x-api-key: c2c1f86a-b113-97d9-ad16-76b66e1e5e68-8235bffb'
                         ),
