@@ -156,7 +156,7 @@ function login($details, $dbConn, $phone)
                 ussd_proceed($ussd_text);
             } else {
                 // add queries here
-                $search_result = $dbConn->query("SELECT * FROM customer3 WHERE phone='$phone'");
+                $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phone'");
                 $fetched_rows = $search_result->fetch();
                 $sender = $fetched_rows['id'];
 
