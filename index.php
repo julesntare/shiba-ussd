@@ -155,14 +155,21 @@ function login($details, $dbConn, $phone)
                 $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
                 ussd_proceed($ussd_text);
             } else {
-                // add queries here
-                $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phone'");
-                $fetched_rows = $search_result->fetch();
-                $sender = $fetched_rows['id'];
+                switch ($details[3]) {
+                    case '3':
+                        // add queries here
+                        $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phone'");
+                        $fetched_rows = $search_result->fetch();
+                        $sender = $fetched_rows['id'];
 
-                $dbConn->exec("INSERT INTO comments (sender, message) VALUES('$sender','$details[3]')");
-                $ussd_text = "Murakoze! igitekerezo cyanyu cyakiriwe";
-                ussd_stop($ussd_text);
+                        $dbConn->exec("INSERT INTO comments (sender, message) VALUES('$sender','$details[3]')");
+                        $ussd_text = "Murakoze! igitekerezo cyanyu cyakiriwe";
+                        ussd_stop($ussd_text);
+                        break;
+                    default:
+                        # code...
+                        break;
+                }
             }
             break;
         default:
