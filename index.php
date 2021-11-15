@@ -166,6 +166,9 @@ function login($details, $dbConn, $phone)
                         $ussd_text = "Murakoze gukoresha sisitemu yacu. ibihe byiza!!!";
                         ussd_stop($ussd_text);
                         break;
+                    default:
+                        ussd_stop("habaye ikibazo, mwongere mukanya");
+                        break;
                 }
             }
             break;
@@ -233,7 +236,7 @@ function register($details, $phone, $dbConn)
                 $fname = $details[1]; //store full name of the baby
                 $oname = $details[2]; //father name
                 $idno = $details[3]; //mother name
-                $pin= $details[4]; //pin number
+                $pin = $details[4]; //pin number
                 //$mid = $details[4]; //mother id
                 $phone_number = $phone; //store phone number
 
@@ -252,7 +255,7 @@ function register($details, $phone, $dbConn)
                         CURLOPT_FOLLOWLOCATION => true,
                         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                         CURLOPT_CUSTOMREQUEST => 'POST',
-                        CURLOPT_POSTFIELDS => array('to' => $phone_number, 'from' => 'SBCA', 'unicode' => '0', 'sms' => "Muraho  " . $fname. ",kwiyandikisha byagenze neza. mushobora kwandikisha umwana wanyu muri SBCS mukajya mubona inama kumikurire myiza yumwana Murakoze!", 'action' => 'send-sms'),
+                        CURLOPT_POSTFIELDS => array('to' => $phone_number, 'from' => 'SBCA', 'unicode' => '0', 'sms' => "Muraho  " . $fname . ",kwiyandikisha byagenze neza. mushobora kwandikisha umwana wanyu muri SBCS mukajya mubona inama kumikurire myiza yumwana Murakoze!", 'action' => 'send-sms'),
                         CURLOPT_HTTPHEADER => array(
                             'x-api-key: c2c1f86a-b113-97d9-ad16-76b66e1e5e68-8235bffb'
                         ),
@@ -261,7 +264,6 @@ function register($details, $phone, $dbConn)
                     $response = curl_exec($curl);
 
                     curl_close($curl);
-
 
                     //execute insert query
                     // $sth->execute();
