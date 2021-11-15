@@ -126,36 +126,14 @@ function login($details, $dbConn, $phone)
                 ussd_proceed($ussd_text);
             } else {
                 $date = date("Y-m-d H:i:s");
-                $search_result = $dbConn->query("SELECT * FROM customer3 WHERE phone='$phone'");
+                $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phone'");
                 $fetched_rows = $search_result->fetch();
-                $bornDate = $fetched_rows['born'];
                 switch ($details[2]) {
                     case "1":
-                        $search_result = $dbConn->query("SELECT * FROM events order by period");
-                        $ussd_text = "";
-                        $no = 1;
-                        while ($row = $search_result->fetch()) {
-                            $perDate = date('Y-m-d H:i:s', strtotime($bornDate . '+' . $row['period'] . 'days'));
-                            if ($date > $perDate) {
-                                $ussd_text .= "(" . $no . ") " . date("d/m/Y", strtotime($perDate)) . " : " . $row['name'] . "\n";
-                            }
-                            $no += 1;
-                        }
-                        ussd_stop($ussd_text);
+                        ussd_stop("yello");
                         break;
                     case "2":
-                        $search_result = $dbConn->query("SELECT * FROM events order by period");
-                        $ussd_text = "";
-                        $no = 1;
-                        while ($row = $search_result->fetch()) {
-                            $perDate = date('Y-m-d H:i:s', strtotime($bornDate . '+' . $row['period'] . 'days'));
-                            if ($date > $perDate) {
-                                continue;
-                            }
-                            $ussd_text .= "(" . $no . ") " . date("d/m/Y", strtotime($perDate)) . " : " . $row['name'] . "\n";
-                            $no += 1;
-                        }
-                        ussd_stop($ussd_text);
+                        ussd_stop("yello2");
                         break;
                     case "3":
                         // add queries here
