@@ -91,7 +91,7 @@ function about($ussd_text)
 
 function display_user_menu()
 {
-    $ussd_text = "1.kwandika umwana mushya\n 1.Ibiherutse gukorwa\n 2. Ibyenda gukorwa\n 3. Tanga igitekerezo\n 4. Gusohoka muri system\n"; // add \n so that the menu has new lines
+    $ussd_text = "1. kwandika umwana mushya\n 2. Ibiherutse gukorwa\n 3. Ibyenda gukorwa\n 4. Tanga igitekerezo\n 5. Gusohoka muri system\n"; // add \n so that the menu has new lines
     ussd_proceed($ussd_text);
 }
 
@@ -192,7 +192,7 @@ function login($details, $dbConn, $phone)
                 $pid = $fetched_rows['id'];
 
                 $dbConn->exec("INSERT INTO children (fname, oname, pid, born) VALUES('$details[3]', '$details[4]', '$pid', '$details[5]')");
-                $ussd_text = "Byegenze neza! Umwana witwa " . $details[2] . " yinjijwe muri sisitemu";
+                $ussd_text = "Byegenze neza! Umwana witwa " . $details[3] . " yinjijwe muri sisitemu";
                 ussd_stop($ussd_text);
             }
             break;
