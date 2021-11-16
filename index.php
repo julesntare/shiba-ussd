@@ -47,6 +47,7 @@ if ($ussd_string_exploded[0] == '') {
         //If user selected 2, send them to the about menu
         about($ussd_string_exploded);
     } elseif ($ussd_string_exploded[0] == "3") {
+        echo "h";
         //If user selected 3, send them to the about menu
         login($ussd_string_exploded, $dbConn, $phone);
     } else {
@@ -206,7 +207,7 @@ function login($details, $dbConn, $phone)
             }
             break;
         default:
-            ussd_stop("habaye ikibazo, mwongere mukanya");
+            ussd_stop("habaye ikibazo, mwongere mukanyas");
             break;
     }
 }
