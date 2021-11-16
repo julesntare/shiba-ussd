@@ -182,6 +182,20 @@ function login($details, $dbConn, $phone)
                 ussd_proceed("Injiza itariki yivuka. urugero:\n 2021-11-16");
             }
             break;
+        case 6:
+            if (empty($details[5])) {
+                $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
+                ussd_proceed($ussd_text);
+            } else {
+                $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phone'");
+                $fetched_rows = $search_result->fetch();
+                $pid = $fetched_rows['id'];
+
+                $dbConn->exec("INSERT INTO children (fname, oname, pid, born) VALUES('$details[2]', '$details[3]', '$pid','$details[4]')");
+                $ussd_text = "Byegenze neza! Umwana witwa " . $details[2] . " yinjijwe muri sisitemu";
+                ussd_stop($ussd_text);
+            }
+            break;
         default:
             ussd_stop("habaye ikibazo, mwongere mukanya");
             break;
