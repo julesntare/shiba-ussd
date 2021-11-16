@@ -19,7 +19,7 @@ try {
 }
 
 // Get the parameters provided by Africa's Talking USSD gateway
-$phone = $_POST['phoneNumber'];
+$phone = $_POST['msisdn'];
 $session_id = $_POST['sessionId'];
 $service_code = $_POST['serviceCode'];
 $ussd_string = $_POST['text'];
