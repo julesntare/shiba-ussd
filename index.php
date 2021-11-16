@@ -157,7 +157,7 @@ function login($details, $dbConn, $phone)
             } else {
                 switch ($details[2]) {
                     case "1":
-                        child_regist($dbConn, $phone, $details);
+                        ussd_proceed("Injiza andi mazina ye");
                         break;
                     case '3':
                         $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phone'");
@@ -167,6 +167,21 @@ function login($details, $dbConn, $phone)
                         $dbConn->exec("INSERT INTO comments (sender, message) VALUES('$sender','$details[3]')");
                         $ussd_text = "Murakoze! igitekerezo cyanyu cyakiriwe";
                         ussd_stop($ussd_text);
+                        break;
+                    default:
+                        ussd_stop("habaye ikibazo, mwongere mukanya");
+                        break;
+                }
+            }
+            break;
+        case 5:
+            if (empty($details[4])) {
+                $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
+                ussd_proceed($ussd_text);
+            } else {
+                switch ($details[3]) {
+                    case "1":
+                        ussd_proceed("Injiza itariki yivuka. urugero:\n 2021-11-16");
                         break;
                     default:
                         ussd_stop("habaye ikibazo, mwongere mukanya");
@@ -259,36 +274,6 @@ function register($details, $phone, $dbConn)
                 } catch (PDOException $e) {
                     ussd_stop("habaye ikibazo, mwongere mukanya");
                 }
-            }
-            break;
-        default:
-            ussd_stop("habaye ikibazo, mwongere mukanya");
-            break;
-    }
-}
-
-function child_regist($dbConn, $phone, $details)
-{
-    $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phone'");
-    $fetched_rows = $search_result->fetch();
-    $pid = $fetched_rows['id'];
-    switch (count($details)) {
-        case 4:
-            if (empty($details[3])) {
-                $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
-                ussd_proceed($ussd_text);
-            } else {
-                ussd_proceed("Injiza andi mazina ye");
-                // $dbConn->exec("INSERT INTO comments (sender, message) VALUES('$sender','$details[3]')");
-            }
-            break;
-        case 5:
-            if (empty($details[4])) {
-                $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
-                ussd_proceed($ussd_text);
-            } else {
-                ussd_proceed("Injiza igihe yavukiye");
-                // $dbConn->exec("INSERT INTO comments (sender, message) VALUES('$sender','$details[3]')");
             }
             break;
         default:
