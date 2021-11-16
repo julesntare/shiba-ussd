@@ -277,15 +277,9 @@ function child_regist($dbConn, $phone, $details)
         $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
         ussd_proceed($ussd_text);
     } else {
-        switch ($details) {
-            case '1':
-                ussd_stop("yes");
-                // $dbConn->exec("INSERT INTO comments (sender, message) VALUES('$sender','$details[3]')");
-                break;
-            default:
-                ussd_stop("habaye ikibazo, mwongere mukanya");
-                break;
-        }
+
+        ussd_stop("yes");
+        // $dbConn->exec("INSERT INTO comments (sender, message) VALUES('$sender','$details[3]')");
     }
 }
 
