@@ -282,13 +282,12 @@ function child_regist($dbConn, $phone, $details)
                 // $dbConn->exec("INSERT INTO comments (sender, message) VALUES('$sender','$details[3]')");
             }
             break;
-
         case 5:
             if (empty($details[4])) {
                 $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
                 ussd_proceed($ussd_text);
             } else {
-                ussd_proceed("Injiza igihe yavukiye. urugero:\n 2021-11-16");
+                ussd_proceed("Injiza igihe yavukiye");
                 // $dbConn->exec("INSERT INTO comments (sender, message) VALUES('$sender','$details[3]')");
             }
             break;
