@@ -326,6 +326,3 @@ function register($details, $phone, $dbConn)
 
 # close the pdo connection
 $dbConn = null;
-$resp = array("sessionId"=>$sessionId,"message"=>$response,"ContinueSession"=>$ContinueSession);
-
-  echo json_encode($resp); 
