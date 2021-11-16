@@ -47,9 +47,9 @@ if ($ussd_string_exploded[0] == '') {
         //If user selected 2, send them to the about menu
         about($ussd_string_exploded);
     } elseif ($ussd_string_exploded[0] == "3") {
-        echo "h";
         //If user selected 3, send them to the about menu
         login($ussd_string_exploded, $dbConn, $phone);
+        echo "h";
     } else {
         ussd_stop("Invalid selection!!!");
     }
