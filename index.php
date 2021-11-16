@@ -26,80 +26,82 @@ $serviceCode = $_POST["serviceCode"];
 $networkCode = $_POST['networkCode'];
 $ussd_string = $_POST['text'];
 
+if ($userinput=="*662*800*70#") {
+
 //set default level to zero
-$level = 0;
+    $level = 0;
 
-/* Split text input based on asteriks(*)
- * Africa's talking appends asteriks for after every menu level or input
- * One needs to split the response from Africa's Talking in order to determine
- * the menu level and input for each level
- * */
-$ussd_string_exploded = explode("*", $ussd_string);
+    /* Split text input based on asteriks(*)
+     * Africa's talking appends asteriks for after every menu level or input
+     * One needs to split the response from Africa's Talking in order to determine
+     * the menu level and input for each level
+     * */
+    $ussd_string_exploded = explode("*", $ussd_string);
 
-// Get menu level from ussd_string reply
-$level = count($ussd_string_exploded);
+    // Get menu level from ussd_string reply
+    $level = count($ussd_string_exploded);
 
-if ($ussd_string_exploded[0] == '') {
-    display_menu(); // show the home/first menu
-} else {
-    if ($ussd_string_exploded[0] == "1") {
-        // If user selected 1 send them to the registration menu
-        register($ussd_string_exploded, $phone, $dbConn);
-    } else if ($ussd_string_exploded[0] == "2") {
-        //If user selected 2, send them to the about menu
-        about($ussd_string_exploded);
-    } elseif ($ussd_string_exploded[0] == "3") {
-        //If user selected 3, send them to the about menu
-        login($ussd_string_exploded, $dbConn, $phone);
+    if ($ussd_string_exploded[0] == '') {
+        display_menu(); // show the home/first menu
     } else {
-        ussd_stop("Invalid selection!!!");
+        if ($ussd_string_exploded[0] == "1") {
+            // If user selected 1 send them to the registration menu
+            register($ussd_string_exploded, $phone, $dbConn);
+        } elseif ($ussd_string_exploded[0] == "2") {
+            //If user selected 2, send them to the about menu
+            about($ussd_string_exploded);
+        } elseif ($ussd_string_exploded[0] == "3") {
+            //If user selected 3, send them to the about menu
+            login($ussd_string_exploded, $dbConn, $phone);
+        } else {
+            ussd_stop("Invalid selection!!!");
+        }
     }
-}
 
 
-/* The ussd_proceed function appends CON to the USSD response your application gives.
- * This informs Africa's Talking USSD gateway and consecuently Safaricom's
- * USSD gateway that the USSD session is till in session or should still continue
- * Use this when you want the application USSD session to continue
-*/
-function ussd_proceed($ussd_text)
-{
-    echo "CON $ussd_text";
-}
+    /* The ussd_proceed function appends CON to the USSD response your application gives.
+     * This informs Africa's Talking USSD gateway and consecuently Safaricom's
+     * USSD gateway that the USSD session is till in session or should still continue
+     * Use this when you want the application USSD session to continue
+    */
+    function ussd_proceed($ussd_text)
+    {
+        echo "CON $ussd_text";
+    }
 
-/* This ussd_stop function appends END to the USSD response your application gives.
- * This informs Africa's Talking USSD gateway and consecuently Safaricom's
- * USSD gateway that the USSD session should end.
- * Use this when you to want the application session to terminate/end the application
-*/
-function ussd_stop($ussd_text)
-{
-    echo "END $ussd_text";
-}
+    /* This ussd_stop function appends END to the USSD response your application gives.
+     * This informs Africa's Talking USSD gateway and consecuently Safaricom's
+     * USSD gateway that the USSD session should end.
+     * Use this when you to want the application session to terminate/end the application
+    */
+    function ussd_stop($ussd_text)
+    {
+        echo "END $ussd_text";
+    }
 
-//This is the home menu function
-function display_menu()
-{
-    $ussd_text = "1. kwiyandikisha(umubyeyi) \n 2. ibyerekeye system \n 3. konti yange  \n"; // add \n so that the menu has new lines
-    ussd_proceed($ussd_text);
-}
+    //This is the home menu function
+    function display_menu()
+    {
+        $ussd_text = "1. kwiyandikisha(umubyeyi) \n 2. ibyerekeye system \n 3. konti yange  \n"; // add \n so that the menu has new lines
+        ussd_proceed($ussd_text);
+    }
 
-// Function that hanldles About menu
-function about($ussd_text)
-{
-    $ussd_text = "This is a sample registration application";
-    ussd_stop($ussd_text);
-}
+    // Function that hanldles About menu
+    function about($ussd_text)
+    {
+        $ussd_text = "This is a sample registration application";
+        ussd_stop($ussd_text);
+    }
 
-function display_user_menu()
-{
-    $ussd_text = "1. kwandika umwana mushya\n 2. Ibiherutse gukorwa\n 3. Ibyenda gukorwa\n 4. Tanga igitekerezo\n 5. Gusohoka muri system\n 6. Subira ahabanza\n"; // add \n so that the menu has new lines
-    ussd_proceed($ussd_text);
-}
+    function display_user_menu()
+    {
+        $ussd_text = "1. kwandika umwana mushya\n 2. Ibiherutse gukorwa\n 3. Ibyenda gukorwa\n 4. Tanga igitekerezo\n 5. Gusohoka muri system\n 6. Subira ahabanza\n"; // add \n so that the menu has new lines
+        ussd_proceed($ussd_text);
+    }
 
-function login($details, $dbConn, $phone)
-{
-    switch (count($details)) {
+    function login($details, $dbConn, $phone)
+    {
+        switch (count($details)) {
         case 1:
             $ussd_text = "injiza umubare wibanga:";
             ussd_proceed($ussd_text); // ask user to enter registration details
@@ -229,18 +231,18 @@ function login($details, $dbConn, $phone)
             ussd_stop("habaye ikibazo, mwongere mukanya");
             break;
     }
-}
-
-// Function that handles Registration menu
-function register($details, $phone, $dbConn)
-{
-    $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phone'");
-    $total_rows = $search_result->rowCount();
-    if ($total_rows > 0) {
-        ussd_stop("Musanzwe muri sisitemu!");
-        return;
     }
-    switch (count($details)) {
+
+    // Function that handles Registration menu
+    function register($details, $phone, $dbConn)
+    {
+        $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phone'");
+        $total_rows = $search_result->rowCount();
+        if ($total_rows > 0) {
+            ussd_stop("Musanzwe muri sisitemu!");
+            return;
+        }
+        switch (count($details)) {
         case 1:
             $ussd_text = "injiza izina ryambere:";
             ussd_proceed($ussd_text); // ask user to enter registration details
@@ -322,7 +324,8 @@ function register($details, $phone, $dbConn)
             ussd_stop("habaye ikibazo, mwongere mukanya");
             break;
     }
-}
+    }
 
-# close the pdo connection
-$dbConn = null;
+    # close the pdo connection
+    $dbConn = null;
+}
