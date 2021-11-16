@@ -279,6 +279,7 @@ function child_regist($dbConn, $phone, $details)
     } else {
         switch ($details) {
             case '1':
+                ussd_stop("yes");
                 // $dbConn->exec("INSERT INTO comments (sender, message) VALUES('$sender','$details[3]')");
                 break;
             default:
