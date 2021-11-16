@@ -201,6 +201,26 @@ function login($details, $dbConn, $phone)
                 $dbConn->exec("INSERT INTO children (fname, oname, pid, born) VALUES('$details[3]', '$details[4]', '$pid', '$details[5]')");
                 $ussd_text = "Byegenze neza! Umwana witwa " . $details[3] . " yinjijwe muri sisitemu";
                 ussd_stop($ussd_text);
+                $curl = curl_init();
+
+                curl_setopt_array($curl, array(
+                    CURLOPT_URL => 'https://api.mista.io/sms',
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => '',
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => 'POST',
+                    CURLOPT_POSTFIELDS => array('to' => $phone, 'from' => 'SBCA', 'unicode' => '0', 'sms' => "Muraho,kwandikisha umwana byagenze neza!. muzajya mubona inama kumikurire myiza yumwana Murakoze!", 'action' => 'send-sms'),
+                    CURLOPT_HTTPHEADER => array(
+                        'x-api-key: c2c1f86a-b113-97d9-ad16-76b66e1e5e68-8235bffb'
+                    ),
+                ));
+
+                $response = curl_exec($curl);
+
+                curl_close($curl);
             }
             break;
         default:
