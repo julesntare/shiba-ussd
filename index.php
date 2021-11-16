@@ -322,6 +322,7 @@ function register($details, $phone, $dbConn)
             break;
     }
 }
+$ContinueSession=0;
 
 # close the pdo connection
 $dbConn = null;
