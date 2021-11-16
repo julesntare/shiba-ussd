@@ -333,7 +333,7 @@ if($userinput=="*662*800*70#"){
     $dbConn = null;
    
 
-$ContinueSession=1;
+
 
 
 }
