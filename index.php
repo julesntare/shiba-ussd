@@ -149,7 +149,7 @@ function login($details, $dbConn, $phone)
                         break;
                     case "6":
                         array_pop($details);
-                        array_pop($details);
+                        // array_pop($details);
                         display_menu();
                         break;
                     default:
