@@ -179,14 +179,7 @@ function login($details, $dbConn, $phone)
                 $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
                 ussd_proceed($ussd_text);
             } else {
-                switch ($details[3]) {
-                    case "1":
-                        ussd_proceed("Injiza itariki yivuka. urugero:\n 2021-11-16");
-                        break;
-                    default:
-                        ussd_stop("habaye ikibazo, mwongere mukanya");
-                        break;
-                }
+                ussd_proceed("Injiza itariki yivuka. urugero:\n 2021-11-16");
             }
             break;
         default:
