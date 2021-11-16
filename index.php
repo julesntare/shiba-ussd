@@ -148,8 +148,8 @@ function login($details, $dbConn, $phone)
                         ussd_stop($ussd_text);
                         break;
                     case "6":
-                        array_pop($ussd_string_exploded);
-                        ussd_proceed(end((array_values($ussd_string_exploded))));
+                        // array_pop($ussd_string_exploded);
+                        ussd_proceed(array_pop($details));
                         // display_menu();
                         break;
                     default:
