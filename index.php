@@ -156,8 +156,10 @@ function login($details, $dbConn, $phone)
                 ussd_proceed($ussd_text);
             } else {
                 switch ($details[2]) {
+                    case "1":
+                        child_regist($dbConn, $phone, $details[3]);
+                        break;
                     case '3':
-                        // add queries here
                         $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phone'");
                         $fetched_rows = $search_result->fetch();
                         $sender = $fetched_rows['id'];
@@ -263,6 +265,26 @@ function register($details, $phone, $dbConn)
         default:
             ussd_stop("Something went wrong");
             break;
+    }
+}
+
+function child_regist($dbConn, $phone, $details)
+{
+    $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phone'");
+    $fetched_rows = $search_result->fetch();
+    $pid = $fetched_rows['id'];
+    if (empty($details)) {
+        $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
+        ussd_proceed($ussd_text);
+    } else {
+        switch ($details) {
+            case '1':
+                // $dbConn->exec("INSERT INTO comments (sender, message) VALUES('$sender','$details[3]')");
+                break;
+            default:
+                ussd_stop("habaye ikibazo, mwongere mukanya");
+                break;
+        }
     }
 }
 
