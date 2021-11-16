@@ -8,7 +8,7 @@ $networkCode = $_POST['networkCode'];
 
 
 if($userinput=="*662*800*70#"){
-   $response  = "Welcome to XYZ Cleaning Company\n";
+   $response  = "shibasaki naamoto\n";
    $response .="1. Register\n 2.Check your balance";
    
 
