@@ -130,7 +130,7 @@ function login($details, $dbConn, $phone)
                 $fetched_rows = $search_result->fetch();
                 switch ($details[2]) {
                     case "1":
-                        ussd_stop("yello");
+                        ussd_proceed("Izina rya gikirisitu");
                         break;
                     case "2":
                         ussd_stop("yello2");
