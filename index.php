@@ -214,7 +214,7 @@ function register($details, $phone, $dbConn)
 {
     $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phone'");
     $total_rows = $search_result->rowCount();
-    if ($total_rows == 0) {
+    if ($total_rows > 0) {
         ussd_stop("Musanzwe muri sisitemu!");
         return;
     }
