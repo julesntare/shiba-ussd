@@ -91,7 +91,7 @@ function about($ussd_text)
 
 function display_user_menu()
 {
-    $ussd_text = "1. kwandika umwana mushya\n 2. Ibiherutse gukorwa\n 3. Ibyenda gukorwa\n 4. Tanga igitekerezo\n 5. Gusohoka muri system\n"; // add \n so that the menu has new lines
+    $ussd_text = "1. kwandika umwana mushya\n 2. Ibiherutse gukorwa\n 3. Ibyenda gukorwa\n 4. Tanga igitekerezo\n 5. Gusohoka muri system\n 6. Subira ahabanza\n"; // add \n so that the menu has new lines
     ussd_proceed($ussd_text);
 }
 
@@ -141,8 +141,14 @@ function login($details, $dbConn, $phone)
                         ussd_proceed($ussd_text); // ask user to enter registration details
                         break;
                     case "4":
+                        ussd_stop("yello3");
+                        break;
+                    case "5":
                         $ussd_text = "Murakoze gukoresha sisitemu yacu. ibihe byiza!!!";
                         ussd_stop($ussd_text);
+                        break;
+                    case "6":
+                        array_pop($details);
                         break;
                     default:
                         ussd_stop("habaye ikibazo, mwongere mukanya");
@@ -179,7 +185,7 @@ function login($details, $dbConn, $phone)
                 $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
                 ussd_proceed($ussd_text);
             } else {
-                ussd_proceed("Injiza itariki yivuka. urugero:\n 2021-11-16");
+                ussd_proceed("Injiza itariki yivuka. urugero:\n 2021-11-16\n");
             }
             break;
         case 6:
