@@ -148,8 +148,10 @@ function login($details, $dbConn, $phone)
                         ussd_stop($ussd_text);
                         break;
                     case "6":
-                        $ussd_string_exploded[0] = "";
-                        display_menu();
+                        array_pop($details);
+                        array_pop($details);
+                        ussd_stop(array_pop($details));
+                        // display_menu();
                         break;
                     default:
                         ussd_stop("habaye ikibazo, mwongere mukanya");
