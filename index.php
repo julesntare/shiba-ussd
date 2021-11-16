@@ -47,13 +47,13 @@ $ussd_string = $_POST['text'];
     } else {
         if ($ussd_string_exploded[0] == "1") {
             // If user selected 1 send them to the registration menu
-            register($ussd_string_exploded, $phone, $dbConn);
+            register($ussd_string_exploded, $phoneNumber, $dbConn);
         } elseif ($ussd_string_exploded[0] == "2") {
             //If user selected 2, send them to the about menu
             about($ussd_string_exploded);
         } elseif ($ussd_string_exploded[0] == "3") {
             //If user selected 3, send them to the about menu
-            login($ussd_string_exploded, $dbConn, $phone);
+            login($ussd_string_exploded, $dbConn, $phoneNumber);
         } else {
             ussd_stop("Invalid selection!!!");
         }
@@ -100,7 +100,7 @@ $ussd_string = $_POST['text'];
         ussd_proceed($ussd_text);
     }
 
-    function login($details, $dbConn, $phone)
+    function login($details, $dbConn, $phoneNumber)
     {
         switch (count($details)) {
         case 1:
@@ -113,7 +113,7 @@ $ussd_string = $_POST['text'];
                 ussd_proceed($ussd_text);
             } else {
                 try {
-                    $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phone' and pin='$details[1]'");
+                    $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phoneNumber' and pin='$details[1]'");
                     $total_rows = $search_result->rowCount();
                     if ($total_rows == 0) {
                         ussd_stop("Umubare w'ibanga ntabwo ariwo");
@@ -131,7 +131,7 @@ $ussd_string = $_POST['text'];
                 ussd_proceed($ussd_text);
             } else {
                 $date = date("Y-m-d H:i:s");
-                $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phone'");
+                $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phoneNumber'");
                 $fetched_rows = $search_result->fetch();
                 switch ($details[2]) {
                     case "1":
@@ -172,7 +172,7 @@ $ussd_string = $_POST['text'];
                         ussd_proceed("Injiza andi mazina ye");
                         break;
                     case '3':
-                        $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phone'");
+                        $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phoneNumber'");
                         $fetched_rows = $search_result->fetch();
                         $sender = $fetched_rows['id'];
 
@@ -199,7 +199,7 @@ $ussd_string = $_POST['text'];
                 $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
                 ussd_proceed($ussd_text);
             } else {
-                $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phone'");
+                $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phoneNumber'");
                 $fetched_rows = $search_result->fetch();
                 $pid = $fetched_rows['id'];
 
@@ -217,7 +217,7 @@ $ussd_string = $_POST['text'];
                     CURLOPT_FOLLOWLOCATION => true,
                     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                     CURLOPT_CUSTOMREQUEST => 'POST',
-                    CURLOPT_POSTFIELDS => array('to' => $phone, 'from' => 'SBCA', 'unicode' => '0', 'sms' => "Muraho,kwandikisha umwana byagenze neza!. muzajya mubona inama kumikurire myiza yumwana Murakoze!", 'action' => 'send-sms'),
+                    CURLOPT_POSTFIELDS => array('to' => $phoneNumber, 'from' => 'SBCA', 'unicode' => '0', 'sms' => "Muraho,kwandikisha umwana byagenze neza!. muzajya mubona inama kumikurire myiza yumwana Murakoze!", 'action' => 'send-sms'),
                     CURLOPT_HTTPHEADER => array(
                         'x-api-key: c2c1f86a-b113-97d9-ad16-76b66e1e5e68-8235bffb'
                     ),
@@ -235,9 +235,9 @@ $ussd_string = $_POST['text'];
     }
 
     // Function that handles Registration menu
-    function register($details, $phone, $dbConn)
+    function register($details, $phoneNumber, $dbConn)
     {
-        $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phone'");
+        $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phoneNumber'");
         $total_rows = $search_result->rowCount();
         if ($total_rows > 0) {
             ussd_stop("Musanzwe muri sisitemu!");
@@ -285,7 +285,7 @@ $ussd_string = $_POST['text'];
                 $idno = $details[3]; //mother name
                 $pin = $details[4]; //pin number
                 //$mid = $details[4]; //mother id
-                $phone_number = $phone; //store phone number
+                $phone_number = $phoneNumber; //store phone number
 
                 // build sql statement
                 try {
