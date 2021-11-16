@@ -49,7 +49,7 @@ if ($ussd_string_exploded[0] == '') {
     } elseif ($ussd_string_exploded[0] == "3") {
         //If user selected 3, send them to the about menu
         login($ussd_string_exploded, $dbConn, $phone);
-        echo "h";
+        echo count($ussd_string_exploded);
     } else {
         ussd_stop("Invalid selection!!!");
     }
