@@ -150,7 +150,7 @@ function login($details, $dbConn, $phone)
                     case "6":
                         array_pop($details);
                         array_pop($details);
-                        ussd_proceed(display_menu());
+                        display_menu();
                         break;
                     default:
                         ussd_stop("habaye ikibazo, mwongere mukanya");
