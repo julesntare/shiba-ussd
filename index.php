@@ -47,6 +47,7 @@ if ($ussd_string_exploded[0] == '') {
         //If user selected 2, send them to the about menu
         about($ussd_string_exploded);
     } elseif ($ussd_string_exploded[0] == "3") {
+        //If user selected 3, send them to the about menu
         login($ussd_string_exploded, $dbConn, $phone);
     } else {
         ussd_stop("Invalid selection!!!");
@@ -90,7 +91,7 @@ function about($ussd_text)
 
 function display_user_menu()
 {
-    $ussd_text = "1.kwandika umwana mushya \n 1.Ibiherutse gukorwa \n 2. Ibyenda gukorwa   \n 3. Tanga igitekerezo  \n 4. Gusohoka muri system  \n"; // add \n so that the menu has new lines
+    $ussd_text = "1.kwandika umwana mushya\n 1.Ibiherutse gukorwa\n 2. Ibyenda gukorwa\n 3. Tanga igitekerezo\n 4. Gusohoka muri system\n"; // add \n so that the menu has new lines
     ussd_proceed($ussd_text);
 }
 
@@ -106,7 +107,6 @@ function login($details, $dbConn, $phone)
                 $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
                 ussd_proceed($ussd_text);
             } else {
-
                 try {
                     $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phone' and pin='$details[1]'");
                     $total_rows = $search_result->rowCount();
@@ -116,7 +116,7 @@ function login($details, $dbConn, $phone)
                     }
                     display_user_menu();
                 } catch (PDOException $e) {
-                    ussd_stop("Error:" . $e->getMessage());
+                    ussd_stop("habaye ikibazo, mwongere mukanya");
                 }
             }
             break;
@@ -155,7 +155,7 @@ function login($details, $dbConn, $phone)
                 $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
                 ussd_proceed($ussd_text);
             } else {
-                switch ($details[3]) {
+                switch ($details[2]) {
                     case '3':
                         // add queries here
                         $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phone'");
@@ -167,7 +167,7 @@ function login($details, $dbConn, $phone)
                         ussd_stop($ussd_text);
                         break;
                     default:
-                        # code...
+                        ussd_stop("habaye ikibazo, mwongere mukanya");
                         break;
                 }
             }
