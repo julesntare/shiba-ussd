@@ -191,7 +191,7 @@ function login($details, $dbConn, $phone)
                 $fetched_rows = $search_result->fetch();
                 $pid = $fetched_rows['id'];
 
-                $dbConn->exec("INSERT INTO children (fname, oname, pid, born) VALUES('$details[2]', '$details[3]', '$pid','$details[4]')");
+                $dbConn->exec("INSERT INTO children (fname, oname, pid, born) VALUES('$details[3]', '$details[4]', '$pid', '$details[5]')");
                 $ussd_text = "Byegenze neza! Umwana witwa " . $details[2] . " yinjijwe muri sisitemu";
                 ussd_stop($ussd_text);
             }
