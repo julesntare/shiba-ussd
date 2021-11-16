@@ -26,7 +26,7 @@ $serviceCode = $_POST["serviceCode"];
 $networkCode = $_POST['networkCode'];
 $ussd_string = $_POST['text'];
 
-if ($userinput=="*662*800*70#") {
+
 
 //set default level to zero
     $level = 0;
@@ -40,6 +40,7 @@ if ($userinput=="*662*800*70#") {
 
     // Get menu level from ussd_string reply
     $level = count($ussd_string_exploded);
+    if ($userinput=="*662*800*70#") {
 
     if ($ussd_string_exploded[0] == '') {
         display_menu(); // show the home/first menu
