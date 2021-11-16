@@ -25,10 +25,6 @@ $userinput   = urldecode($_POST["UserInput"]);
 $serviceCode = $_POST["serviceCode"];
 $networkCode = $_POST['networkCode'];
 
-if($userinput=="*662*800*70#"){
-
-
-
 //set default level to zero
 $level = 0;
 
@@ -326,6 +322,6 @@ function register($details, $phone, $dbConn)
             break;
     }
 }
-}
+
 # close the pdo connection
 $dbConn = null;
