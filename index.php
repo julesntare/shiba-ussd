@@ -1,9 +1,11 @@
 <?php
-/* Simple sample USSD registration application
- * USSD gateway that is being used is Africa's Talking USSD gateway
- */
+$sessionId   = $_POST["sessionId"];
+$phoneNumber = $_POST["msisdn"];
+$userinput   = urldecode($_POST["UserInput"]);
+$serviceCode = $_POST["serviceCode"];
+$networkCode = $_POST['networkCode'];
 
-// Print the response as plain text so that the gateway can read it
+
 header('Content-type: text/plain');
 
 /* local db configuration */
@@ -19,11 +21,7 @@ try {
 }
 
 // Get the parameters provided by Africa's Talking USSD gateway
-$sessionId   = $_POST["sessionId"];
-$phoneNumber = $_POST["phoneNumber"];
-$userinput   = urldecode($_POST["UserInput"]);
-$serviceCode = $_POST["serviceCode"];
-$networkCode = $_POST['networkCode'];
+
 $ussd_string = $_POST['text'];
 
 
@@ -329,3 +327,7 @@ $ussd_string = $_POST['text'];
 
     # close the pdo connection
     $dbConn = null;
+
+  $resp = array("sessionId"=>$sessionId,"message"=>$response,"ContinueSession"=>$ContinueSession);
+
+  echo json_encode($resp); 
