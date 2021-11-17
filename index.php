@@ -6,6 +6,10 @@ $serviceCode = $_POST["serviceCode"];
 $networkCode = $_POST['networkCode'];
 
 
+
+if($userinput=="*662*800*70#"){
+
+
 header('Content-type: text/plain');
 
 /* local db configuration */
@@ -327,6 +331,12 @@ $ussd_string = $_POST['text'];
 
     # close the pdo connection
     $dbConn = null;
+
+  $resp = array("sessionId"=>$sessionId,"message"=>$response,"ContinueSession"=>$ContinueSession);
+
+  echo json_encode($resp); 
+   
+}
 
   $resp = array("sessionId"=>$sessionId,"message"=>$response,"ContinueSession"=>$ContinueSession);
 
