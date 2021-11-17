@@ -19,9 +19,11 @@ try {
 }
 
 // Get the parameters provided by Africa's Talking USSD gateway
-$phone = $_POST['phoneNumber'];
-$session_id = $_POST['sessionId'];
-$service_code = $_POST['serviceCode'];
+$sessionId   = $_POST["sessionId"];
+$phone = $_POST["msisdn"];
+$userinput   = urldecode($_POST["UserInput"]);
+$serviceCode = $_POST["serviceCode"];
+$networkCode = $_POST['networkCode'];
 $ussd_string = $_POST['text'];
 
 //set default level to zero
@@ -85,7 +87,7 @@ function display_menu()
 // Function that hanldles About menu
 function about($ussd_text)
 {
-    $ussd_text = "This is about the system";
+    $ussd_text = "This is a sample registration application";
     ussd_stop($ussd_text);
 }
 
