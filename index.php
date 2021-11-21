@@ -80,7 +80,8 @@ function ussd_stop($ussd_text)
 //This is the home menu function
 function display_menu()
 {
-    return "1. kwiyandikisha(umubyeyi) \n 2. ibyerekeye system \n 3. konti yange  \n"; // add \n so that the menu has new lines
+    $initial_msg = "Murakaza neza muri SBCA\n\n 1. kwiyandikisha(umubyeyi) \n 2. ibyerekeye system \n 3. konti yange  \n";
+    return $initial_msg; // add \n so that the menu has new lines
 }
 
 // Function that hanldles About menu
