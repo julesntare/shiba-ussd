@@ -59,7 +59,8 @@ if ($userinput == '*662*800*70#') {
                 login($ussd_string_exploded, $dbConn, $phone);
                 break;
             default:
-                $resp = "Invalid selection!!!";
+                $response = "Invalid selection!!!";
+                $ContinueSession = 0;
                 break;
         }
     }
