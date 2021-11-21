@@ -38,6 +38,7 @@ $level = count($ussd_string_exploded);
 
 if ($userinput == '*662*800*70#') {
     $response = display_menu(); // show the home/first menu
+    $ContinueSession = 1;
 } else {
     if ($ussd_string_exploded[0] == "1") {
         // If user selected 1 send them to the registration menu
@@ -80,7 +81,7 @@ function ussd_stop($ussd_text)
 //This is the home menu function
 function display_menu()
 {
-    $initial_msg = "Murakaza neza muri SBCA\n\n 1. kwiyandikisha(umubyeyi) \n 2. ibyerekeye system \n 3. konti yange  \n";
+    $initial_msg = "Murakaza neza muri SBCA System\n\n 1. kwiyandikisha(umubyeyi) \n 2. ibyerekeye system \n 3. konti yange \n";
     return $initial_msg; // add \n so that the menu has new lines
 }
 
