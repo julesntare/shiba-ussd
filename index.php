@@ -40,20 +40,28 @@ if ($userinput == '*662*800*70#') {
     $response = display_menu(); // show the home/first menu
     $ContinueSession = 1;
 } else {
-    if ($ussd_string_exploded[0] == "1") {
-        // If user selected 1 send them to the registration menu
-        register($ussd_string_exploded, $phone, $dbConn);
-    } else if ($ussd_string_exploded[0] == "2") {
-        //If user selected 2, send them to the about menu
-        about($ussd_string_exploded);
-    } elseif ($ussd_string_exploded[0] == "3") {
-        //If user selected 3, send them to the about menu
-        login($ussd_string_exploded, $dbConn, $phone);
-        if (count($ussd_string_exploded) == 3) {
-            $ussd_string_exploded[0] = "";
+    if ($level == 5) {
+        $last_item = $ussd_string_exploded[$level - 1];
+        $explod_hash = explode('#', $last_item);
+        $last_item = $explod_hash[0];
+        switch ($last_item) {
+            case 1:
+                // If user selected 1 send them to the registration menu
+                register($ussd_string_exploded, $phone, $dbConn);
+                break;
+            case 2:
+                //If user selected 2, send them to the about menu
+                $response = about();
+                $ContinueSession = 0;
+                break;
+            case 3:
+                //If user selected 3, send them to the about menu
+                login($ussd_string_exploded, $dbConn, $phone);
+                break;
+            default:
+                $resp = "Invalid selection!!!";
+                break;
         }
-    } else {
-        ussd_stop("Invalid selection!!!");
     }
 }
 
@@ -86,10 +94,10 @@ function display_menu()
 }
 
 // Function that hanldles About menu
-function about($ussd_text)
+function about()
 {
-    $ussd_text = "This is a sample registration application";
-    ussd_stop($ussd_text);
+    $about_text = "This is a sample registration application";
+    return $about_text;
 }
 
 function display_user_menu()
