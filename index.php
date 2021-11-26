@@ -55,8 +55,13 @@ if ($userinput == '*662*800*70#') {
             break;
         case 3:
             //If user selected 3, send them to the about menu
-            $response = login($level, $dbConn, $phone);
-            $ContinueSession = 1;
+            $res_temp = login($level, $dbConn, $phone);
+            $response = $res_temp['msg'];
+            if ($res_temp['status'] == 0) {
+                $ContinueSession = 0;
+            } else {
+                $ContinueSession = 1;
+            }
             break;
         default:
             $response = "Invalid selection!!!";
@@ -108,12 +113,28 @@ function display_user_menu()
 
 function login($level, $dbConn, $phone)
 {
-    // $temp = explode('*', $level);
-    // $level_2 = str_replace("#", '', $temp[2]);
-    // $res = "f";
-    // if ($level) {
-    $res = "injiza umubare wibanga:";
-    // }
+    $temp = explode('*', $level);
+    $level_2 = str_replace("#", '', $temp[2]);
+    $res = array();
+
+    $res .= "injiza umubare wibanga:";
+    if (!empty($level_2)) {
+        $pin = $level_2;
+        try {
+            $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phone' and pin='$pin'");
+            $total_rows = $search_result->rowCount();
+            if ($total_rows == 0) {
+                $res["msg"] = "Umubare w'ibanga ntabwo ariwo";
+                $res["status"] = 0;
+            }
+        } catch (PDOException $e) {
+            $res["msg"] = "habaye ikibazo, mwongere mukanya";
+            $res["status"] = 0;
+        }
+    } else {
+        $res["msg"] = "ntakintu mwinjijemo ntabwo byemewe";
+        $res["status"] = 0;
+    }
     //     //         ussd_proceed($ussd_text); // ask user to enter registration details
     //     //         break;
     //     //     case 2:
