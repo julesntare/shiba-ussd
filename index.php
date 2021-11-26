@@ -275,8 +275,64 @@ function register($level, $phone, $dbConn)
                 }
                 break;
             case 4:
+                if (empty($lvl)) {
+                    $res["msg"] = "ntakintu mwinjijemo ntabwo byemewe";
+                    $res["status"] = 0;
+                } else {
+                    $res["msg"] = "Andika inumero y'indangamuntu:";
+                    $res["status"] = 1;
+                }
                 break;
             case 5:
+                if (empty($lvl)) {
+                    $res["msg"] = "Ntakintu mwinjijemo ntabwo byemewe";
+                    $res["status"] = 0;
+                } else {
+                    $res["msg"] = "Hitamo umubare w'ibanga:";
+                    $res["status"] = 1;
+                }
+                break;
+            case 6:
+                if (empty($lvl)) {
+                    $res["msg"] = "Ntakintu mwinjijemo ntabwo byemewe";
+                    $res["status"] = 0;
+                    $fname = trim(str_replace("#", '', $temp[count($temp) - 1]));
+                    $oname = trim(str_replace("#", '', $temp[count($temp) - 2]));
+                    $idno = trim(str_replace("#", '', $temp[count($temp) - 3]));
+                    $pin = trim(str_replace("#", '', $temp[count($temp) - 4]));
+                    $phone_number = $phone;
+
+                    // build sql statement
+                    try {
+                        $dbConn->exec("INSERT INTO parents (fname,oname,idno,phone,pin) VALUES('$fname','$oname','$idno','$phone_number','$pin')");
+
+                        $curl = curl_init();
+
+                        curl_setopt_array($curl, array(
+                            CURLOPT_URL => 'https://api.mista.io/sms',
+                            CURLOPT_RETURNTRANSFER => true,
+                            CURLOPT_ENCODING => '',
+                            CURLOPT_MAXREDIRS => 10,
+                            CURLOPT_TIMEOUT => 0,
+                            CURLOPT_FOLLOWLOCATION => true,
+                            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                            CURLOPT_CUSTOMREQUEST => 'POST',
+                            CURLOPT_POSTFIELDS => array('to' => $phone_number, 'from' => 'SBCA', 'unicode' => '0', 'sms' => "Muraho  " . $fname . ",kwiyandikisha byagenze neza. mushobora kwandikisha umwana wanyu muri SBCS mukajya mubona inama kumikurire myiza yumwana Murakoze!", 'action' => 'send-sms'),
+                            CURLOPT_HTTPHEADER => array(
+                                'x-api-key: c2c1f86a-b113-97d9-ad16-76b66e1e5e68-8235bffb'
+                            ),
+                        ));
+                        curl_close($curl);
+
+                        //execute insert query
+                        // $sth->execute();
+                        $res["msg"] = "kwiyandikisha byagenze neza murakira ubutumwa bw'ikaze mukanya. Murakoze!";
+                        $res["status"] = 0;
+                    } catch (PDOException $e) {
+                        $res["msg"] = "habaye ikibazo, mwongere mukanya";
+                        $res["status"] = 0;
+                    }
+                }
                 break;
             default:
                 $res["msg"] = "habaye ikibazo, mwongere mukanya";
@@ -284,74 +340,6 @@ function register($level, $phone, $dbConn)
                 break;
         }
     }
-    //     case 3:
-    //         if (empty($level[2])) {
-    //             $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
-    //             ussd_proceed($ussd_text);
-    //         } else {
-    //             $ussd_text = "injiza numero yirangamuntu:";  // ask user to enter home location
-    //             ussd_proceed($ussd_text);
-    //         }
-    //         break;
-    //     case 4:
-    //         if (empty($level[3])) {
-    //             $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
-    //             ussd_proceed($ussd_text);
-    //         } else {
-    //             $ussd_text = "hitamo umubare wibanga :";  // ask user to enter home location
-    //             ussd_proceed($ussd_text);
-    //         }
-    //         break;
-    //     case 5:
-    //         if (empty($level[4])) {
-    //             $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
-    //             ussd_proceed($ussd_text);
-    //         } else {
-    //             $fname = $level[1]; //store full name of the baby
-    //             $oname = $level[2]; //father name
-    //             $idno = $level[3]; //mother name
-    //             $pin = $level[4]; //pin number
-    //             //$mid = $level[4]; //mother id
-    //             $phone_number = $phone; //store phone number
-
-    //             // build sql statement
-    //             try {
-    //                 $dbConn->exec("INSERT INTO parents (fname,oname,idno,phone,pin) VALUES('$fname','$oname','$idno','$phone_number','$pin')");
-
-    //                 $curl = curl_init();
-
-    //                 curl_setopt_array($curl, array(
-    //                     CURLOPT_URL => 'https://api.mista.io/sms',
-    //                     CURLOPT_RETURNTRANSFER => true,
-    //                     CURLOPT_ENCODING => '',
-    //                     CURLOPT_MAXREDIRS => 10,
-    //                     CURLOPT_TIMEOUT => 0,
-    //                     CURLOPT_FOLLOWLOCATION => true,
-    //                     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-    //                     CURLOPT_CUSTOMREQUEST => 'POST',
-    //                     CURLOPT_POSTFIELDS => array('to' => $phone_number, 'from' => 'SBCA', 'unicode' => '0', 'sms' => "Muraho  " . $fname . ",kwiyandikisha byagenze neza. mushobora kwandikisha umwana wanyu muri SBCS mukajya mubona inama kumikurire myiza yumwana Murakoze!", 'action' => 'send-sms'),
-    //                     CURLOPT_HTTPHEADER => array(
-    //                         'x-api-key: c2c1f86a-b113-97d9-ad16-76b66e1e5e68-8235bffb'
-    //                     ),
-    //                 ));
-
-    //                 $response = curl_exec($curl);
-
-    //                 curl_close($curl);
-
-    //                 //execute insert query
-    //                 // $sth->execute();
-    //                 $ussd_text = " kwiyandikisha byagenze neza murakira ubutumwa bw'ikaze murakoze!";
-    //                 ussd_stop($ussd_text);
-    //             } catch (PDOException $e) {
-    //                 ussd_stop("habaye ikibazo, mwongere mukanya");
-    //             }
-    //         }
-    //         break;
-    //     default:
-    //         ussd_stop("habaye ikibazo, mwongere mukanya");
-    //         break;
-    // }
     return $res;
 }
 
