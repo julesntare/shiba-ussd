@@ -363,7 +363,7 @@ function userMenus($level, $dbConn, $phone)
             }
             break;
         default:
-            $arr["msg"] = "habaye ikibazo, mwongere mukanya";
+            $arr["msg"] = $lvl;
             $arr["status"] = 0;
             break;
     }
