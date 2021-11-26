@@ -114,9 +114,10 @@ function display_user_menu()
 function login($level, $dbConn, $phone)
 {
     $temp = explode('*', $level);
+    $level_1 = str_replace("#", '', $temp[1]);
     $level_2 = str_replace("#", '', $temp[2]);
     $res = array();
-    if ($temp[1] == 3) {
+    if ($level_1 == 3) {
         $res["msg"] = "injiza umubare wibanga:";
         $res["status"] = 1;
     } else if (!empty($level_2)) {
