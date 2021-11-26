@@ -364,6 +364,7 @@ function resSelectedMenu($level)
 
 function toggleUserMenus($level, $dbConn, $phone)
 {
+    $res = array();
     switch ($level[count($level) - 2]) {
         case 1:
             $res["msg"] = "Andika andi mazina (y'umwana):";
@@ -375,7 +376,8 @@ function toggleUserMenus($level, $dbConn, $phone)
             $sender = $fetched_rows['id'];
             $msg = trim(str_replace("#", '', $level[count($level) - 1]));
             $dbConn->exec("INSERT INTO comments (sender, message) VALUES('$sender','$msg')");
-            $ussd_text = "Murakoze! igitekerezo cyanyu cyakiriwe";
+            $res["msg"] = "Murakoze! igitekerezo cyanyu cyakiriwe";
+            $res["status"] = 0;
             break;
         default:
             $res["msg"] = "habaye ikibazo, mwongere mukanya";
