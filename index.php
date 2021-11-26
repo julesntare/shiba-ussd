@@ -133,10 +133,10 @@ function login($level, $dbConn, $phone)
                     if ($total_rows == 0) {
                         $res["msg"] = "Umubare w'ibanga ntabwo ariwo";
                         $res["status"] = 0;
-                        return;
+                    } else {
+                        $res["msg"] = "yesiii";
+                        $res["status"] = 1;
                     }
-                    $res["msg"] = "yesiii";
-                    $res["status"] = 1;
                 } catch (PDOException $e) {
                     $res["msg"] = "habaye ikibazo, mwongere mukanya";
                     $res["status"] = 0;
