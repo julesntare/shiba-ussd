@@ -355,16 +355,16 @@ function userMenus($level, $dbConn, $phone)
             break;
         case 4:
             if (empty($lvl)) {
-                $res["msg"] = "ntakintu mwinjijemo ntabwo byemewe";
-                $res["status"] = 0;
+                $arr["msg"] = "ntakintu mwinjijemo ntabwo byemewe";
+                $arr["status"] = 0;
             } else {
                 $arr["msg"] = "ok";
                 $arr["status"] = 1;
             }
             break;
         default:
-            $res["msg"] = "habaye ikibazo, mwongere mukanya";
-            $res["status"] = 0;
+            $arr["msg"] = "habaye ikibazo, mwongere mukanya";
+            $arr["status"] = 0;
             break;
     }
     return $arr;
