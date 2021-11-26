@@ -108,12 +108,12 @@ function display_user_menu()
 
 function login($level, $dbConn, $phone)
 {
-    $temp = explode('*', $level);
-    $level_2 = str_replace("#", '', $temp[2]);
-    $res = "f";
-    if ($level_2) {
-        $res .= "injiza umubare wibanga:";
-    }
+    // $temp = explode('*', $level);
+    // $level_2 = str_replace("#", '', $temp[2]);
+    // $res = "f";
+    // if ($level) {
+    $res = "injiza umubare wibanga:";
+    // }
     //     //         ussd_proceed($ussd_text); // ask user to enter registration details
     //     //         break;
     //     //     case 2:
