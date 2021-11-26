@@ -134,8 +134,8 @@ function login($level, $dbConn, $phone)
                 $res["msg"] = "ntakintu mwinjijemo ntabwo byemewe";
                 $res["status"] = 0;
             } else {
-                $res["msg"] = "ok";
-                $res["status"] = 0;
+                $resSel = toggleUserMenus($temp, $dbConn, $phone);
+                $res = array_merge($res, $resSel);
             }
             break;
         default:
@@ -336,7 +336,7 @@ function resSelectedMenu($level)
 {
     switch ($level) {
         case 1:
-            $res["msg"] = "Andika Izina rya mbere (umwana):";
+            $res["msg"] = "Andika Izina rya mbere (ry'umwana):";
             $res["status"] = 1;
             break;
         case 2:
@@ -361,6 +361,30 @@ function resSelectedMenu($level)
     }
     return $res;
 }
+
+function toggleUserMenus($level, $dbConn, $phone)
+{
+    switch ($level[count($level) - 2]) {
+        case 1:
+            $res["msg"] = "Andika andi mazina (y'umwana):";
+            $res["status"] = 1;
+            break;
+        case 3:
+            $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phone'");
+            $fetched_rows = $search_result->fetch();
+            $sender = $fetched_rows['id'];
+            $msg = trim(str_replace("#", '', $level[count($level) - 1]));
+            $dbConn->exec("INSERT INTO comments (sender, message) VALUES('$sender','$msg')");
+            $ussd_text = "Murakoze! igitekerezo cyanyu cyakiriwe";
+            break;
+        default:
+            $res["msg"] = "habaye ikibazo, mwongere mukanya";
+            $res["status"] = 0;
+            break;
+    }
+    return $res;
+}
+
 
 # close the pdo connection
 $dbConn = null;
