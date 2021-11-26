@@ -251,7 +251,7 @@ function login($level, $dbConn, $phone)
 function register($level, $phone, $dbConn)
 {
     $temp = explode('*', $level);
-    $lvl = str_replace("#", '', $temp[count($temp) - 1]);
+    $lvl = trim(str_replace("#", '', $temp[count($temp) - 1]));
     $res = array();
 
     $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phone'");
