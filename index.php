@@ -41,11 +41,12 @@ if ($userinput == '*662*800*70#') {
     $ContinueSession = 1;
 } else {
     $temp = explode('*', $level);
-    $level_1 = $res = str_replace("#", '', $temp[1]);
+    $level_1 = str_replace("#", '', $temp[1]);
     switch ($level_1) {
         case 1:
             // If user selected 1 send them to the registration menu
-            register($level, $phone, $dbConn);
+            $response = register($level, $phone, $dbConn);
+            $ContinueSession = 1;
             break;
         case 2:
             //If user selected 2, send them to the about menu
@@ -54,7 +55,8 @@ if ($userinput == '*662*800*70#') {
             break;
         case 3:
             //If user selected 3, send them to the about menu
-            login($level, $dbConn, $phone);
+            $response = login($level, $dbConn, $phone);
+            $ContinueSession = 1;
             break;
         default:
             $response = "Invalid selection!!!";
@@ -104,138 +106,144 @@ function display_user_menu()
     ussd_proceed($ussd_text);
 }
 
-function login($details, $dbConn, $phone)
+function login($level, $dbConn, $phone)
 {
-    switch (count($details)) {
-        case 1:
-            $ussd_text = "injiza umubare wibanga:";
-            ussd_proceed($ussd_text); // ask user to enter registration details
-            break;
-        case 2:
-            if (empty($details[1])) {
-                $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
-                ussd_proceed($ussd_text);
-            } else {
-                try {
-                    $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phone' and pin='$details[1]'");
-                    $total_rows = $search_result->rowCount();
-                    if ($total_rows == 0) {
-                        ussd_stop("Umubare w'ibanga ntabwo ariwo");
-                        return;
-                    }
-                    display_user_menu();
-                } catch (PDOException $e) {
-                    ussd_stop("habaye ikibazo, mwongere mukanya");
-                }
-            }
-            break;
-        case 3:
-            if (empty($details[2])) {
-                $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
-                ussd_proceed($ussd_text);
-            } else {
-                $date = date("Y-m-d H:i:s");
-                $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phone'");
-                $fetched_rows = $search_result->fetch();
-                switch ($details[2]) {
-                    case "1":
-                        ussd_proceed("Izina rya gikirisitu");
-                        break;
-                    case "2":
-                        ussd_stop("yello2");
-                        break;
-                    case "3":
-                        // add queries here
-                        $ussd_text = "andika igitekerezo:";
-                        ussd_proceed($ussd_text); // ask user to enter registration details
-                        break;
-                    case "4":
-                        ussd_stop("yello3");
-                        break;
-                    case "5":
-                        $ussd_text = "Murakoze gukoresha sisitemu yacu. ibihe byiza!!!";
-                        ussd_stop($ussd_text);
-                        break;
-                    case "6":
-                        array_pop($details);
-                        array_pop($details);
-                        array_pop($details);
-                        display_menu();
-                        break;
-                    default:
-                        ussd_stop("habaye ikibazo, mwongere mukanya");
-                        break;
-                }
-            }
-            break;
-        case 4:
-            if (empty($details[3])) {
-                $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
-                ussd_proceed($ussd_text);
-            } else {
-                switch ($details[2]) {
-                    case "1":
-                        ussd_proceed("Injiza andi mazina ye");
-                        break;
-                    case '3':
-                        $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phone'");
-                        $fetched_rows = $search_result->fetch();
-                        $sender = $fetched_rows['id'];
-
-                        $dbConn->exec("INSERT INTO comments (sender, message) VALUES('$sender','$details[3]')");
-                        $ussd_text = "Murakoze! igitekerezo cyanyu cyakiriwe";
-                        ussd_stop($ussd_text);
-                        break;
-                    default:
-                        ussd_stop("habaye ikibazo, mwongere mukanya");
-                        break;
-                }
-            }
-            break;
-        case 5:
-            if (empty($details[4])) {
-                $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
-                ussd_proceed($ussd_text);
-            } else {
-                ussd_proceed("Injiza itariki yivuka. urugero:\n 2021-11-16\n");
-            }
-            break;
-        case 6:
-            if (empty($details[5])) {
-                $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
-                ussd_proceed($ussd_text);
-            } else {
-                $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phone'");
-                $fetched_rows = $search_result->fetch();
-                $pid = $fetched_rows['id'];
-
-                $dbConn->exec("INSERT INTO children (fname, oname, pid, born) VALUES('$details[3]', '$details[4]', '$pid', '$details[5]')");
-                $ussd_text = "Byegenze neza! Umwana witwa " . $details[3] . " yinjijwe muri sisitemu";
-                ussd_stop($ussd_text);
-            }
-            break;
-        default:
-            ussd_stop("habaye ikibazo, mwongere mukanyas");
-            break;
+    $temp = explode('*', $level);
+    $level_2 = str_replace("#", '', $temp[2]);
+    $res = null;
+    if ($level_2) {
+        $res = "injiza umubare wibanga:";
     }
+    //         ussd_proceed($ussd_text); // ask user to enter registration details
+    //         break;
+    //     case 2:
+    //         if (empty($level[1])) {
+    //             $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
+    //             ussd_proceed($ussd_text);
+    //         } else {
+    //             try {
+    //                 $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phone' and pin='$level[1]'");
+    //                 $total_rows = $search_result->rowCount();
+    //                 if ($total_rows == 0) {
+    //                     ussd_stop("Umubare w'ibanga ntabwo ariwo");
+    //                     return;
+    //                 }
+    //                 display_user_menu();
+    //             } catch (PDOException $e) {
+    //                 ussd_stop("habaye ikibazo, mwongere mukanya");
+    //             }
+    //         }
+    //         break;
+    //     case 3:
+    //         if (empty($level[2])) {
+    //             $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
+    //             ussd_proceed($ussd_text);
+    //         } else {
+    //             $date = date("Y-m-d H:i:s");
+    //             $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phone'");
+    //             $fetched_rows = $search_result->fetch();
+    //             switch ($level[2]) {
+    //                 case "1":
+    //                     ussd_proceed("Izina rya gikirisitu");
+    //                     break;
+    //                 case "2":
+    //                     ussd_stop("yello2");
+    //                     break;
+    //                 case "3":
+    //                     // add queries here
+    //                     $ussd_text = "andika igitekerezo:";
+    //                     ussd_proceed($ussd_text); // ask user to enter registration details
+    //                     break;
+    //                 case "4":
+    //                     ussd_stop("yello3");
+    //                     break;
+    //                 case "5":
+    //                     $ussd_text = "Murakoze gukoresha sisitemu yacu. ibihe byiza!!!";
+    //                     ussd_stop($ussd_text);
+    //                     break;
+    //                 case "6":
+    //                     array_pop($level);
+    //                     array_pop($level);
+    //                     array_pop($level);
+    //                     display_menu();
+    //                     break;
+    //                 default:
+    //                     ussd_stop("habaye ikibazo, mwongere mukanya");
+    //                     break;
+    //             }
+    //         }
+    //         break;
+    //     case 4:
+    //         if (empty($level[3])) {
+    //             $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
+    //             ussd_proceed($ussd_text);
+    //         } else {
+    //             switch ($level[2]) {
+    //                 case "1":
+    //                     ussd_proceed("Injiza andi mazina ye");
+    //                     break;
+    //                 case '3':
+    //                     $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phone'");
+    //                     $fetched_rows = $search_result->fetch();
+    //                     $sender = $fetched_rows['id'];
+
+    //                     $dbConn->exec("INSERT INTO comments (sender, message) VALUES('$sender','$level[3]')");
+    //                     $ussd_text = "Murakoze! igitekerezo cyanyu cyakiriwe";
+    //                     ussd_stop($ussd_text);
+    //                     break;
+    //                 default:
+    //                     ussd_stop("habaye ikibazo, mwongere mukanya");
+    //                     break;
+    //             }
+    //         }
+    //         break;
+    //     case 5:
+    //         if (empty($level[4])) {
+    //             $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
+    //             ussd_proceed($ussd_text);
+    //         } else {
+    //             ussd_proceed("Injiza itariki yivuka. urugero:\n 2021-11-16\n");
+    //         }
+    //         break;
+    //     case 6:
+    //         if (empty($level[5])) {
+    //             $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
+    //             ussd_proceed($ussd_text);
+    //         } else {
+    //             $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phone'");
+    //             $fetched_rows = $search_result->fetch();
+    //             $pid = $fetched_rows['id'];
+
+    //             $dbConn->exec("INSERT INTO children (fname, oname, pid, born) VALUES('$level[3]', '$level[4]', '$pid', '$level[5]')");
+    //             $ussd_text = "Byegenze neza! Umwana witwa " . $level[3] . " yinjijwe muri sisitemu";
+    //             ussd_stop($ussd_text);
+    //         }
+    //         break;
+    //     default:
+    //         ussd_stop("habaye ikibazo, mwongere mukanyas");
+    //         break;
+    // }
+    return $res;
 }
 
 // Function that handles Registration menu
-function register($details, $phone, $dbConn)
+function register($level, $phone, $dbConn)
 {
+    $temp = explode('*', $level);
+    $level_2 = str_replace("#", '', $temp[2]);
     $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phone'");
     $total_rows = $search_result->rowCount();
     if ($total_rows > 0) {
         ussd_stop("Musanzwe muri sisitemu!");
         return;
     }
-    switch (count($details)) {
+    switch ($level_2) {
         case 1:
             $ussd_text = "injiza izina ryambere:";
             ussd_proceed($ussd_text); // ask user to enter registration details
             break;
         case 2:
-            if (empty($details[1])) {
+            if (empty($level[1])) {
                 $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
                 ussd_proceed($ussd_text);
             } else {
@@ -244,7 +252,7 @@ function register($details, $phone, $dbConn)
             }
             break;
         case 3:
-            if (empty($details[2])) {
+            if (empty($level[2])) {
                 $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
                 ussd_proceed($ussd_text);
             } else {
@@ -253,7 +261,7 @@ function register($details, $phone, $dbConn)
             }
             break;
         case 4:
-            if (empty($details[3])) {
+            if (empty($level[3])) {
                 $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
                 ussd_proceed($ussd_text);
             } else {
@@ -262,15 +270,15 @@ function register($details, $phone, $dbConn)
             }
             break;
         case 5:
-            if (empty($details[4])) {
+            if (empty($level[4])) {
                 $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
                 ussd_proceed($ussd_text);
             } else {
-                $fname = $details[1]; //store full name of the baby
-                $oname = $details[2]; //father name
-                $idno = $details[3]; //mother name
-                $pin = $details[4]; //pin number
-                //$mid = $details[4]; //mother id
+                $fname = $level[1]; //store full name of the baby
+                $oname = $level[2]; //father name
+                $idno = $level[3]; //mother name
+                $pin = $level[4]; //pin number
+                //$mid = $level[4]; //mother id
                 $phone_number = $phone; //store phone number
 
                 // build sql statement
