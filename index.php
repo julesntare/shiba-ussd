@@ -151,7 +151,7 @@ function login($level, $dbConn, $phone)
             }
             break;
         default:
-            $res["msg"] = "habaye ikibazo, mwongere mukanya";
+            $res["msg"] = $level_2;
             $res["status"] = 0;
             break;
     }
@@ -363,7 +363,7 @@ function userMenus($level, $dbConn, $phone)
             }
             break;
         default:
-            $arr["msg"] = $lvl;
+            $arr["msg"] = "habaye ikibazo, mwongere mukanya";
             $arr["status"] = 0;
             break;
     }
