@@ -117,7 +117,7 @@ function login($level, $dbConn, $phone)
     $level_1 = str_replace("#", '', $temp[1]);
     $level_2 = str_replace("#", '', $temp[2]);
     $res = array();
-    if ($level_1 == 3) {
+    if (count($temp) == 2) {
         $res["msg"] = "injiza umubare wibanga:";
         $res["status"] = 1;
     } else if (!empty($level_2)) {
