@@ -112,7 +112,7 @@ function login($level, $dbConn, $phone)
     $level_2 = str_replace("#", '', $temp[2]);
     $res = "";
     if ($level_2) {
-        return "injiza umubare wibanga:";
+        $res .= "injiza umubare wibanga:";
     }
     //     //         ussd_proceed($ussd_text); // ask user to enter registration details
     //     //         break;
@@ -223,7 +223,7 @@ function login($level, $dbConn, $phone)
     //     //         ussd_stop("habaye ikibazo, mwongere mukanyas");
     //     //         break;
     //     // }
-    // return $res;
+    return $res;
 }
 
 // Function that handles Registration menu
