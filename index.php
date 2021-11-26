@@ -131,7 +131,7 @@ function login($level, $dbConn, $phone)
                     $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='+250784645417' and pin='$pin'");
                     $total_rows = $search_result->rowCount();
                     if ($total_rows == 0) {
-                        $res["msg"] = "Umubare w'ibanga ntabwo ariwo";
+                        $res["msg"] = $phone;
                         $res["status"] = 0;
                     } else {
                         $res["msg"] = "yesiii";
