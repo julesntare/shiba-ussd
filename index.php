@@ -342,6 +342,10 @@ function resSelectedMenu($level)
             $res["msg"] = "Murakoze gukoresha sisitemu.";
             $res["status"] = 0;
             break;
+        case 6:
+            $res["msg"] = display_menu();
+            $res["status"] = 1;
+            break;
         default:
             $res["msg"] = "habaye ikibazo, mwongere mukanya";
             $res["status"] = 0;
