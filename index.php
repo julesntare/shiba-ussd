@@ -31,38 +31,34 @@ $networkCode = $_POST['networkCode'];
  * One needs to split the response from Africa's Talking in order to determine
  * the menu level and input for each level
  * */
-$ussd_string_exploded = explode("*", $userinput);
+$ussd_string_exploded = explode("70", $userinput);
 
 // Get menu level from ussd_string reply
-$level = count($ussd_string_exploded);
+$level = $ussd_string_exploded[count($ussd_string_exploded) - 1];
 
 if ($userinput == '*662*800*70#') {
     $response = display_menu(); // show the home/first menu
     $ContinueSession = 1;
 } else {
-    if ($level == 5) {
-        $last_item = $ussd_string_exploded[$level - 1];
-        $explod_hash = explode('#', $last_item);
-        $last_item = $explod_hash[0];
-        switch ($last_item) {
-            case 1:
-                // If user selected 1 send them to the registration menu
-                register($ussd_string_exploded, $phone, $dbConn);
-                break;
-            case 2:
-                //If user selected 2, send them to the about menu
-                $response = about();
-                $ContinueSession = 0;
-                break;
-            case 3:
-                //If user selected 3, send them to the about menu
-                login($ussd_string_exploded, $dbConn, $phone);
-                break;
-            default:
-                $response = "Invalid selection!!!";
-                $ContinueSession = 0;
-                break;
-        }
+    $level_1 = explode('*', $level);
+    switch ($level_1) {
+        case 1:
+            // If user selected 1 send them to the registration menu
+            register($level, $phone, $dbConn);
+            break;
+        case 2:
+            //If user selected 2, send them to the about menu
+            $response = about();
+            $ContinueSession = 0;
+            break;
+        case 3:
+            //If user selected 3, send them to the about menu
+            login($level, $dbConn, $phone);
+            break;
+        default:
+            $response = "Invalid selection!!!";
+            $ContinueSession = 0;
+            break;
     }
 }
 
