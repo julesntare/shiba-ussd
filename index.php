@@ -261,6 +261,20 @@ function register($level, $phone, $dbConn)
         $res["status"] = 0;
     } else {
         switch (count($temp)) {
+            case 2:
+                $res["msg"] = "injiza izina ryambere:";
+                $res["status"] = 1;
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            default:
+                $res["msg"] = "habaye ikibazo, mwongere mukanya";
+                $res["status"] = 0;
+                break;
         }
     }
     // switch ($level_2) {
