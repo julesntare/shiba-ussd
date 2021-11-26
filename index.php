@@ -128,10 +128,11 @@ function login($level, $dbConn, $phone)
                 $res["status"] = 0;
             } else {
                 try {
-                    $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='+250784645417' and pin='$pin'");
+                    $p = str_replace("+", '', $phone);
+                    $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$p' and pin='$pin'");
                     $total_rows = $search_result->rowCount();
                     if ($total_rows == 0) {
-                        $res["msg"] = $phone;
+                        $res["msg"] = "Umubare w'ibanga ntabwo ariwo.";
                         $res["status"] = 0;
                     } else {
                         $res["msg"] = "yesiii";
