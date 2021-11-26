@@ -114,28 +114,39 @@ function display_user_menu()
 function login($level, $dbConn, $phone)
 {
     $temp = explode('*', $level);
-    $level_1 = str_replace("#", '', $temp[1]);
     $level_2 = str_replace("#", '', $temp[2]);
     $res = array();
-    if (count($temp) == 2) {
-        $res["msg"] = "injiza umubare wibanga:";
-        $res["status"] = 1;
-    } else if (!empty($level_2)) {
-        $pin = $level_2;
-        try {
-            $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phone' and pin='$pin'");
-            $total_rows = $search_result->rowCount();
-            if ($total_rows == 0) {
-                $res["msg"] = "Umubare w'ibanga ntabwo ariwo";
+    switch (count($temp)) {
+        case 2:
+            $res["msg"] = "injiza umubare wibanga:";
+            $res["status"] = 1;
+            break;
+        case 3:
+            $pin = $level_2;
+            if (empty($level_2)) {
+                $res["msg"] = "ntakintu mwinjijemo ntabwo byemewe";
                 $res["status"] = 0;
+            } else {
+                try {
+                    $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phone' and pin='$pin'");
+                    $total_rows = $search_result->rowCount();
+                    if ($total_rows == 0) {
+                        $res["msg"] = "Umubare w'ibanga ntabwo ariwo";
+                        $res["status"] = 0;
+                        return;
+                    }
+                    $res["msg"] = "";
+                    $res["status"] = 1;
+                } catch (PDOException $e) {
+                    $res["msg"] = "habaye ikibazo, mwongere mukanya";
+                    $res["status"] = 0;
+                }
             }
-        } catch (PDOException $e) {
+            break;
+        default:
             $res["msg"] = "habaye ikibazo, mwongere mukanya";
             $res["status"] = 0;
-        }
-    } else {
-        $res["msg"] = "ntakintu mwinjijemo ntabwo byemewe";
-        $res["status"] = 0;
+            break;
     }
     //     //         ussd_proceed($ussd_text); // ask user to enter registration details
     //     //         break;
