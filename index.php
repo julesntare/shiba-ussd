@@ -297,10 +297,10 @@ function register($level, $phone, $dbConn)
                     $res["msg"] = "Ntakintu mwinjijemo ntabwo byemewe";
                     $res["status"] = 0;
                 } else {
-                    $fname = trim(str_replace("#", '', $temp[count($temp) - 1]));
-                    $oname = trim(str_replace("#", '', $temp[count($temp) - 2]));
-                    $idno = trim(str_replace("#", '', $temp[count($temp) - 3]));
-                    $pin = trim(str_replace("#", '', $temp[count($temp) - 4]));
+                    $fname = trim(str_replace("#", '', $temp[count($temp) - 4]));
+                    $oname = trim(str_replace("#", '', $temp[count($temp) - 3]));
+                    $idno = trim(str_replace("#", '', $temp[count($temp) - 2]));
+                    $pin = trim(str_replace("#", '', $temp[count($temp) - 1]));
                     $phone_number = $phone;
 
                     // build sql statement
