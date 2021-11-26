@@ -40,8 +40,9 @@ if ($userinput == '*662*800*70#') {
     $response = display_menu(); // show the home/first menu
     $ContinueSession = 1;
 } else {
-    $level_1 = explode('*', $level);
-    switch ($level_1[1]) {
+    $temp = explode('*', $level);
+    $level_1 = $res = str_replace("#", '', $temp[1]);
+    switch ($level_1) {
         case 1:
             // If user selected 1 send them to the registration menu
             register($level, $phone, $dbConn);
