@@ -116,8 +116,10 @@ function login($level, $dbConn, $phone)
     $temp = explode('*', $level);
     $level_2 = str_replace("#", '', $temp[2]);
     $res = array();
-
-    $res["msg"] = "injiza umubare wibanga:";
+    if ($level == 3) {
+        $res["msg"] = "injiza umubare wibanga:";
+        $res["status"] = 1;
+    }
     if (!empty($level_2)) {
         $pin = $level_2;
         try {
