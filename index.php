@@ -122,13 +122,13 @@ function login($level, $dbConn, $phone)
             $res["status"] = 1;
             break;
         case 3:
-            $pin = rtrim($level_2);
+            $pin = $level_2;
             if (empty(trim($level_2))) {
                 $res["msg"] = "ntakintu mwinjijemo ntabwo byemewe";
                 $res["status"] = 0;
             } else {
                 try {
-                    $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phone' and pin='$pin'");
+                    $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phone' and pin=$pin");
                     $total_rows = $search_result->rowCount();
                     if ($total_rows == 0) {
                         $res["msg"] = "Umubare w'ibanga ntabwo ariwo";
