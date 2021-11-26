@@ -135,7 +135,7 @@ function login($level, $dbConn, $phone)
                         $res["status"] = 0;
                         return;
                     }
-                    $res["msg"] = "";
+                    $res["msg"] = "yesiii";
                     $res["status"] = 1;
                 } catch (PDOException $e) {
                     $res["msg"] = "habaye ikibazo, mwongere mukanya";
