@@ -152,11 +152,11 @@ function login($level, $dbConn, $phone)
             break;
         case 4:
             if (empty($lvl)) {
-                $arr["msg"] = "ntakintu mwinjijemo ntabwo byemewe";
-                $arr["status"] = 0;
+                $res["msg"] = "ntakintu mwinjijemo ntabwo byemewe";
+                $res["status"] = 0;
             } else {
-                $arr["msg"] = "ok";
-                $arr["status"] = 1;
+                $res["msg"] = "ok";
+                $res["status"] = 1;
             }
             break;
         default:
