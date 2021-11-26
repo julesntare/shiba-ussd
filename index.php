@@ -46,8 +46,13 @@ if ($userinput == '*662*800*70#') {
     switch ($level_1) {
         case 1:
             // If user selected 1 send them to the registration menu
-            $response = register($level, $p, $dbConn);
-            $ContinueSession = 1;
+            $res_temp = register($level, $p, $dbConn);
+            $response = $res_temp['msg'];
+            if ($res_temp['status'] == 0) {
+                $ContinueSession = 0;
+            } else {
+                $ContinueSession = 1;
+            }
             break;
         case 2:
             //If user selected 2, send them to the about menu
