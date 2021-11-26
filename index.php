@@ -141,13 +141,22 @@ function login($level, $dbConn, $phone)
                         $res["msg"] = "Umubare w'ibanga ntabwo ariwo.";
                         $res["status"] = 0;
                     } else {
-                        $rtArr = userMenus($temp, $dbConn, $phone);
-                        $res = array_merge($res, $rtArr);
+                        $res["msg"] = display_user_menu();
+                        $res["status"] = 1;
                     }
                 } catch (PDOException $e) {
                     $res["msg"] = "habaye ikibazo, mwongere mukanya";
                     $res["status"] = 0;
                 }
+            }
+            break;
+        case 4:
+            if (empty($lvl)) {
+                $arr["msg"] = "ntakintu mwinjijemo ntabwo byemewe";
+                $arr["status"] = 0;
+            } else {
+                $arr["msg"] = "ok";
+                $arr["status"] = 1;
             }
             break;
         default:
@@ -342,32 +351,6 @@ function register($level, $phone, $dbConn)
         }
     }
     return $res;
-}
-
-function userMenus($level, $dbConn, $phone)
-{
-    $arr = array();
-    $lvl = trim(str_replace("#", '', $level[count($level) - 1]));
-    switch (count($level)) {
-        case 3:
-            $arr["msg"] = display_user_menu();
-            $arr["status"] = 1;
-            break;
-        case 4:
-            if (empty($lvl)) {
-                $arr["msg"] = "ntakintu mwinjijemo ntabwo byemewe";
-                $arr["status"] = 0;
-            } else {
-                $arr["msg"] = "ok";
-                $arr["status"] = 1;
-            }
-            break;
-        default:
-            $arr["msg"] = "habaye ikibazo, mwongere mukanya";
-            $arr["status"] = 0;
-            break;
-    }
-    return $arr;
 }
 
 # close the pdo connection
