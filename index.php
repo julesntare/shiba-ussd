@@ -125,8 +125,8 @@ function login($level, $dbConn, $phone)
                 $res["msg"] = "ntakintu mwinjijemo ntabwo byemewe";
                 $res["status"] = 0;
             } else {
-                $res["msg"] = resSelectedMenu($temp);
-                $res["status"] = 1;
+                $resSel = resSelectedMenu($lvl);
+                $res = array_merge($res, $resSel);
             }
             break;
         default:
@@ -325,7 +325,29 @@ function register($level, $phone, $dbConn)
 
 function resSelectedMenu($level)
 {
-    return $level;
+    switch ($level) {
+        case 1:
+            # code...
+            break;
+        case 2:
+            # code...
+            break;
+        case 3:
+            # code...
+            break;
+        case 4:
+            # code...
+            break;
+        case 5:
+            $res["msg"] = "Murakoze gukoresha sisitemu.";
+            $res["status"] = 0;
+            break;
+        default:
+            $res["msg"] = "habaye ikibazo, mwongere mukanya";
+            $res["status"] = 0;
+            break;
+    }
+    return $res;
 }
 
 # close the pdo connection
