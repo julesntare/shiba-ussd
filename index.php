@@ -113,7 +113,6 @@ function login($level, $dbConn, $phone)
     $res = null;
     if ($level_2) {
         $res = "injiza umubare wibanga:";
-    }
     //         ussd_proceed($ussd_text); // ask user to enter registration details
     //         break;
     //     case 2:
