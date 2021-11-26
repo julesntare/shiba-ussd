@@ -121,7 +121,7 @@ function display_user_menu()
 function login($level, $dbConn, $phone)
 {
     $temp = explode('*', $level);
-    $level_2 = str_replace("#", '', $temp[2]);
+    $lvl = trim(str_replace("#", '', $temp[count($temp) - 1]));
     $res = array();
     switch (count($temp)) {
         case 2:
@@ -129,8 +129,8 @@ function login($level, $dbConn, $phone)
             $res["status"] = 1;
             break;
         case 3:
-            $pin = $level_2;
-            if (empty(trim($level_2))) {
+            $pin = $lvl;
+            if (empty(trim($lvl))) {
                 $res["msg"] = "ntakintu mwinjijemo ntabwo byemewe";
                 $res["status"] = 0;
             } else {
@@ -160,7 +160,7 @@ function login($level, $dbConn, $phone)
             }
             break;
         default:
-            $res["msg"] = $level_2;
+            $res["msg"] = "habaye ikibazo, mwongere mukanya";
             $res["status"] = 0;
             break;
     }
