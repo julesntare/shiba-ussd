@@ -251,7 +251,7 @@ function login($level, $dbConn, $phone)
 function register($level, $phone, $dbConn)
 {
     $temp = explode('*', $level);
-    $level_2 = str_replace("#", '', $temp[2]);
+    $lvl = str_replace("#", '', $temp[count($temp) - 1]);
     $res = array();
 
     $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phone'");
@@ -262,10 +262,17 @@ function register($level, $phone, $dbConn)
     } else {
         switch (count($temp)) {
             case 2:
-                $res["msg"] = "injiza izina ryambere:";
+                $res["msg"] = "Andika izina rya mbere:";
                 $res["status"] = 1;
                 break;
             case 3:
+                if (empty($lvl)) {
+                    $res["msg"] = "ntakintu mwinjijemo ntabwo byemewe";
+                    $res["status"] = 0;
+                } else {
+                    $res["msg"] = "Andika andi mazina:";
+                    $res["status"] = 1;
+                }
                 break;
             case 4:
                 break;
@@ -277,20 +284,6 @@ function register($level, $phone, $dbConn)
                 break;
         }
     }
-    // switch ($level_2) {
-    //     case 1:
-    //         $ussd_text = "injiza izina ryambere:";
-    //         ussd_proceed($ussd_text); // ask user to enter registration details
-    //         break;
-    //     case 2:
-    //         if (empty($level[1])) {
-    //             $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
-    //             ussd_proceed($ussd_text);
-    //         } else {
-    //             $ussd_text = "injiza andi mazina:";
-    //             ussd_proceed($ussd_text); // ask user to enter registration details
-    //         }
-    //         break;
     //     case 3:
     //         if (empty($level[2])) {
     //             $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
