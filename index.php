@@ -41,7 +41,11 @@ if ($userinput == '*662*800*70#') {
     $ContinueSession = 1;
 } else {
     $level_1 = explode('*', $level);
+<<<<<<< HEAD
     switch ($level_1[1]) {
+=======
+    switch ($level_1) {
+>>>>>>> d5bfe42060ec07ce393a7c551d81d9c1166f92fc
         case 1:
             // If user selected 1 send them to the registration menu
             register($level, $phone, $dbConn);
