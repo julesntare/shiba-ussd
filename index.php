@@ -119,8 +119,7 @@ function login($level, $dbConn, $phone)
     if ($level == 3) {
         $res["msg"] = "injiza umubare wibanga:";
         $res["status"] = 1;
-    }
-    if (!empty($level_2)) {
+    } else if (!empty($level_2)) {
         $pin = $level_2;
         try {
             $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phone' and pin='$pin'");
