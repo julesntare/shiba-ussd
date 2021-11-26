@@ -83,7 +83,7 @@ function about()
 
 function display_user_menu()
 {
-    $ussd_text = "1. kwandika umwana mushya\n 2. Ibiherutse gukorwa\n 3. Ibyenda gukorwa\n 4. Tanga igitekerezo\n 5. Gusohoka muri system\n 6. Subira ahabanza\n";
+    $ussd_text = "1. kwandika umwana mushya\n 2. Ibyenda gukorwa\n 3. Tanga igitekerezo\n 4. Gusohoka muri system\n 5. Subira ahabanza\n";
 
     return $ussd_text;
 }
@@ -127,6 +127,15 @@ function login($level, $dbConn, $phone)
             } else {
                 $resSel = resSelectedMenu($lvl);
                 $res = array_merge($res, $resSel);
+            }
+            break;
+        case 5:
+            if (empty($lvl)) {
+                $res["msg"] = "ntakintu mwinjijemo ntabwo byemewe";
+                $res["status"] = 0;
+            } else {
+                $res["msg"] = "ok";
+                $res["status"] = 0;
             }
             break;
         default:
@@ -327,22 +336,21 @@ function resSelectedMenu($level)
 {
     switch ($level) {
         case 1:
-            # code...
+            $res["msg"] = "Andika Izina rya mbere (umwana):";
+            $res["status"] = 1;
             break;
         case 2:
             # code...
             break;
         case 3:
-            # code...
+            $res["msg"] = "Andika igitekerezo cyawe:";
+            $res["status"] = 1;
             break;
         case 4:
-            # code...
-            break;
-        case 5:
             $res["msg"] = "Murakoze gukoresha sisitemu.";
             $res["status"] = 0;
             break;
-        case 6:
+        case 5:
             $res["msg"] = display_menu();
             $res["status"] = 1;
             break;
