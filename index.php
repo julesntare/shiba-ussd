@@ -136,7 +136,8 @@ function login($level, $dbConn, $phone)
                         $res["msg"] = "Umubare w'ibanga ntabwo ariwo.";
                         $res["status"] = 0;
                     } else {
-                        userMenus($temp, $dbConn, $p);
+                        $rtArr = userMenus($temp, $dbConn, $p);
+                        $res = array_merge($res, $rtArr);
                     }
                 } catch (PDOException $e) {
                     $res["msg"] = "habaye ikibazo, mwongere mukanya";
@@ -338,8 +339,10 @@ function register($level, $phone, $dbConn)
 
 function userMenus($level, $dbConn, $phone)
 {
-    $res["msg"] = display_user_menu();
-    $res["status"] = 1;
+    $arr = array();
+    $arr["msg"] = display_user_menu();
+    $arr["status"] = 1;
+    return $arr;
 }
 
 # close the pdo connection
