@@ -347,8 +347,26 @@ function register($level, $phone, $dbConn)
 function userMenus($level, $dbConn, $phone)
 {
     $arr = array();
-    $arr["msg"] = $level;
-    $arr["status"] = 1;
+    $lvl = trim(str_replace("#", '', $level[count($level) - 1]));
+    switch (count($level)) {
+        case 3:
+            $arr["msg"] = display_user_menu();
+            $arr["status"] = 1;
+            break;
+        case 4:
+            if (empty($lvl)) {
+                $res["msg"] = "ntakintu mwinjijemo ntabwo byemewe";
+                $res["status"] = 0;
+            } else {
+                $arr["msg"] = "ok";
+                $arr["status"] = 1;
+            }
+            break;
+        default:
+            $res["msg"] = "habaye ikibazo, mwongere mukanya";
+            $res["status"] = 0;
+            break;
+    }
     return $arr;
 }
 
