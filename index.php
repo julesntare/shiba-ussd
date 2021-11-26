@@ -110,7 +110,7 @@ function login($level, $dbConn, $phone)
 {
     $temp = explode('*', $level);
     $level_2 = str_replace("#", '', $temp[2]);
-    $res = "";
+    $res = "f";
     if ($level_2) {
         $res .= "injiza umubare wibanga:";
     }
