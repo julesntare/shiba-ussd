@@ -1,7 +1,4 @@
 <?php
-/* Simple sample USSD registration application
- * USSD gateway that is being used is Africa's Talking USSD gateway
- */
 
 // Print the response as plain text so that the gateway can read it
 header('Content-type: text/plain');
@@ -26,12 +23,6 @@ $userinput = urldecode($_POST["UserInput"]);
 $serviceCode = $_POST["serviceCode"];
 $networkCode = $_POST['networkCode'];
 
-
-/* Split text input based on asteriks(*)
- * Africa's talking appends asteriks for after every menu level or input
- * One needs to split the response from Africa's Talking in order to determine
- * the menu level and input for each level
- * */
 $ussd_string_exploded = explode("70", $userinput);
 
 // Get menu level from ussd_string reply
@@ -74,27 +65,6 @@ if ($userinput == '*662*800*70#') {
             $ContinueSession = 0;
             break;
     }
-}
-
-
-/* The ussd_proceed function appends CON to the USSD response your application gives.
- * This informs Africa's Talking USSD gateway and consecuently Safaricom's
- * USSD gateway that the USSD session is till in session or should still continue
- * Use this when you want the application USSD session to continue
-*/
-function ussd_proceed($ussd_text)
-{
-    echo "CON $ussd_text";
-}
-
-/* This ussd_stop function appends END to the USSD response your application gives.
- * This informs Africa's Talking USSD gateway and consecuently Safaricom's
- * USSD gateway that the USSD session should end.
- * Use this when you to want the application session to terminate/end the application
-*/
-function ussd_stop($ussd_text)
-{
-    echo "END $ussd_text";
 }
 
 //This is the home menu function
@@ -155,7 +125,7 @@ function login($level, $dbConn, $phone)
                 $res["msg"] = "ntakintu mwinjijemo ntabwo byemewe";
                 $res["status"] = 0;
             } else {
-                $res["msg"] = "ok";
+                $res["msg"] = resSelectedMenu($temp);
                 $res["status"] = 1;
             }
             break;
@@ -351,6 +321,11 @@ function register($level, $phone, $dbConn)
         }
     }
     return $res;
+}
+
+function resSelectedMenu($level)
+{
+    return $level;
 }
 
 # close the pdo connection
