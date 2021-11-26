@@ -20,6 +20,7 @@ try {
 
 // Get the parameters provided by Africa's Talking USSD gateway
 $phone = $_POST['msisdn'];
+$p = str_replace("%2B", '+', $phone);
 $session_id = $_POST['sessionId'];
 $userinput = urldecode($_POST["UserInput"]);
 $serviceCode = $_POST["serviceCode"];
@@ -45,7 +46,7 @@ if ($userinput == '*662*800*70#') {
     switch ($level_1) {
         case 1:
             // If user selected 1 send them to the registration menu
-            $response = register($level, $phone, $dbConn);
+            $response = register($level, $p, $dbConn);
             $ContinueSession = 1;
             break;
         case 2:
@@ -55,7 +56,7 @@ if ($userinput == '*662*800*70#') {
             break;
         case 3:
             //If user selected 3, send them to the about menu
-            $res_temp = login($level, $dbConn, $phone);
+            $res_temp = login($level, $dbConn, $p);
             $response = $res_temp['msg'];
             if ($res_temp['status'] == 0) {
                 $ContinueSession = 0;
@@ -129,14 +130,13 @@ function login($level, $dbConn, $phone)
                 $res["status"] = 0;
             } else {
                 try {
-                    $p = str_replace("%2B", '+', $phone);
-                    $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$p' and pin='$pin'");
+                    $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phone' and pin='$pin'");
                     $total_rows = $search_result->rowCount();
                     if ($total_rows == 0) {
                         $res["msg"] = "Umubare w'ibanga ntabwo ariwo.";
                         $res["status"] = 0;
                     } else {
-                        $rtArr = userMenus($temp, $dbConn, $p);
+                        $rtArr = userMenus($temp, $dbConn, $phone);
                         $res = array_merge($res, $rtArr);
                     }
                 } catch (PDOException $e) {
@@ -247,94 +247,100 @@ function register($level, $phone, $dbConn)
 {
     $temp = explode('*', $level);
     $level_2 = str_replace("#", '', $temp[2]);
+    $res = array();
+
     $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phone'");
     $total_rows = $search_result->rowCount();
     if ($total_rows > 0) {
-        ussd_stop("Musanzwe muri sisitemu!");
-        return;
+        $res["msg"] = "Musanzwe muri sisitemu!";
+        $res["status"] = 0;
+    } else {
+        switch (count($temp)) {
+        }
     }
-    switch ($level_2) {
-        case 1:
-            $ussd_text = "injiza izina ryambere:";
-            ussd_proceed($ussd_text); // ask user to enter registration details
-            break;
-        case 2:
-            if (empty($level[1])) {
-                $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
-                ussd_proceed($ussd_text);
-            } else {
-                $ussd_text = "injiza andi mazina:";
-                ussd_proceed($ussd_text); // ask user to enter registration details
-            }
-            break;
-        case 3:
-            if (empty($level[2])) {
-                $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
-                ussd_proceed($ussd_text);
-            } else {
-                $ussd_text = "injiza numero yirangamuntu:";  // ask user to enter home location
-                ussd_proceed($ussd_text);
-            }
-            break;
-        case 4:
-            if (empty($level[3])) {
-                $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
-                ussd_proceed($ussd_text);
-            } else {
-                $ussd_text = "hitamo umubare wibanga :";  // ask user to enter home location
-                ussd_proceed($ussd_text);
-            }
-            break;
-        case 5:
-            if (empty($level[4])) {
-                $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
-                ussd_proceed($ussd_text);
-            } else {
-                $fname = $level[1]; //store full name of the baby
-                $oname = $level[2]; //father name
-                $idno = $level[3]; //mother name
-                $pin = $level[4]; //pin number
-                //$mid = $level[4]; //mother id
-                $phone_number = $phone; //store phone number
+    // switch ($level_2) {
+    //     case 1:
+    //         $ussd_text = "injiza izina ryambere:";
+    //         ussd_proceed($ussd_text); // ask user to enter registration details
+    //         break;
+    //     case 2:
+    //         if (empty($level[1])) {
+    //             $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
+    //             ussd_proceed($ussd_text);
+    //         } else {
+    //             $ussd_text = "injiza andi mazina:";
+    //             ussd_proceed($ussd_text); // ask user to enter registration details
+    //         }
+    //         break;
+    //     case 3:
+    //         if (empty($level[2])) {
+    //             $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
+    //             ussd_proceed($ussd_text);
+    //         } else {
+    //             $ussd_text = "injiza numero yirangamuntu:";  // ask user to enter home location
+    //             ussd_proceed($ussd_text);
+    //         }
+    //         break;
+    //     case 4:
+    //         if (empty($level[3])) {
+    //             $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
+    //             ussd_proceed($ussd_text);
+    //         } else {
+    //             $ussd_text = "hitamo umubare wibanga :";  // ask user to enter home location
+    //             ussd_proceed($ussd_text);
+    //         }
+    //         break;
+    //     case 5:
+    //         if (empty($level[4])) {
+    //             $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
+    //             ussd_proceed($ussd_text);
+    //         } else {
+    //             $fname = $level[1]; //store full name of the baby
+    //             $oname = $level[2]; //father name
+    //             $idno = $level[3]; //mother name
+    //             $pin = $level[4]; //pin number
+    //             //$mid = $level[4]; //mother id
+    //             $phone_number = $phone; //store phone number
 
-                // build sql statement
-                try {
-                    $dbConn->exec("INSERT INTO parents (fname,oname,idno,phone,pin) VALUES('$fname','$oname','$idno','$phone_number','$pin')");
+    //             // build sql statement
+    //             try {
+    //                 $dbConn->exec("INSERT INTO parents (fname,oname,idno,phone,pin) VALUES('$fname','$oname','$idno','$phone_number','$pin')");
 
-                    $curl = curl_init();
+    //                 $curl = curl_init();
 
-                    curl_setopt_array($curl, array(
-                        CURLOPT_URL => 'https://api.mista.io/sms',
-                        CURLOPT_RETURNTRANSFER => true,
-                        CURLOPT_ENCODING => '',
-                        CURLOPT_MAXREDIRS => 10,
-                        CURLOPT_TIMEOUT => 0,
-                        CURLOPT_FOLLOWLOCATION => true,
-                        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                        CURLOPT_CUSTOMREQUEST => 'POST',
-                        CURLOPT_POSTFIELDS => array('to' => $phone_number, 'from' => 'SBCA', 'unicode' => '0', 'sms' => "Muraho  " . $fname . ",kwiyandikisha byagenze neza. mushobora kwandikisha umwana wanyu muri SBCS mukajya mubona inama kumikurire myiza yumwana Murakoze!", 'action' => 'send-sms'),
-                        CURLOPT_HTTPHEADER => array(
-                            'x-api-key: c2c1f86a-b113-97d9-ad16-76b66e1e5e68-8235bffb'
-                        ),
-                    ));
+    //                 curl_setopt_array($curl, array(
+    //                     CURLOPT_URL => 'https://api.mista.io/sms',
+    //                     CURLOPT_RETURNTRANSFER => true,
+    //                     CURLOPT_ENCODING => '',
+    //                     CURLOPT_MAXREDIRS => 10,
+    //                     CURLOPT_TIMEOUT => 0,
+    //                     CURLOPT_FOLLOWLOCATION => true,
+    //                     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+    //                     CURLOPT_CUSTOMREQUEST => 'POST',
+    //                     CURLOPT_POSTFIELDS => array('to' => $phone_number, 'from' => 'SBCA', 'unicode' => '0', 'sms' => "Muraho  " . $fname . ",kwiyandikisha byagenze neza. mushobora kwandikisha umwana wanyu muri SBCS mukajya mubona inama kumikurire myiza yumwana Murakoze!", 'action' => 'send-sms'),
+    //                     CURLOPT_HTTPHEADER => array(
+    //                         'x-api-key: c2c1f86a-b113-97d9-ad16-76b66e1e5e68-8235bffb'
+    //                     ),
+    //                 ));
 
-                    $response = curl_exec($curl);
+    //                 $response = curl_exec($curl);
 
-                    curl_close($curl);
+    //                 curl_close($curl);
 
-                    //execute insert query
-                    // $sth->execute();
-                    $ussd_text = " kwiyandikisha byagenze neza murakira ubutumwa bw'ikaze murakoze!";
-                    ussd_stop($ussd_text);
-                } catch (PDOException $e) {
-                    ussd_stop("habaye ikibazo, mwongere mukanya");
-                }
-            }
-            break;
-        default:
-            ussd_stop("habaye ikibazo, mwongere mukanya");
-            break;
-    }
+    //                 //execute insert query
+    //                 // $sth->execute();
+    //                 $ussd_text = " kwiyandikisha byagenze neza murakira ubutumwa bw'ikaze murakoze!";
+    //                 ussd_stop($ussd_text);
+    //             } catch (PDOException $e) {
+    //                 ussd_stop("habaye ikibazo, mwongere mukanya");
+    //             }
+    //         }
+    //         break;
+    //     default:
+    //         ussd_stop("habaye ikibazo, mwongere mukanya");
+    //         break;
+    // }
+    return $res;
 }
 
 function userMenus($level, $dbConn, $phone)
