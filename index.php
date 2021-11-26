@@ -296,6 +296,7 @@ function register($level, $phone, $dbConn)
                 if (empty($lvl)) {
                     $res["msg"] = "Ntakintu mwinjijemo ntabwo byemewe";
                     $res["status"] = 0;
+                } else {
                     $fname = trim(str_replace("#", '', $temp[count($temp) - 1]));
                     $oname = trim(str_replace("#", '', $temp[count($temp) - 2]));
                     $idno = trim(str_replace("#", '', $temp[count($temp) - 3]));
