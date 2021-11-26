@@ -107,8 +107,9 @@ function about()
 
 function display_user_menu()
 {
-    $ussd_text = "1. kwandika umwana mushya\n 2. Ibiherutse gukorwa\n 3. Ibyenda gukorwa\n 4. Tanga igitekerezo\n 5. Gusohoka muri system\n 6. Subira ahabanza\n"; // add \n so that the menu has new lines
-    ussd_proceed($ussd_text);
+    $ussd_text = "1. kwandika umwana mushya\n 2. Ibiherutse gukorwa\n 3. Ibyenda gukorwa\n 4. Tanga igitekerezo\n 5. Gusohoka muri system\n 6. Subira ahabanza\n";
+
+    return $ussd_text;
 }
 
 function login($level, $dbConn, $phone)
@@ -135,8 +136,7 @@ function login($level, $dbConn, $phone)
                         $res["msg"] = "Umubare w'ibanga ntabwo ariwo.";
                         $res["status"] = 0;
                     } else {
-                        $res["msg"] = "yesiii";
-                        $res["status"] = 1;
+                        userMenus($temp, $dbConn, $p);
                     }
                 } catch (PDOException $e) {
                     $res["msg"] = "habaye ikibazo, mwongere mukanya";
@@ -149,26 +149,6 @@ function login($level, $dbConn, $phone)
             $res["status"] = 0;
             break;
     }
-    //     //         ussd_proceed($ussd_text); // ask user to enter registration details
-    //     //         break;
-    //     //     case 2:
-    //     //         if (empty($level[1])) {
-    //     //             $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
-    //     //             ussd_proceed($ussd_text);
-    //     //         } else {
-    //     //             try {
-    //     //                 $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phone' and pin='$level[1]'");
-    //     //                 $total_rows = $search_result->rowCount();
-    //     //                 if ($total_rows == 0) {
-    //     //                     ussd_stop("Umubare w'ibanga ntabwo ariwo");
-    //     //                     return;
-    //     //                 }
-    //     //                 display_user_menu();
-    //     //             } catch (PDOException $e) {
-    //     //                 ussd_stop("habaye ikibazo, mwongere mukanya");
-    //     //             }
-    //     //         }
-    //     //         break;
     //     //     case 3:
     //     //         if (empty($level[2])) {
     //     //             $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
@@ -354,6 +334,12 @@ function register($level, $phone, $dbConn)
             ussd_stop("habaye ikibazo, mwongere mukanya");
             break;
     }
+}
+
+function userMenus($level, $dbConn, $phone)
+{
+    $res["msg"] = display_user_menu();
+    $res["status"] = 1;
 }
 
 # close the pdo connection
