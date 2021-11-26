@@ -123,7 +123,7 @@ function login($level, $dbConn, $phone)
             break;
         case 3:
             $pin = $level_2;
-            if (empty($level_2)) {
+            if (empty(trim($level_2))) {
                 $res["msg"] = "ntakintu mwinjijemo ntabwo byemewe";
                 $res["status"] = 0;
             } else {
