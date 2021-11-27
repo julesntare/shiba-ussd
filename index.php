@@ -70,7 +70,7 @@ if ($userinput == '*662*800*70#') {
 //This is the home menu function
 function display_menu()
 {
-    $initial_msg = "Murakaza neza muri SBCS System\n\n 1. kwiyandikisha(umubyeyi) \n 2. ibyerekeye system \n 3. konti yange \n";
+    $initial_msg = "Murakaza neza muri SBCA System\n\n 1. kwiyandikisha(umubyeyi) \n 2. ibyerekeye system \n 3. konti yange \n";
     return $initial_msg; // add \n so that the menu has new lines
 }
 
@@ -264,7 +264,7 @@ function register($level, $phone, $dbConn)
                             CURLOPT_CUSTOMREQUEST => 'POST',
                             CURLOPT_POSTFIELDS => array('to' => $phone_number, 'from' => 'SBCA', 'unicode' => '0', 'sms' => "Muraho  " . $fname . ",kwiyandikisha byagenze neza. mushobora kwandikisha umwana wanyu muri SBCS mukajya mubona inama kumikurire myiza yumwana Murakoze!", 'action' => 'send-sms'),
                             CURLOPT_HTTPHEADER => array(
-                                 'x-api-key: c2c1f86a-b113-97d9-ad16-76b66e1e5e68-8235bffb'
+                                // 'x-api-key: c2c1f86a-b113-97d9-ad16-76b66e1e5e68-8235bffb'
                             ),
                         ));
                         curl_close($curl);
