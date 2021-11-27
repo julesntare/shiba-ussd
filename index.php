@@ -325,6 +325,8 @@ function resSelectedMenu($level, $dbConn, $phone)
                         $diff = round($datediff / (60 * 60 * 24));
                         if ($diff <= $period) {
                             $comb_res .= "\n" . $fetched_vax['name'];
+                        } else {
+                            $comb_res .= "\nNta gikorwa gihari.";
                         }
                     }
                 }
