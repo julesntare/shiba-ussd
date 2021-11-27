@@ -125,7 +125,7 @@ function login($level, $dbConn, $phone)
                 $res["msg"] = "ntakintu mwinjijemo ntabwo byemewe";
                 $res["status"] = 0;
             } else {
-                $resSel = resSelectedMenu($lvl);
+                $resSel = resSelectedMenu($lvl, $dbConn, $phone);
                 $res = array_merge($res, $resSel);
             }
             break;
@@ -288,7 +288,7 @@ function register($level, $phone, $dbConn)
     return $res;
 }
 
-function resSelectedMenu($level)
+function resSelectedMenu($level, $dbConn, $phone)
 {
     switch ($level) {
         case 1:
@@ -296,7 +296,41 @@ function resSelectedMenu($level)
             $res["status"] = 1;
             break;
         case 2:
-            # code...
+            // get parent id
+            $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phone'");
+            $fetched_rows = $search_result->fetch();
+            $pid = $fetched_rows['id'];
+
+            // get children under this->parent
+            $child_result = $dbConn->query("SELECT * FROM children WHERE pid='$pid'");
+            if ($child_result->rowCount() < 1) {
+                $res["msg"] = "Nta mwana mwandikishije.";
+                $res["status"] = 0;
+            } else {
+                $comb_res = "";
+                while ($child_fetched_rows = $child_result->fetch()) {
+                    $comb_res .= "\n" . $child_fetched_rows['fname'] . " " . $child_fetched_rows['oname'];
+                    $child_bd = $child_fetched_rows['born'];
+
+                    $vax_result = $dbConn->query("SELECT * FROM vaccines");
+                    if ($vax_result->rowCount() < 1) {
+                        $comb_res = "\nNta gikorwa gihari.";
+                    } else {
+                        $fetched_vax = $vax_result->fetch();
+                        $period = $fetched_vax['period'];
+                        $now = time(); // or your date as well
+                        $your_date = strtotime($child_bd);
+                        $datediff = $now - $your_date;
+
+                        $diff = round($datediff / (60 * 60 * 24));
+                        if ($diff <= $period) {
+                            $comb_res = "\n" . $fetched_vax['name'];
+                        }
+                    }
+                }
+            }
+            $res["msg"] = $comb_res;
+            $res["status"] = 0;
             break;
         case 3:
             $res["msg"] = "Andika igitekerezo cyawe:";
