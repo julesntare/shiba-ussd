@@ -300,6 +300,7 @@ function resSelectedMenu($level, $dbConn, $phone)
             $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phone'");
             $fetched_rows = $search_result->fetch();
             $pid = $fetched_rows['id'];
+            $comb_res = "";
 
             // get children under this->parent
             $child_result = $dbConn->query("SELECT * FROM children WHERE pid='$pid'");
@@ -307,7 +308,6 @@ function resSelectedMenu($level, $dbConn, $phone)
                 $res["msg"] = "Nta mwana mwandikishije.";
                 $res["status"] = 0;
             } else {
-                $comb_res = "";
                 while ($child_fetched_rows = $child_result->fetch()) {
                     $comb_res .= "\n" . $child_fetched_rows['fname'] . " " . $child_fetched_rows['oname'];
                     $child_bd = $child_fetched_rows['born'];
