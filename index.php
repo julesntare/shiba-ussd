@@ -300,7 +300,7 @@ function resSelectedMenu($level, $dbConn, $phone)
             $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phone'");
             $fetched_rows = $search_result->fetch();
             $pid = $fetched_rows['id'];
-            $comb_res = "";
+            $comb_res = "Ibyenda gukorwa:\n";
 
             // get children under this->parent
             $child_result = $dbConn->query("SELECT * FROM children WHERE pid='$pid'");
