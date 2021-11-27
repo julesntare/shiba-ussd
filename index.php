@@ -308,8 +308,9 @@ function resSelectedMenu($level, $dbConn, $phone)
                 $res["msg"] = "Nta mwana mwandikishije.";
                 $res["status"] = 0;
             } else {
+                $i = 1;
                 while ($child_fetched_rows = $child_result->fetch()) {
-                    $comb_res .= "\n" . $child_fetched_rows['fname'] . " " . $child_fetched_rows['oname'];
+                    $comb_res .= "\n" . $i . ". " . $child_fetched_rows['fname'] . " " . $child_fetched_rows['oname'] . ":";
                     $child_bd = $child_fetched_rows['born'];
 
                     $vax_result = $dbConn->query("SELECT * FROM vaccines");
@@ -329,6 +330,7 @@ function resSelectedMenu($level, $dbConn, $phone)
                             $comb_res .= "\nNta gikorwa gihari.";
                         }
                     }
+                    $i += 1;
                 }
             }
             $res["msg"] = $comb_res;
