@@ -327,7 +327,7 @@ function resSelectedMenu($level, $dbConn, $phone)
                         if ($diff <= $period) {
                             $comb_res .= "\n -> " . $fetched_vax['name'];
                         } else {
-                            $comb_res .= "\nNta gikorwa gihari.";
+                            $comb_res .= "\n Nta gikorwa gihari.";
                         }
                     }
                     $i += 1;
