@@ -17,7 +17,7 @@ try {
 
 // Get the parameters provided by Africa's Talking USSD gateway
 $phone = $_POST['msisdn'];
-$p = str_replace("%2B", '+', $phone);
+$p =  substr($phone, 0, 1) != '+' ? (substr($phone, 0, 1) == '%' ? str_replace("%2B", '+', $phone) : "+" . $phone) : $phone;
 $session_id = $_POST['sessionId'];
 $userinput = urldecode($_POST["UserInput"]);
 $serviceCode = $_POST["serviceCode"];
