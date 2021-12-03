@@ -262,14 +262,11 @@ function register($level, $phone, $dbConn)
                             CURLOPT_FOLLOWLOCATION => true,
                             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                             CURLOPT_CUSTOMREQUEST => 'POST',
-                            CURLOPT_POSTFIELDS => array('to' => $phone_number, 'from' => 'SBCA', 'unicode' => '0', 'sms' => "Muraho,kwandikisha umwana byagenze neza!. muzajya mubona inama kumikurire myiza yumwana Murakoze!", 'action' => 'send-sms'),
+                            CURLOPT_POSTFIELDS => array('to' => $phone_number, 'from' => 'SBCA', 'unicode' => '0', 'sms' => "Muraho  " . $fname . ",kwiyandikisha byagenze neza. mushobora kwandikisha umwana wanyu muri SBCS mukajya mubona inama kumikurire myiza yumwana Murakoze!", 'action' => 'send-sms'),
                             CURLOPT_HTTPHEADER => array(
                                 'x-api-key:c2c1f86a-b113-97d9-ad16-76b66e1e5e68-8235bffb'
                             ),
                         ));
-        
-                        $response = curl_exec($curl);
-        
                         curl_close($curl);
 
                         //execute insert query
