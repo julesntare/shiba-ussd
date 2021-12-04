@@ -264,7 +264,7 @@ function register($level, $phone, $dbConn)
                             CURLOPT_CUSTOMREQUEST => 'POST',
                             CURLOPT_POSTFIELDS => array('to' => $phone_number, 'from' => 'SBCA', 'unicode' => '0', 'sms' => "Muraho  " . $fname . ",kwiyandikisha byagenze neza. mushobora kwandikisha umwana wanyu muri SBCS mukajya mubona inama kumikurire myiza yumwana Murakoze!", 'action' => 'send-sms'),
                             CURLOPT_HTTPHEADER => array(
-                                'x-api-key:e95e1e9e-e704-96b7-ac9d-b961e31ce727-778675c0'
+                                'x-api-key:35a13e16-dd2c-9c91-819b-34ed0beb5dc7-08b4b43d'
                             ),
                         ));
                         curl_close($curl);
