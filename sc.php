@@ -10,7 +10,7 @@ curl_setopt_array($curl, array(
     CURLOPT_FOLLOWLOCATION => true,
     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
     CURLOPT_CUSTOMREQUEST => "POST",
-    CURLOPT_POSTFIELDS => array('action' => 'send-sms', 'to' => '+250780674459', 'from' => 'SBCA', 'sms' => 'YourMessage', 'schedule' => '12/07/2021 03:47 PM'),
+    CURLOPT_POSTFIELDS => array('action' => 'send-sms', 'to' => '+250780674459', 'from' => 'SBCA', 'sms' => 'YourMessage', 'schedule' => '12/07/2021 04:05 PM'),
     CURLOPT_HTTPHEADER => array(
         "x-api-key: 35a13e16-dd2c-9c91-819b-34ed0beb5dc7-08b4b43d"
     ),
