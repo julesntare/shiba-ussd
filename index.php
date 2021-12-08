@@ -77,7 +77,9 @@ function display_menu()
 // Function that hanldles About menu
 function about()
 {
-    $about_text = "-SBCS ni gahunda izajya ifasha";
+    $about_text = "-SBCS ni gahunda izajya ifasha ababyeyi kugira amakuru ahagije kumikurire yabana bari munsi y'imyaka 2 \n 
+    - umubyeyi yiyandikisha muri sisiteme hanyuma akabasha kwandika umwana we \n
+    ";
     return $about_text;
 }
 
