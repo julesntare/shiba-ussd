@@ -169,25 +169,6 @@ function login($level, $dbConn, $phone)
             $res["status"] = 0;
             break;
     }
-    //     //     case 3:
-    //     //         if (empty($level[2])) {
-    //     //             $ussd_text = "ntakintu mwinjijemo ntabwo byemewe";
-    //     //             ussd_proceed($ussd_text);
-    //     //         } else {
-    //     //             $date = date("Y-m-d H:i:s");
-    //     //             $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phone'");
-    //     //             $fetched_rows = $search_result->fetch();
-    //     //             switch ($level[2]) {
-    //     //                 case "6":
-    //     //                     array_pop($level);
-    //     //                     array_pop($level);
-    //     //                     array_pop($level);
-    //     //                     display_menu();
-    //     //                     break;
-    //     //             }
-    //     //         }
-    //     //         break;
-    //     // }
     return $res;
 }
 
@@ -276,8 +257,6 @@ function register($level, $phone, $dbConn)
 
                         curl_close($curl);
 
-                        //execute insert query
-                        // $sth->execute();
                         $res["msg"] = "kwiyandikisha byagenze neza murakira ubutumwa bw'ikaze mukanya. Murakoze!";
                         $res["status"] = 0;
                     } catch (PDOException $e) {
