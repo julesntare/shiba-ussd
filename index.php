@@ -79,6 +79,9 @@ function about()
 {
     $about_text = "-SBCS ni gahunda izajya ifasha ababyeyi kugira amakuru ahagije kumikurire yabana bari munsi y'imyaka 2 \n 
     - umubyeyi yiyandikisha muri sisiteme hanyuma akabasha kwandika umwana we \n
+
+    SBCS ntabwo ikuraho gahunda isanzwe yirangamimerere \n 
+    umwana aramutse agize ikibazo ntabashe gukurikiza gahunda ahabwa na system ihutire kukigo nderabuzima kikwegereye \n
     ";
     return $about_text;
 }
