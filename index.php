@@ -165,14 +165,14 @@ function login($level, $dbConn, $phone)
                 $search_result_not = $dbConn->query("SELECT * FROM events");
                 $search_result_data = $search_result_not->fetchAll();
 
-                // foreach($search_result_not as $values){
-                //     $timetosend = '2';
-                //     $smstext = '5';
-                //     $dbConn->exec("INSERT INTO sms (receiver_phone, smstext, timetosend) VALUES('$pid', '$smstext', '$timetosend')");
-                // }
+                foreach($search_result_data as $key => $values){
+                    $timetosend = $values['timetosend'];
+                    $smstext = $values['smstext'];
+                    $dbConn->exec("INSERT INTO sms (receiver_phone, smstext, timetosend) VALUES('$pid', '$smstext', '$timetosend')");
+                }
 
                 $dbConn->exec("INSERT INTO children (fname, oname, pid, born) VALUES('$fname', '$oname', '$pid', '$born')");
-                $res["msg"] = "Byegenze neza! " . $search_result_data . " yanditswe muri sisitemu";
+                $res["msg"] = "Byegenze neza! " . $fname . " yanditswe muri sisitemu";
                 $res["status"] = 0;
                 
                 
