@@ -165,8 +165,8 @@ function login($level, $dbConn, $phone)
                 $search_result_not = $dbConn->query("SELECT * FROM events");
                 $search_result_data = $search_result_not->fetchAll();
 
-                foreach($search_result_data as $values){
-                    $timetosend = '20' + time();
+                foreach($search_result_data as $x){
+                    $timetosend = $x;
                     $smstext = '123';
                     $dbConn->exec("INSERT INTO sms (receiver_phone, smstext, timetosend) VALUES('$pid', '$smstext', '$timetosend')");
                 }
