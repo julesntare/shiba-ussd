@@ -167,7 +167,7 @@ function login($level, $dbConn, $phone)
 
                 foreach($search_result_data as $x => $y){
                     $timetosend = $y[2] + time();
-                    $smstext = $y[3];
+                    $smstext = $y[2];
                     $dbConn->exec("INSERT INTO sms (receiver_phone, smstext, timetosend) VALUES('$pid', '$smstext', '$timetosend')");
                 }
 
