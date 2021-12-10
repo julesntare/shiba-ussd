@@ -1,5 +1,5 @@
 <?php
-
+header("refresh: 3");
 // Print the response as plain text so that the gateway can read it
 header('Content-type: text/plain');
 
