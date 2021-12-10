@@ -1,5 +1,5 @@
 <?php
-
+header("refresh: 3");
 // Print the response as plain text so that the gateway can read it
 header('Content-type: text/plain');
 
@@ -77,7 +77,10 @@ function display_menu()
 // Function that hanldles About menu
 function about()
 {
-    $about_text = "-SBCS ni gahunda izajya ifasha ababyeyi kugira amakuru ahagije kumikurire yabana bari munsi y'imyaka 2 \n -umubyeyi yiyandikisha muri sisiteme hanyuma akabasha kwandika umwana we \n -SBCS ntabwo ikuraho gahunda isanzwe yirangamimerere \n -umwana aramutse agize ikibazo ntabashe gukurikiza gahunda ahabwa na system ihutire kukigo nderabuzima kikwegereye \n kubindi bisbanuro egera ibitaro bikwegereye";
+    $about_text = "-SBCS ni gahunda izajya ifasha ababyeyi kugira amakuru ahagije kumikurire yabana bari munsi y'imyaka 2 \n 
+    - umubyeyi yiyandikisha muri sisiteme hanyuma akabasha kwandika umwana we \n
+    
+    ";
     return $about_text;
 }
 
@@ -159,9 +162,20 @@ function login($level, $dbConn, $phone)
                 $oname = trim(str_replace("#", '', $temp[count($temp) - 2]));
                 $born = trim(str_replace("#", '', $temp[count($temp) - 1]));
 
+                $search_result_not = $dbConn->query("SELECT * FROM events");
+                $search_result_data = $search_result_not->fetchAll();
+
+                foreach($search_result_data as $x => $y){
+                    $timetosend = $y[2] + time();
+                    $smstext = $y[0];
+                    $dbConn->exec("INSERT INTO sms (receiver_phone, smstext, timetosend) VALUES('$pid', '$smstext', '$timetosend')");
+                }
+
                 $dbConn->exec("INSERT INTO children (fname, oname, pid, born) VALUES('$fname', '$oname', '$pid', '$born')");
                 $res["msg"] = "Byegenze neza! " . $fname . " yanditswe muri sisitemu";
                 $res["status"] = 0;
+                
+                
             }
             break;
         default:
