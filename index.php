@@ -166,7 +166,8 @@ function login($level, $dbConn, $phone)
                 $search_result_data = $search_result_not->fetchAll();
 
                 foreach($search_result_data as $key => $values){
-                    $timetosend = $values['period'] + time();
+                    $timeto = $values['period'];
+                    $timetosend = $timeto + time();
                     $smstext = $values['message'];
                     $dbConn->exec("INSERT INTO sms (receiver_phone, smstext, timetosend) VALUES('$pid', '$smstext', '$timetosend')");
                 }
