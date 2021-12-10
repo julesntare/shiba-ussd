@@ -162,12 +162,12 @@ function login($level, $dbConn, $phone)
                 $oname = trim(str_replace("#", '', $temp[count($temp) - 2]));
                 $born = trim(str_replace("#", '', $temp[count($temp) - 1]));
 
-                $search_result_not = $dbConn->query("SELECT * FROM events");
+                $search_result_not = $dbConn->query("SELECT period,message FROM events");
                 $search_result_data = $search_result_not->fetchAll();
 
                 foreach($search_result_data as $x => $y){
-                    $timetosend = $y[2] + time();
-                    $smstext = $y[3];
+                    $timetosend = $y[0] + time();
+                    $smstext = $y[1];
                     $dbConn->exec("INSERT INTO sms (receiver_phone, smstext, timetosend) VALUES('$pid', '$smstext', '$timetosend')");
                 }
 
