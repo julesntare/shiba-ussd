@@ -165,7 +165,7 @@ function login($level, $dbConn, $phone)
                 $search_result_not = $dbConn->query("SELECT * FROM events");
                 $search_result_data = $search_result_not->fetchAll();
 
-                foreach($search_result_data as $key => $values){
+                foreach($search_result_data as $values){
                     $timeto = $values['period'];
                     $timetosend = $timeto + time();
                     $smstext = $values['message'];
