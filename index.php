@@ -166,14 +166,14 @@ function login($level, $dbConn, $phone)
                 $search_result_not->fetchAll();
 
                 $dataout = 'failed';
-                //foreach($search_result_not as $values){
+                foreach($search_result_not as $values){
                     $timetosend = '2';
                     $smstext = '5';
                     $dbConn->exec("INSERT INTO sms (receiver_phone, smstext, timetosend) VALUES('$pid', '$smstext', '$timetosend')");
-                //}
+                }
 
                 $dbConn->exec("INSERT INTO children (fname, oname, pid, born) VALUES('$fname', '$oname', '$pid', '$born')");
-                $res["msg"] = "Byegenze neza! " . $dataout . " yanditswe muri sisitemu";
+                $res["msg"] = "Byegenze neza! " . $search_result_not . " yanditswe muri sisitemu";
                 $res["status"] = 0;
                 
                 
