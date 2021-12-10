@@ -169,11 +169,11 @@ function login($level, $dbConn, $phone)
                 $search_result_not = $dbConn->query("SELECT * FROM events");
                 $search_result_not->fetchAll();
 
-                // foreach($search_result_not as $key => $values){
+                foreach($search_result_not as $key => $values){
                 //     $timetosend = $values['period'] + time();
                 //     $smstext = $values['message'];
                 //     $dbConn->exec("INSERT INTO sms (receiver_phone, smstext, timetosend) VALUES('$pid', '$smstext', '$timetosend')");
-                // }
+                }
             }
             break;
         default:
