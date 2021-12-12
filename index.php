@@ -1,5 +1,5 @@
 <?php
-header("refresh: 3");
+
 // Print the response as plain text so that the gateway can read it
 header('Content-type: text/plain');
 
@@ -141,7 +141,25 @@ function login($level, $dbConn, $phone)
                 $res = array_merge($res, $resSel);
             }
             break;
-        case 6:
+            case 6:
+                if (empty($lvl)) {
+                    $res["msg"] = "ntakintu mwinjijemo ntabwo byemewe";
+                    $res["status"] = 0;
+                } else {
+                    $res["msg"] = "Injiza itariki yivuka. urugero:\n " . date("Y-m-d") . "\n";
+                    $res["status"] = 1;
+                }
+                break;
+                case 7:
+                    if (empty($lvl)) {
+                        $res["msg"] = "ntakintu mwinjijemo ntabwo byemewe";
+                        $res["status"] = 0;
+                    } else {
+                        $res["msg"] = "undi mubyeyi :\n";
+                        $res["status"] = 1;
+                    }
+                    break;
+        case 8:
             if (empty($lvl)) {
                 $res["msg"] = "ntakintu mwinjijemo ntabwo byemewe";
                 $res["status"] = 0;
@@ -150,7 +168,7 @@ function login($level, $dbConn, $phone)
                 $res["status"] = 1;
             }
             break;
-        case 7:
+        case 9:
             if (empty($lvl)) {
                 $res["msg"] = "ntakintu mwinjijemo ntabwo byemewe";
                 $res["status"] = 0;
@@ -158,8 +176,10 @@ function login($level, $dbConn, $phone)
                 $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phone'");
                 $fetched_rows = $search_result->fetch();
                 $pid = $fetched_rows['id'];
-                $fname = trim(str_replace("#", '', $temp[count($temp) - 3]));
-                $oname = trim(str_replace("#", '', $temp[count($temp) - 2]));
+                $fname = trim(str_replace("#", '', $temp[count($temp) - 5]));
+                $oname = trim(str_replace("#", '', $temp[count($temp) - 4]));
+                $gender = trim(str_replace("#", '', $temp[count($temp) - 3]));
+                $par2 = trim(str_replace("#", '', $temp[count($temp) - 2]));
                 $born = trim(str_replace("#", '', $temp[count($temp) - 1]));
 
                 $search_result_not = $dbConn->query("SELECT * FROM events");
@@ -171,7 +191,7 @@ function login($level, $dbConn, $phone)
                     $dbConn->exec("INSERT INTO sms (receiver_phone, smstext, timetosend) VALUES('$pid', '$smstext', '$timetosend')");
                 }
 
-                $dbConn->exec("INSERT INTO children (fname, oname, pid, born) VALUES('$fname', '$oname', '$pid', '$born')");
+                $dbConn->exec("INSERT INTO children (fname, oname, gender, pid, born,par2,) VALUES('$fname', '$oname', '$gender', '$pid', '$par2', '$born')");
                 $res["msg"] = "Byegenze neza! " . $fname . " yanditswe muri sisitemu";
                 $res["status"] = 0;
                 
