@@ -269,7 +269,7 @@ function register($level, $phone, $dbConn)
                     $res["msg"] = "Ntakintu mwinjijemo ntabwo byemewe";
                     $res["status"] = 0;
                 }
-                if (trim(str_replace("#", '', $temp[count($temp) - 2])) == trim(str_replace("#", '', $temp[count($temp) - 1]))) {
+                else if (trim(str_replace("#", '', $temp[count($temp) - 2])) != trim(str_replace("#", '', $temp[count($temp) - 1]))) {
                     $res["msg"] = "Umubare w'i ibanga ntuhuye n uwambere";
                     $res["status"] = 0;
                 } else {
