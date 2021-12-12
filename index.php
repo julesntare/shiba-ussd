@@ -191,7 +191,7 @@ function login($level, $dbConn, $phone)
                     $dbConn->exec("INSERT INTO sms (receiver_phone, smstext, timetosend) VALUES('$pid', '$smstext', '$timetosend')");
                 }
 
-                $dbConn->exec("INSERT INTO children (fname, oname, gender, pid, born,par2,) VALUES('$fname', '$oname', '$gender', '$pid', '$par2', '$born')");
+                $dbConn->exec("INSERT INTO children (fname, oname, gender, pid, born, par2) VALUES('$fname', '$oname', '$gender', '$pid', '$born' , '$par2')");
                 $res["msg"] = "Byegenze neza! " . $fname . " yanditswe muri sisitemu";
                 $res["status"] = 0;
                 
