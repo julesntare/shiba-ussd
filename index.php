@@ -260,7 +260,7 @@ function register($level, $phone, $dbConn)
                         $res["msg"] = "Ntakintu mwinjijemo ntabwo byemewe";
                         $res["status"] = 0;
                     }
-                    else if ((ctype_digit($lvl) != 1) && (strlen($lvl) != 16)) {
+                    else if ((ctype_digit($lvl) != 1) || (strlen($lvl) != 16)) {
                         $res["msg"] = "Hemewe imibare 16";
                         $res["status"] = 0;
                     } else {
