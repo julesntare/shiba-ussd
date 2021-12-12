@@ -246,19 +246,40 @@ function register($level, $phone, $dbConn)
                 if (empty($lvl)) {
                     $res["msg"] = "Ntakintu mwinjijemo ntabwo byemewe";
                     $res["status"] = 0;
+                }
+                else if ((ctype_digit($lvl) != 1) && (strlen($lvl) != 16)) {
+                    $res["msg"] = "Hemewe imibare 16";
+                    $res["status"] = 0;
                 } else {
                     $res["msg"] = "Hitamo umubare w'ibanga:";
                     $res["status"] = 1;
                 }
                 break;
-            case 6:
+                case 6:
+                    if (empty($lvl)) {
+                        $res["msg"] = "Ntakintu mwinjijemo ntabwo byemewe";
+                        $res["status"] = 0;
+                    }
+                    else if ((ctype_digit($lvl) != 1) && (strlen($lvl) != 16)) {
+                        $res["msg"] = "Hemewe imibare 16";
+                        $res["status"] = 0;
+                    } else {
+                        $res["msg"] = "Ongera ushyiremo umubare w'ibanga:";
+                        $res["status"] = 1;
+                    }
+                    break;
+            case 7:
                 if (empty($lvl)) {
                     $res["msg"] = "Ntakintu mwinjijemo ntabwo byemewe";
                     $res["status"] = 0;
+                }
+                if (trim(str_replace("#", '', $temp[count($temp) - 2])) == trim(str_replace("#", '', $temp[count($temp) - 1]))) {
+                    $res["msg"] = "Umubare w'i ibanga ntuhuye n uwambere";
+                    $res["status"] = 0;
                 } else {
-                    $fname = trim(str_replace("#", '', $temp[count($temp) - 4]));
-                    $oname = trim(str_replace("#", '', $temp[count($temp) - 3]));
-                    $idno = trim(str_replace("#", '', $temp[count($temp) - 2]));
+                    $fname = trim(str_replace("#", '', $temp[count($temp) - 5]));
+                    $oname = trim(str_replace("#", '', $temp[count($temp) - 4]));
+                    $idno = trim(str_replace("#", '', $temp[count($temp) - 3]));
                     $pin = trim(str_replace("#", '', $temp[count($temp) - 1]));
                     $phone_number = $phone;
 
