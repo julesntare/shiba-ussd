@@ -146,7 +146,7 @@ function login($level, $dbConn, $phone)
                     $res["msg"] = "ntakintu mwinjijemo ntabwo byemewe";
                     $res["status"] = 0;
                 } else {
-                    $res["msg"] = "Injiza itariki yivuka. urugero:\n " . date("Y-m-d") . "\n";
+                    $res["msg"] = "igitsina cyumwana \n 1.gabo \n 2.gore ";
                     $res["status"] = 1;
                 }
                 break;
