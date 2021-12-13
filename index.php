@@ -413,7 +413,18 @@ function toggleUserMenus($level, $dbConn, $phone, $txt)
             $res["status"] = 1;
             break;
         case 2:
-            $res["msg"] = "Andika ibyihariye ku mwana: " . $txt;
+            // get parent id
+            $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phone'");
+            $fetched_rows = $search_result->fetch();
+            $pid = $fetched_rows['id'];
+
+            // get children under this->parent
+            $child_result = $dbConn->query("SELECT * FROM children WHERE pid='$pid'");
+            while ($child_fetched_rows = $child_result->fetch()) {
+                if ($child_fetched_rows[$txt]) {
+                    $res["msg"] = "Andika ibyihariye ku mwana: " . $child_fetched_rows['fname'];
+                }
+            }
             $res["status"] = 1;
             break;
         case 3:
