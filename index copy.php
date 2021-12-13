@@ -132,4 +132,3 @@ function register($details,$phone, $dbh){
 $dbh = null;
 // header('Content-type: text/plain');
 // echo $response;
-?>

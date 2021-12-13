@@ -141,24 +141,24 @@ function login($level, $dbConn, $phone)
                 $res = array_merge($res, $resSel);
             }
             break;
-            case 6:
-                if (empty($lvl)) {
-                    $res["msg"] = "ntakintu mwinjijemo ntabwo byemewe";
-                    $res["status"] = 0;
-                } else {
-                    $res["msg"] = "igitsina cyumwana \n 1.gabo \n 2.gore ";
-                    $res["status"] = 1;
-                }
-                break;
-                case 7:
-                    if (empty($lvl)) {
-                        $res["msg"] = "ntakintu mwinjijemo ntabwo byemewe";
-                        $res["status"] = 0;
-                    } else {
-                        $res["msg"] = "undi mubyeyi :\n";
-                        $res["status"] = 1;
-                    }
-                    break;
+        case 6:
+            if (empty($lvl)) {
+                $res["msg"] = "ntakintu mwinjijemo ntabwo byemewe";
+                $res["status"] = 0;
+            } else {
+                $res["msg"] = "igitsina cyumwana \n 1.gabo \n 2.gore ";
+                $res["status"] = 1;
+            }
+            break;
+        case 7:
+            if (empty($lvl)) {
+                $res["msg"] = "ntakintu mwinjijemo ntabwo byemewe";
+                $res["status"] = 0;
+            } else {
+                $res["msg"] = "undi mubyeyi :\n";
+                $res["status"] = 1;
+            }
+            break;
         case 8:
             if (empty($lvl)) {
                 $res["msg"] = "ntakintu mwinjijemo ntabwo byemewe";
@@ -185,17 +185,38 @@ function login($level, $dbConn, $phone)
                 $search_result_not = $dbConn->query("SELECT * FROM events");
                 $search_result_data = $search_result_not->fetchAll();
 
-                foreach($search_result_data as $x => $y){
+                foreach ($search_result_data as $x => $y) {
                     $timetosend = $y[2] + time();
                     $smstext = $y[0];
                     $dbConn->exec("INSERT INTO sms (receiver_phone, smstext, timetosend) VALUES('$pid', '$smstext', '$timetosend')");
                 }
 
-                $dbConn->exec("INSERT INTO children (fname, oname, gender, pid, born, par2) VALUES('$fname', '$oname', '$gender', '$pid', '$born' , '$par2')");
+                $dbConn->exec("INSERT INTO children (fname, oname, gender, pid, born, par2) VALUES('$fname', '$oname', '$gender', '$pid', '$born' , '$par2')"); // sms api
+                $curl = curl_init();
+
+                curl_setopt_array(
+                    $curl,
+                    array(
+                        CURLOPT_URL => 'https://api.mista.io/sms',
+                        CURLOPT_RETURNTRANSFER => true,
+                        CURLOPT_ENCODING => '',
+                        CURLOPT_MAXREDIRS => 10,
+                        CURLOPT_TIMEOUT => 0,
+                        CURLOPT_FOLLOWLOCATION => true,
+                        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                        CURLOPT_CUSTOMREQUEST => 'POST',
+                        CURLOPT_POSTFIELDS => array('to' => $phone_number, 'from' => 'SBCA', 'unicode' => '0', 'sms' => "Muraho  " . $fname . ",Kwandikisha umwana byagenze neza. Murakoze!", 'action' => 'send-sms'),
+                        CURLOPT_HTTPHEADER => array(
+                            'x-api-key: 35a13e16-dd2c-9c91-819b-34ed0beb5dc7-08b4b43d'
+                        ),
+                    )
+                );
+
+                curl_exec($curl);
+
+                curl_close($curl);
                 $res["msg"] = "Byegenze neza! " . $fname . " yanditswe muri sisitemu";
                 $res["status"] = 0;
-                
-                
             }
             break;
         default:
@@ -228,12 +249,10 @@ function register($level, $phone, $dbConn)
                 if (empty($lvl)) {
                     $res["msg"] = "ntakintu mwinjijemo ntabwo byemewe";
                     $res["status"] = 0;
-                }
-                else if (ctype_alpha($lvl) != 1) {
+                } else if (ctype_alpha($lvl) != 1) {
                     $res["msg"] = "Hemewe inyuguti gusa";
                     $res["status"] = 0;
-                }
-                 else {
+                } else {
                     $res["msg"] = "Andika andi mazina:";
                     $res["status"] = 1;
                 }
@@ -242,8 +261,7 @@ function register($level, $phone, $dbConn)
                 if (empty($lvl)) {
                     $res["msg"] = "ntakintu mwinjijemo ntabwo byemewe";
                     $res["status"] = 0;
-                }
-                else if (ctype_alpha($lvl) != 1) {
+                } else if (ctype_alpha($lvl) != 1) {
                     $res["msg"] = "Hemewe inyuguti gusa";
                     $res["status"] = 0;
                 } else {
@@ -255,8 +273,7 @@ function register($level, $phone, $dbConn)
                 if (empty($lvl)) {
                     $res["msg"] = "Ntakintu mwinjijemo ntabwo byemewe";
                     $res["status"] = 0;
-                }
-                else if ((ctype_digit($lvl) != 1) || (strlen($lvl) != 16)) {
+                } else if ((ctype_digit($lvl) != 1) || (strlen($lvl) != 16)) {
                     $res["msg"] = "Hemewe imibare 16";
                     $res["status"] = 0;
                 } else {
@@ -264,21 +281,20 @@ function register($level, $phone, $dbConn)
                     $res["status"] = 1;
                 }
                 break;
-                case 6:
-                    if (empty($lvl)) {
-                        $res["msg"] = "Ntakintu mwinjijemo ntabwo byemewe";
-                        $res["status"] = 0;
-                    } else {
-                        $res["msg"] = "Ongera ushyiremo umubare w'ibanga:";
-                        $res["status"] = 1;
-                    }
-                    break;
+            case 6:
+                if (empty($lvl)) {
+                    $res["msg"] = "Ntakintu mwinjijemo ntabwo byemewe";
+                    $res["status"] = 0;
+                } else {
+                    $res["msg"] = "Ongera ushyiremo umubare w'ibanga:";
+                    $res["status"] = 1;
+                }
+                break;
             case 7:
                 if (empty($lvl)) {
                     $res["msg"] = "Ntakintu mwinjijemo ntabwo byemewe";
                     $res["status"] = 0;
-                }
-                else if (trim(str_replace("#", '', $temp[count($temp) - 2])) != trim(str_replace("#", '', $temp[count($temp) - 1]))) {
+                } else if (trim(str_replace("#", '', $temp[count($temp) - 2])) != trim(str_replace("#", '', $temp[count($temp) - 1]))) {
                     $res["msg"] = "Umubare w'i ibanga ntuhuye n uwambere";
                     $res["status"] = 0;
                 } else {
