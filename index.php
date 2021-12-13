@@ -86,8 +86,7 @@ function about()
 
 function display_user_menu()
 {
-    $ussd_text = "1. kwandika umwana mushya\n 2. Ibyenda gukorwa\n 3. Tanga igitekerezo\n 4. Gusohoka muri system\n 5. Subira ahabanza\n";
-
+    $ussd_text = "1. kwandika umwana mushya\n 2. Raporo yihariye\n 3. Tanga igitekerezo\n 4. Gusohoka muri system\n 5. Subira ahabanza\n";
     return $ussd_text;
 }
 
@@ -171,6 +170,12 @@ function login($level, $dbConn, $phone)
         case 9:
             if (empty($lvl)) {
                 $res["msg"] = "ntakintu mwinjijemo ntabwo byemewe";
+                $res["status"] = 0;
+            } else if (strtotime(trim(str_replace("#", '', $temp[count($temp) - 1]))) > strtotime('-2 years')) {
+                $res["msg"] = "Umwana agomba kuba yaravutse munsi y imyaka ibiri ishize.";
+                $res["status"] = 0;
+            } else if (trim(str_replace("#", '', $temp[count($temp) - 1])) > date('Y-m-d')) {
+                $res["msg"] = "Mwashyizemo itariki itaragera.";
                 $res["status"] = 0;
             } else {
                 $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phone'");
