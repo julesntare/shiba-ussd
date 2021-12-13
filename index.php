@@ -420,10 +420,12 @@ function toggleUserMenus($level, $dbConn, $phone, $txt)
 
             // get children under this->parent
             $child_result = $dbConn->query("SELECT * FROM children WHERE pid='$pid'");
+            $i = 0;
             while ($child_fetched_rows = $child_result->fetch()) {
-                if ($child_fetched_rows[0]) {
-                    $res["msg"] = "Andika ibyihariye ku mwana: " . $child_fetched_rows[0];
+                if ($child_fetched_rows[$txt - 1] == $child_fetched_rows[$i]) {
+                    $res["msg"] = "Andika ibyihariye ku mwana: " . $child_fetched_rows['fname'];
                 }
+                $i += 1;
             }
             $res["status"] = 1;
             break;
