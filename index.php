@@ -421,7 +421,7 @@ function toggleUserMenus($level, $dbConn, $phone, $txt)
             // get children under this->parent
             $child_result = $dbConn->query("SELECT * FROM children WHERE pid='$pid'");
             while ($child_fetched_rows = $child_result->fetch()) {
-                if ($child_fetched_rows[$txt]) {
+                if ($child_fetched_rows[$txt - 1]) {
                     $res["msg"] = "Andika ibyihariye ku mwana: " . $child_fetched_rows['fname'];
                 }
             }
