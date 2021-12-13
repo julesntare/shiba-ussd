@@ -136,7 +136,7 @@ function login($level, $dbConn, $phone)
                 $res["msg"] = "ntakintu mwinjijemo ntabwo byemewe";
                 $res["status"] = 0;
             } else {
-                $resSel = toggleUserMenus($temp, $dbConn, $phone);
+                $resSel = toggleUserMenus($temp, $dbConn, $phone, $lvl);
                 $res = array_merge($res, $resSel);
             }
             break;
@@ -377,7 +377,7 @@ function resSelectedMenu($level, $dbConn, $phone)
             } else {
                 $i = 1;
                 while ($child_fetched_rows = $child_result->fetch()) {
-                    $comb_res .= "\n" . $i . ". " . $child_fetched_rows['fname'] . " " . $child_fetched_rows['oname'] . ":";
+                    $comb_res .= "\n" . $i . ". " . $child_fetched_rows['fname'] . " " . $child_fetched_rows['oname'];
                     $i += 1;
                 }
             }
@@ -404,7 +404,7 @@ function resSelectedMenu($level, $dbConn, $phone)
     return $res;
 }
 
-function toggleUserMenus($level, $dbConn, $phone)
+function toggleUserMenus($level, $dbConn, $phone, $txt)
 {
     $res = array();
     switch ($level[count($level) - 2]) {
@@ -413,7 +413,7 @@ function toggleUserMenus($level, $dbConn, $phone)
             $res["status"] = 1;
             break;
         case 2:
-            $res["msg"] = "Andika ibyihariye ku mwana:";
+            $res["msg"] = "Andika ibyihariye ku mwana: " . $txt;
             $res["status"] = 1;
             break;
         case 3:
