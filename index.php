@@ -70,7 +70,7 @@ if ($userinput == '*662*800*70#') {
 //This is the home menu function
 function display_menu()
 {
-    $initial_msg = "Murakaza neza muri SBCS System\n\n 1. kwiyandikisha(umubyeyi) \n 2. ibyerekeye system \n 3. konti yange \n";
+    $initial_msg = "welcome muri SBCS System\n\n 1. kwiyandikisha(umubyeyi) \n 2. ibyerekeye system \n 3. konti yange \n";
     return $initial_msg; // add \n so that the menu has new lines
 }
 
@@ -228,7 +228,12 @@ function register($level, $phone, $dbConn)
                 if (empty($lvl)) {
                     $res["msg"] = "ntakintu mwinjijemo ntabwo byemewe";
                     $res["status"] = 0;
-                } else {
+                }
+                else if (ctype_alpha($lvl) != 1) {
+                    $res["msg"] = "Hemewe inyuguti gusa";
+                    $res["status"] = 0;
+                }
+                 else {
                     $res["msg"] = "Andika andi mazina:";
                     $res["status"] = 1;
                 }
@@ -236,6 +241,10 @@ function register($level, $phone, $dbConn)
             case 4:
                 if (empty($lvl)) {
                     $res["msg"] = "ntakintu mwinjijemo ntabwo byemewe";
+                    $res["status"] = 0;
+                }
+                else if (ctype_alpha($lvl) != 1) {
+                    $res["msg"] = "Hemewe inyuguti gusa";
                     $res["status"] = 0;
                 } else {
                     $res["msg"] = "Andika inumero y'indangamuntu:";
