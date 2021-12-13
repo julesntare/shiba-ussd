@@ -378,30 +378,11 @@ function resSelectedMenu($level, $dbConn, $phone)
                 $i = 1;
                 while ($child_fetched_rows = $child_result->fetch()) {
                     $comb_res .= "\n" . $i . ". " . $child_fetched_rows['fname'] . " " . $child_fetched_rows['oname'] . ":";
-                    $child_bd = $child_fetched_rows['born'];
-
-                    $vax_result = $dbConn->query("SELECT * FROM vaccines");
-                    if ($vax_result->rowCount() < 1) {
-                        $comb_res .= "\nNta gikorwa gihari.";
-                    } else {
-                        $fetched_vax = $vax_result->fetch();
-                        $period = $fetched_vax['period'];
-                        $now = time(); // or your date as well
-                        $your_date = strtotime($child_bd);
-                        $datediff = $now - $your_date;
-
-                        $diff = round($datediff / (60 * 60 * 24));
-                        if ($diff <= $period) {
-                            $comb_res .= "\n -> " . $fetched_vax['name'];
-                        } else {
-                            $comb_res .= "\n Nta gikorwa gihari.";
-                        }
-                    }
                     $i += 1;
                 }
             }
             $res["msg"] = $comb_res;
-            $res["status"] = 0;
+            $res["status"] = 1;
             break;
         case 3:
             $res["msg"] = "Andika igitekerezo cyawe:";
@@ -429,6 +410,10 @@ function toggleUserMenus($level, $dbConn, $phone)
     switch ($level[count($level) - 2]) {
         case 1:
             $res["msg"] = "Andika andi mazina (y'umwana):";
+            $res["status"] = 1;
+            break;
+        case 2:
+            $res["msg"] = "Andika ibyihariye ku mwana:";
             $res["status"] = 1;
             break;
         case 3:
