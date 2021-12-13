@@ -422,7 +422,7 @@ function toggleUserMenus($level, $dbConn, $phone, $txt)
             $child_result = $dbConn->query("SELECT * FROM children WHERE pid='$pid'");
             while ($child_fetched_rows = $child_result->fetch()) {
                 if ($child_fetched_rows[0]) {
-                    $res["msg"] = "Andika ibyihariye ku mwana: " . $child_fetched_rows['fname'];
+                    $res["msg"] = "Andika ibyihariye ku mwana: " . $child_fetched_rows[0];
                 }
             }
             $res["status"] = 1;
