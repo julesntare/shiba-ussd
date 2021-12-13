@@ -70,7 +70,7 @@ if ($userinput == '*662*800*70#') {
 //This is the home menu function
 function display_menu()
 {
-    $initial_msg = "welcome muri SBCS System\n\n 1. kwiyandikisha(umubyeyi) \n 2. ibyerekeye system \n 3. konti yange \n";
+    $initial_msg = "Murakaza Neza Muri SBCS System\n\n 1. kwiyandikisha(umubyeyi) \n 2. ibyerekeye system \n 3. konti yange \n";
     return $initial_msg; // add \n so that the menu has new lines
 }
 
