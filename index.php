@@ -171,7 +171,7 @@ function login($level, $dbConn, $phone)
             if (empty($lvl)) {
                 $res["msg"] = "ntakintu mwinjijemo ntabwo byemewe";
                 $res["status"] = 0;
-            } else if (strtotime($lvl) > strtotime('-2 years')) {
+            } else if (strtotime($lvl) < strtotime('-2 years')) {
                 $res["msg"] = "Umwana agomba kuba yaravutse munsi y imyaka ibiri ishize.";
                 $res["status"] = 0;
             } else if ($lvl > date('Y-m-d')) {
