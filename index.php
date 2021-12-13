@@ -197,29 +197,29 @@ function login($level, $dbConn, $phone)
                 }
 
                 $dbConn->exec("INSERT INTO children (fname, oname, gender, pid, born, par2) VALUES('$fname', '$oname', '$gender', '$pid', '$born' , '$par2')"); // sms api
-                // $curl = curl_init();
+                $curl = curl_init();
 
-                // curl_setopt_array(
-                //     $curl,
-                //     array(
-                //         CURLOPT_URL => 'https://api.mista.io/sms',
-                //         CURLOPT_RETURNTRANSFER => true,
-                //         CURLOPT_ENCODING => '',
-                //         CURLOPT_MAXREDIRS => 10,
-                //         CURLOPT_TIMEOUT => 0,
-                //         CURLOPT_FOLLOWLOCATION => true,
-                //         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                //         CURLOPT_CUSTOMREQUEST => 'POST',
-                //         CURLOPT_POSTFIELDS => array('to' => $phone_number, 'from' => 'SBCA', 'unicode' => '0', 'sms' => "Muraho  " . $fname . ",Kwandikisha umwana byagenze neza. Murakoze!", 'action' => 'send-sms'),
-                //         CURLOPT_HTTPHEADER => array(
-                //             'x-api-key: 35a13e16-dd2c-9c91-819b-34ed0beb5dc7-08b4b43d'
-                //         ),
-                //     )
-                // );
+                curl_setopt_array(
+                    $curl,
+                    array(
+                        CURLOPT_URL => 'https://api.mista.io/sms',
+                        CURLOPT_RETURNTRANSFER => true,
+                        CURLOPT_ENCODING => '',
+                        CURLOPT_MAXREDIRS => 10,
+                        CURLOPT_TIMEOUT => 0,
+                        CURLOPT_FOLLOWLOCATION => true,
+                        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                        CURLOPT_CUSTOMREQUEST => 'POST',
+                        CURLOPT_POSTFIELDS => array('to' => $phone_number, 'from' => 'SBCA', 'unicode' => '0', 'sms' => "Muraho  " . $fname . ",Kwandikisha umwana byagenze neza. Murakoze!", 'action' => 'send-sms'),
+                        CURLOPT_HTTPHEADER => array(
+                            'x-api-key: 35a13e16-dd2c-9c91-819b-34ed0beb5dc7-08b4b43d'
+                        ),
+                    )
+                );
 
-                // curl_exec($curl);
+                curl_exec($curl);
 
-                // curl_close($curl);
+                curl_close($curl);
                 $res["msg"] = "Byegenze neza! " . $fname . " yanditswe muri sisitemu";
                 $res["status"] = 0;
             }
