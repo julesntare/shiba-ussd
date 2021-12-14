@@ -86,7 +86,7 @@ function about()
 
 function display_user_menu()
 {
-    $ussd_text = "1. kwandika umwana mushya\n 2. Raporo yihariye\n 3. Tanga igitekerezo\n 4. Gusohoka muri system\n 5. Subira ahabanza\n";
+    $ussd_text = "1. kwandika umwana mushya\n 2. Tanga igitekerezo\n 4. Gusohoka muri system\n 5. Subira ahabanza\n";
     return $ussd_text;
 }
 
@@ -153,11 +153,7 @@ function login($level, $dbConn, $phone)
             if (empty($lvl)) {
                 $res["msg"] = "ntakintu mwinjijemo ntabwo byemewe";
                 $res["status"] = 0;
-            } elseif(ctype_alpha($lvl) != 1) {
-                    $res["msg"] = "Hemewe inyuguti gusa";
-                    $res["status"] = 0;
-                }
-             else {
+            } else {
                 $res["msg"] = "undi mubyeyi :\n";
                 $res["status"] = 1;
                 
