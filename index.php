@@ -86,7 +86,7 @@ function about()
 
 function display_user_menu()
 {
-    $ussd_text = "1. kwandika umwana mushya\n 2. Tanga igitekerezo\n 4. Gusohoka muri system\n 5. Subira ahabanza\n";
+    $ussd_text = "1. kwandika umwana mushya\n 2. Raporo yihariye\n 3. Tanga igitekerezo\n 4. Gusohoka muri system\n 5. Subira ahabanza\n";
     return $ussd_text;
 }
 
