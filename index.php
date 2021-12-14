@@ -153,9 +153,14 @@ function login($level, $dbConn, $phone)
             if (empty($lvl)) {
                 $res["msg"] = "ntakintu mwinjijemo ntabwo byemewe";
                 $res["status"] = 0;
-            } else {
+            } elseif(ctype_alpha($lvl) != 1) {
+                    $res["msg"] = "Hemewe inyuguti gusa";
+                    $res["status"] = 0;
+                }
+             else {
                 $res["msg"] = "undi mubyeyi :\n";
                 $res["status"] = 1;
+                
             }
             break;
         case 8:
@@ -172,7 +177,7 @@ function login($level, $dbConn, $phone)
                 $res["msg"] = "ntakintu mwinjijemo ntabwo byemewe";
                 $res["status"] = 0;
             } else if (strtotime($lvl) < strtotime('-2 years')) {
-                $res["msg"] = "Umwana agomba kuba yaravutse munsi y imyaka ibiri ishize.";
+                $res["msg"] = "Umwana agomba kuba ari munsi yimyaka 2.";
                 $res["status"] = 0;
             } else if ($lvl > date('Y-m-d')) {
                 $res["msg"] = "Mwashyizemo itariki itaragera.";
