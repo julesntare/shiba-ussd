@@ -4,10 +4,10 @@
 header('Content-type: text/plain');
 
 /* local db configuration */
-$dbHost = "bnw530k7urgmxgzkeziw-mysql.services.clever-cloud.com";
-$dbName = "bnw530k7urgmxgzkeziw";
-$dbUser = "uuvo090e1awwwfz0";      //by default root is user name.
-$dbPassword = "WknalOFgRERGk4rldEsr";     //password is blank by default
+$dbHost = "be9rqxhhu2jbxks5xhwg-mysql.services.clever-cloud.com";
+$dbName = "be9rqxhhu2jbxks5xhwg";
+$dbUser = "be9rqxhhu2jbxks5xhwg";      //by default root is user name.
+$dbPassword = "9mPBlRWmm4YQbTIqv95n";     //password is blank by default
 try {
     $dbConn = new PDO("mysql:host=$dbHost;dbname=$dbName", $dbUser, $dbPassword);
     $dbConn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -70,7 +70,7 @@ if ($userinput == '*662*800*70#') {
 //This is the home menu function
 function display_menu()
 {
-    $initial_msg = "Murakaza Neza Muri SBCS System\n\n 1. kwiyandikisha(umubyeyi) \n 2. ibyerekeye system \n 3. konti yange \n";
+    $initial_msg = "bertin Neza Muri SBCS System\n\n 1. kwiyandikisha(umubyeyi) \n 2. ibyerekeye system \n 3. konti yange \n";
     return $initial_msg; // add \n so that the menu has new lines
 }
 
