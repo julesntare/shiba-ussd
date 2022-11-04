@@ -211,7 +211,7 @@ function login($level, $dbConn, $phone)
                         CURLOPT_FOLLOWLOCATION => true,
                         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                         CURLOPT_CUSTOMREQUEST => 'POST',
-                        CURLOPT_POSTFIELDS => array('to' => $phone, 'from' => 'SBCA', 'unicode' => '0', 'sms' => "Muraho , umwana yanditswe muri SBCS . mubyeyi, muzajya muhabwa inama kumikurire ya " .$fname.  "Murakoze!", 'action' => 'send-sms'),
+                        CURLOPT_POSTFIELDS => array('to' => $phone, 'from' => 'SBCA', 'unicode' => '0', 'sms' => "Muraho , umwana yanditswe muri SBCS . mubyeyi, muzajya muhabwa inama kumikurire ye " .$fname.  "Murakoze!", 'action' => 'send-sms'),
                         CURLOPT_HTTPHEADER => array(
                             'x-api-key: 35a13e16-dd2c-9c91-819b-34ed0beb5dc7-08b4b43d'
                         ),
