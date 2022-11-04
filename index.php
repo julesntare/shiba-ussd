@@ -243,7 +243,7 @@ function register($level, $phone, $dbConn)
     $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phone'");
     $total_rows = $search_result->rowCount();
     if ($total_rows > 0) {
-        $res["msg"] = "Musanzwe muri sisitemu!";
+        $res["msg"] = "Musanzwe muri muri sisitemu!";
         $res["status"] = 0;
     } else {
         switch (count($temp)) {
