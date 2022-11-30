@@ -212,7 +212,7 @@ function login($level, $dbConn, $phone)
                         CURLOPT_FOLLOWLOCATION => true,
                         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                         CURLOPT_CUSTOMREQUEST => 'POST',
-                        CURLOPT_POSTFIELDS => array('to' => $phone, 'from' => 'SBCA', 'unicode' => '0', 'sms' => "Muraho , umwana yanditswe muri SBCS . mubyeyi, muzajya muhabwa inama kumikurire ya " .$fname.  "Murakoze!", 'action' => 'send-sms'),
+                        CURLOPT_POSTFIELDS => array('to' => $phone, 'from' => 'SBCA', 'unicode' => '0', 'sms' => "Muraho , umwana yanditswe muri SBCS . mubyeyi, muzajya muhabwa inama kumikurire ye " .$fname.  "Murakoze!", 'action' => 'send-sms'),
                         CURLOPT_HTTPHEADER => array(
                             'x-api-key: 35a13e16-dd2c-9c91-819b-34ed0beb5dc7-08b4b43d'
                         ),
@@ -244,7 +244,7 @@ function register($level, $phone, $dbConn)
     $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phone'");
     $total_rows = $search_result->rowCount();
     if ($total_rows > 0) {
-        $res["msg"] = "Musanzwe muri sisitemu!";
+        $res["msg"] = "Musanzwe muri muri sisitemu!";
         $res["status"] = 0;
     } else {
         switch (count($temp)) {
