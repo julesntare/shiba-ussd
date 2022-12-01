@@ -23,13 +23,13 @@ $userinput = urldecode($_POST["UserInput"]);
 $serviceCode = $_POST["serviceCode"];
 $networkCode = $_POST['networkCode'];
 
-$ussd_string_exploded = explode("70", $userinput);
+$ussd_string_exploded = explode("80", $userinput);
 
 // Get menu level from ussd_string reply
 $level = $ussd_string_exploded[count($ussd_string_exploded) - 1];
 echo $userinput;
 
-if ($userinput == '*662*800*70#') {
+if ($userinput == '*662*800*80#') {
     $response = display_menu(); // show the home/first menu
     $ContinueSession = 1;
 } else {
