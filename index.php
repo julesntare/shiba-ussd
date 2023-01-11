@@ -18,18 +18,17 @@ try {
 // Get the parameters provided by Africa's Talking USSD gateway
 $phone = $_POST['msisdn'];
 $p =  substr($phone, 0, 1) != '+' ? (substr($phone, 0, 1) == '%' ? str_replace("%2B", '+', $phone) : "+" . $phone) : $phone;
-$sessionId = $_POST['sessionId'];
+$session_id = $_POST['sessionId'];
 $userinput = urldecode($_POST["UserInput"]);
 $serviceCode = $_POST["serviceCode"];
 $networkCode = $_POST['networkCode'];
 
-$ussd_string_exploded = explode("80", $userinput);
+$ussd_string_exploded = explode("70", $userinput);
 
 // Get menu level from ussd_string reply
 $level = $ussd_string_exploded[count($ussd_string_exploded) - 1];
-echo $userinput;
 
-if ($userinput == '*662*800*80#') {
+if ($userinput == '*662*800*70#') {
     $response = display_menu(); // show the home/first menu
     $ContinueSession = 1;
 } else {
@@ -71,7 +70,7 @@ if ($userinput == '*662*800*80#') {
 //This is the home menu function
 function display_menu()
 {
-    $initial_msg = "Murakaza  Neza Muri SBCS System\n\n 1. kwiyandikisha(umubyeyi) \n 2. ibyerekeye system \n 3. konti yange \n";
+    $initial_msg = "Murakaza Neza Muri SBCS System\n\n 1. kwiyandikisha(umubyeyi) \n 2. ibyerekeye system \n 3. konti yange \n";
     return $initial_msg; // add \n so that the menu has new lines
 }
 
@@ -87,7 +86,7 @@ function about()
 
 function display_user_menu()
 {
-    $ussd_text = "1. kwandika umwana mushya\n  3. Tanga igitekerezo\n 4. Gusohoka muri system\n 5. Subira ahabanza\n";
+    $ussd_text = "1. kwandika umwana mushya\n 2. Raporo yihariye\n 3. Tanga igitekerezo\n 4. Gusohoka muri system\n 5. Subira ahabanza\n";
     return $ussd_text;
 }
 
@@ -157,7 +156,6 @@ function login($level, $dbConn, $phone)
             } else {
                 $res["msg"] = "undi mubyeyi :\n";
                 $res["status"] = 1;
-                
             }
             break;
         case 8:
@@ -174,7 +172,7 @@ function login($level, $dbConn, $phone)
                 $res["msg"] = "ntakintu mwinjijemo ntabwo byemewe";
                 $res["status"] = 0;
             } else if (strtotime($lvl) < strtotime('-2 years')) {
-                $res["msg"] = "Umwana agomba kuba ari munsi yimyaka 2.";
+                $res["msg"] = "Umwana agomba kuba yaravutse munsi y imyaka ibiri ishize.";
                 $res["status"] = 0;
             } else if ($lvl > date('Y-m-d')) {
                 $res["msg"] = "Mwashyizemo itariki itaragera.";
@@ -212,7 +210,7 @@ function login($level, $dbConn, $phone)
                         CURLOPT_FOLLOWLOCATION => true,
                         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                         CURLOPT_CUSTOMREQUEST => 'POST',
-                        CURLOPT_POSTFIELDS => array('to' => $phone, 'from' => 'SBCA', 'unicode' => '0', 'sms' => "Muraho , umwana yanditswe muri SBCS . mubyeyi, muzajya muhabwa inama kumikurire ye " .$fname.  "Murakoze!", 'action' => 'send-sms'),
+                        CURLOPT_POSTFIELDS => array('to' => $phone, 'from' => 'SBCA', 'unicode' => '0', 'sms' => "Muraho  " . $fname . ",Kwandikisha umwana byagenze neza. Murakoze!", 'action' => 'send-sms'),
                         CURLOPT_HTTPHEADER => array(
                             'x-api-key: 35a13e16-dd2c-9c91-819b-34ed0beb5dc7-08b4b43d'
                         ),
@@ -244,7 +242,7 @@ function register($level, $phone, $dbConn)
     $search_result = $dbConn->query("SELECT * FROM parents WHERE phone='$phone'");
     $total_rows = $search_result->rowCount();
     if ($total_rows > 0) {
-        $res["msg"] = "Musanzwe muri muri sisitemu!";
+        $res["msg"] = "Musanzwe muri sisitemu!";
         $res["status"] = 0;
     } else {
         switch (count($temp)) {
