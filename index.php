@@ -29,45 +29,6 @@ $ussd_string_exploded = explode("70", $userinput);
 $level = $ussd_string_exploded[count($ussd_string_exploded) - 1];
 echo $userinput;
 
-if ($userinput == '*662*800*70#') {
-    $response = display_menu(); // show the home/first menu
-    $ContinueSession = 1;
-} else {
-    $temp = explode('*', $level);
-    $level_1 = str_replace("#", '', $temp[1]);
-    switch ($level_1) {
-        case 1:
-            // If user selected 1 send them to the registration menu
-            $res_temp = register($level, $p, $dbConn);
-            $response = $res_temp['msg'];
-            if ($res_temp['status'] == 0) {
-                $ContinueSession = 0;
-            } else {
-                $ContinueSession = 1;
-            }
-            break;
-        case 2:
-            //If user selected 2, send them to the about menu
-            $response = about();
-            $ContinueSession = 0;
-            break;
-        case 3:
-            //If user selected 3, send them to the about menu
-            $res_temp = login($level, $dbConn, $p);
-            $response = $res_temp['msg'];
-            if ($res_temp['status'] == 0) {
-                $ContinueSession = 0;
-            } else {
-                $ContinueSession = 1;
-            }
-            break;
-        default:
-            $response = "Invalid selection!!!";
-            $ContinueSession = 0;
-            break;
-    }
-}
-
 //This is the home menu function
 function display_menu()
 {
