@@ -27,7 +27,7 @@ $ussd_string_exploded = explode("70", $userinput);
 
 // Get menu level from ussd_string reply
 $level = $ussd_string_exploded[count($ussd_string_exploded) - 1];
-// echo $userinput;
+echo $userinput;
 
 if ($userinput == '*662*800*70#') {
     $response = display_menu(); // show the home/first menu
@@ -71,7 +71,7 @@ if ($userinput == '*662*800*70#') {
 //This is the home menu function
 function display_menu()
 {
-    $initial_msg = "Murakaza hello  Neza Muri SBCS System\n\n 1. kwiyandikisha(umubyeyi) \n 2. ibyerekeye system \n 3. konti yange \n";
+    $initial_msg = "Murakaza  Neza Muri SBCS System\n\n 1. kwiyandikisha(umubyeyi) \n 2. ibyerekeye system \n 3. konti yange \n";
     return $initial_msg; // add \n so that the menu has new lines
 }
 
