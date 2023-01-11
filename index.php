@@ -450,6 +450,6 @@ function toggleUserMenus($level, $dbConn, $phone, $txt)
 # close the pdo connection
 $dbConn = null;
 
-$resp = array("sessionId" => $sessionId, "message" => $response, "ContinueSession" => $ContinueSession);
+$resp = array("sessionId" => $session_id, "message" => $response, "ContinueSession" => $ContinueSession);
 
 echo json_encode($resp);
